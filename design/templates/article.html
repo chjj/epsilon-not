@@ -1,0 +1,13 @@
+	<article>
+		<header>
+			<h2><a href="@permalink;" rel="bookmark">@title;</a></h2>
+			<time datetime="@datetime;" pubdate="">@date;</time>
+		</header>
+		@content;
+		{<aside>
+			<h3>Comments</h3>
+			@comments;
+			@post_form;
+		</aside>}
+		<footer>@footer;</footer>
+	</article>

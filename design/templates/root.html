@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html id="root">
+<head>
+	<title>{@title; &#x25AA; }epsilon-not</title>
+	<meta name="viewport" content="width=device-width, user-scalable=no" />
+	<link rel="stylesheet" type="text/css" href="/design/style.css" title="Aesthetic Risk" />
+	<link rel="alternate" type="application/atom+xml" href="/feed" title="Atom Feed" />
+	<script src="/misc.js" title="Miscellaneous"></script>
+</head>
+<body>
+	<header>
+		<h1><a href="/" rel="index{+@home; self}">&#x3B5;<sub>0</sub></a></h1>
+		<aside><ol>
+			++ <li><a href="@_;" title="@_;"><time>@_;</time></a></li> ++
+		</ol></aside>
+		<nav><ul>
+			<li><a href="/browse" rel="archives{+@article; related}">Articles</a></li>
+			<li><a href="/development"{+@development; rel="self"}>Development</a></li>
+			<li><a href="/about" rel="author{+@about; self}">About</a></li>
+			<li><a href="/feed" rel="alternate">Feed</a></li>
+		</ul></nav>
+	</header>
+	@content;
+	<footer>
+		<a href="#root" title="Expand">&#x3B5;<sub>0</sub></a>
+		<form action="/browse" method="get">
+			<input type="search" placeholder="&#xBB; search articles" required="" name="search" />
+			<input type="submit" value="Go" />
+		</form>
+		<small>&#xA9; 
+			<a href="http://creativecommons.org/licenses/by/3.0/" rel="license">Copyright 2010</a>, 
+			epsilon-not.net. Some Rights Reserved.
+		</small>
+	</footer>
+</body>
+</html>
