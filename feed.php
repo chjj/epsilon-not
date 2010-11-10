@@ -12,8 +12,8 @@
 			'tag:'.$_SERVER['HTTP_HOST'].','
 				.date('Y', $article['timestamp']).':'.$article['id'],
 			date(DATE_ATOM, $article['timestamp']), 
-			preg_replace('/<[^>]+>/', '', substr($article['content'], 0, 250)).'...',
-			preg_replace('/<[^>]+>/', '', $article['content'])
+			preg_replace('/<[^>]+>/', '', page::parse_markup($article['content'], 3, false, true)).'...',
+			page::parse_markup($article['content'], 3, false, false)
 		);
 		$data['latest_update'] = $article['timestamp'];
 	}

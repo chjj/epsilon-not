@@ -127,7 +127,7 @@ body {
 			body:after { left: auto; right: 8px; top: 155px; bottom: 80px; }
 		
 		/* content header */
-		body > header + * > :first-child { overflow: hidden; margin: 4px -20px; }
+		body > header + * > :first-child { overflow: hidden; margin: 5px -20px 10px -20px; }
 			h2 > a { color: inherit; float: left; text-shadow: none; }
 			header > time { float: right; letter-spacing: 0.15em; font: 25px/1.2 serif; }
 				time > sup { font-size: 50%; }
@@ -201,6 +201,13 @@ body {
 	#root:target body { height: auto; min-height: 100%; padding: 0; margin-top: -2px; margin-bottom: 10px; }
 	#root:target body > header + * { margin-bottom: 70px; }
 	#root:target body > footer { position: absolute; bottom: 0; left: 0; right: 0; }
+	
+	/* --- scrollbar on the outside: experimental --- */
+	@media all and (min-width: 920px) {
+		body { padding-bottom: 190px; }
+		body > header + * { margin: 0 -40px 15px -40px; padding: 0 90px 0 90px; }
+	}
+	
 
 /* --- color scheme --- */
 html { color: #303030; }

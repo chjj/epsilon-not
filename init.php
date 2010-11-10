@@ -130,7 +130,7 @@
 			$placeholders = array();
 			if (preg_match_all('/<pre>.+?<\/pre>/is', $text, $m)) {
 				for ($i = 0; $i < count($m[0]); $i++) {
-					$placeholders[] = preg_replace('/(?:\r?\n|\r\n?){2,}/', '&#x0A;', $m[0][$i]);
+					$placeholders[] = preg_replace('/(?:\r?\n|\r\n?)+/', '&#x0A;', $m[0][$i]);
 					$text = str_replace($m[0][$i], '!PLACEHOLDER:'.(count($placeholders)-1).'!!!!!!', $text);
 				}
 			}
@@ -183,7 +183,7 @@
 			
 			$articles = array();
 			foreach($this->db->fetch('id, timestamp, title', 'articles', 'ORDER BY timestamp DESC LIMIT 0, 4', false, true) as $article) 
-				array_push($articles, self::uri($article['id']), $article['title'], date('m-d-Y', $article['timestamp']));
+				array_push($articles, self::uri($article['id']), $article['title'], date('Y-m-d', $article['timestamp']));
 			
 			return template::parse('root', array_merge(array(
 				'title' => strtolower($this->title),
