@@ -8,8 +8,8 @@
 	}
 })(['header', 'hgroup', 'footer', 'aside', 'section', 'article', 'nav', 'figure', 'figcaption', 'time', 'mark', 'meter']);
 
-//make placeholder work for legacy browsers
 window.onload = function() {
+	//make placeholder work for legacy browsers
 	(function(elements) { 
 		if (!('placeholder' in document.createElement('input'))) {
 			for (var i = 0; i < elements.length; i++) {
@@ -18,12 +18,13 @@ window.onload = function() {
 					elements[i].onfocus = function() { 
 						if (this.value == this.getAttribute('placeholder')) {
 							this.value = ''; 
-							this.style.color = null;
+							this.style.color = '';
 						}
 					};
 					elements[i].onblur = function() { 
-						if (this.value == '') {
-							this.value = this.getAttribute('placeholder'); 
+						var placeholder = this.getAttribute('placeholder');
+						if (this.value == '' || this.value == placeholder) {
+							this.value = placeholder; 
 							this.style.color = '#a9a9a9';
 						}
 					};

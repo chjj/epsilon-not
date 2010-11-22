@@ -1,0 +1,231 @@
+/* (c) Copyright 2010, epsilon-not.net. */
+
+/* --- html5 elements --- */
+header, footer, nav, section, aside, 
+article, hgroup, figure, figcaption { display: block; }
+
+/* --- basic elements that generally don't appear in any one specific spot --- */
+::selection { background: rgba(0, 0, 0, 0.5); color: rgba(255, 255, 255, 0.8); }
+::-moz-selection { background: rgba(0, 0, 0, 0.5); color: rgba(255, 255, 255, 0.8); }
+
+a { text-shadow: rgba(0, 0, 0, 0.1) 1px 1px; text-decoration: none; } 
+	a:hover, a:active, a:focus { text-decoration: underline; outline: none; } 
+
+abbr { border-bottom: currentColor solid 1px; cursor: help; }
+
+figure, blockquote, pre { 
+	border: #888 solid 1px; margin: 20px; padding: 20px; 
+	box-shadow: rgba(0, 0, 0, 0.15) -2px -2px 5px inset; 
+	-moz-box-shadow: rgba(0, 0, 0, 0.15) -2px -2px 5px inset; 
+	-webkit-box-shadow: rgba(0, 0, 0, 0.15) -2px -2px 5px inset; 
+}
+	figcaption { margin: 20px 20px 0 20px; }
+	blockquote { padding-left: 50px; padding-bottom: 2px; font-style: italic; }
+		blockquote:before { content: "\201C"; float: left; margin: 38px 0 0 -43px; font: 110px/10px arial; }
+		blockquote > cite { display: block; margin: 15px 40px; font-style: normal; }
+	pre { overflow: auto; white-space: pre-wrap; max-height: 200px; }
+		pre > code[title]:before { float: right; content: "[" attr(title) "]"; }
+
+h2, h3, h4, h5, h6, dt { font: normal 27px/1.2 serif; letter-spacing: 0.2em; margin: 18px 0 9px 0; }
+	h1, h2 { font-weight: normal; margin: 0; }
+	h3 { font-size: 22px; }
+	h4, dt { font-size: 20px; }
+	h5 { font-size: 18px; }
+	h6 { font-size: 16px; }
+
+hr { height: auto; margin: 30px 0; border: none; text-align: center; clear: both; margin: 25px 0; } 
+	hr:before { content: "\A7"; color: #bbb; font: 40px/1 serif; font-style: italic; font-size: 60px; }
+
+img { outline: none; border: none; }
+
+input, textarea { 
+	display: block; height: 20px; font: inherit; 
+	margin: 0; padding: 0 2px; box-sizing: border-box; 
+	-moz-box-sizing: border-box; -webkit-box-sizing: border-box;
+}
+	input[type="checkbox"], input[type="radio"] { 
+		display: inline-block; height: auto; width: auto; 
+		margin: 0; padding: 0; vertical-align: bottom; 
+	}
+	input[type="submit"] { 
+		width: auto; background: transparent; box-shadow: none; 
+		-moz-box-shadow: none; -webkit-box-shadow: none;
+	}
+
+/* paragraphs */
+p { cursor: auto; text-align: justify; line-height: 20px; margin: 0 0 18px 0; word-wrap: break-word; }
+p ~ p { text-indent: 20px; }
+header + p:first-line, h2 + p:first-line { font-style: italic; }
+blockquote > p:first-child:first-letter, 
+header + p:first-letter, h2 + p:first-letter, 
+form > p:first-letter { float: left; font: 40px/28px serif; margin: 8px 3px 0 0; }
+
+small { font-size: 11px; }
+
+/* sub is styled differently in every browser, this makes things more consistent */
+sub { font-size: 75%; vertical-align: baseline; position: relative; right: 0.1em; top: 0.16em; }
+
+/* lists */
+ul, ol { margin: 5px 0 0 25px; padding: 0; line-height: 20px; }
+	ul ul, ol ol { margin: 0 0 0 5px; }
+	li { margin-bottom: 5px; }
+ul { list-style-type: square; }
+	ul ul { list-style-type: circle; }
+dl { margin: 20px 0; padding: 0; }
+	dd { margin: 0 0 0 20px; padding: 0; }
+
+/* --- layout design: things are organized according to their order of appearance --- */
+html { 
+	height: 100%; padding: 22px 0 0 0; font: 12px/1.2 verdana, sans-serif; cursor: default; 
+	box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; overflow-y: scroll;
+}
+	html:before { content: "\20"; position: fixed; bottom: 0; left: 0; right: 0; top: 0; z-index: -1; border: rgba(0, 0, 0, 0.075) dashed 100px; }
+body {
+	position: relative; width: 840px; min-height: 100%; margin: -12px auto 0; padding: 0; 
+	border: solid 1px; box-sizing: border-box; box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 10px; 
+	-moz-box-sizing: border-box; -webkit-box-sizing: border-box; 
+	-moz-box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 10px; 
+	-webkit-box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 10px;
+}
+
+	/* --- page header -- */
+	body > header { position: relative; overflow: hidden; height: 125px; }
+		h1 > a, h1 > a:hover, h1 > a:focus, h1 > a:active { 
+			display: block; width: 100px; margin: -25px 0 0 20px;
+			position: absolute; font-size: 100px; text-align: center; text-decoration: none; 
+		}
+		
+		/* header aside */
+		header > aside { height: 50px; margin-top: 30px; padding-left: 120px; border-width: 2px; border-style: solid none; }
+			header > aside:before {
+				display: block; float: left; margin-top: 20px; width: 300px; white-space: nowrap; text-align: center;
+				font: italic 15px/1 serif; letter-spacing: 2px; text-shadow: rgba(255, 255, 255, 0.5) 0 1px;
+				content: "\201C" "Because code is not poetry." "\201D"; 
+			}
+			aside > ol { 
+				float: right; height: 30px; width: 360px; padding: 5px 20px; margin: 28px 10px 0 0;
+				line-height: 12px; text-align: center; list-style-type: none;
+			}
+				aside li { display: block; float: left; width: 70px; margin: 0 10px; }
+					aside > ol a:before { display: block; content: "+"; font-size: 95px; text-shadow: rgba(0, 0, 0, 0.4) 25px -25px; } 
+					aside > ol a:hover { text-decoration: none; color: rgba(0, 0, 0, 0.5); }
+						aside a > time { position: absolute; clip: rect(0, 0, 0, 0); }
+		
+		/* header nav */
+		header > nav { margin-top: 20px; }
+			header ul { list-style-type: none; margin: 0 20px; overflow: hidden; }
+				header > nav li { margin: 0 10px; float: left; line-height: normal; letter-spacing: 1px; text-transform: uppercase; }
+					header > nav li:before { content: "\BB"; margin-right: 2px; font-size: 15px; line-height: 10px; }
+	
+	/* --- content section -- */
+	body > header + * { padding: 0 50px 75px 50px; margin-bottom: -10px; }
+		body > header + *:before { content: "\A7"; height: 28px; position: absolute; right: 2px; top: 125px; font: 25px/1 serif; }
+		body:before, body:after { content: "\20"; position: absolute; top: 129px; bottom: 54px; left: 4px; border-left: solid 1px; }
+			body:after { left: auto; right: 8px; top: 155px; bottom: 80px; }
+		
+		/* content header */
+		body > header + * > :first-child { height: 30px; margin: 10px -20px; }
+			h2 > a { color: inherit; float: left; text-shadow: none; }
+			header > time { float: right; letter-spacing: 0.15em; font: 25px/1.2 serif; }
+				time > sup { font-size: 50%; }
+		
+		/* article comments */
+		aside > h3 { text-indent: 20px; border-bottom: #888 solid 1px; }
+			aside > article, aside > form { margin: 20px 30px; counter-increment: comment; }
+				aside h4 { margin-top: 0; margin-left: -10px; }
+					aside > article > h4:before { content: counter(comment) "."; float: right; }
+					h4 > a[rel~="author"]:before { content: "@"; color: #888; }
+				aside > article > img { display: block; float: left; margin: 0 8px 0 0; border: #888 solid 1px; height: 35px; width: 35px; }
+				aside > article > footer { text-align: right; margin: -18px 0px 0 0px; padding-top: 5px; clear: both; }
+					footer > time { float: left; color: #888; }
+		
+		/* form controls */
+		fieldset { float: right; border: none; margin: 15px 10px 0 0; padding: 0; }
+		label { display: block; margin-bottom: 8px; }
+			label > input, label > textarea {
+				margin-top: 2px; border: #888 solid 1px;
+				box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 2px inset; 
+				-moz-box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 2px inset;
+				-webkit-box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 2px inset;
+			}
+			label > textarea { width: 100%; height: 180px; padding: 5px; }
+			h2 + form textarea { height: 400px; }
+			label > input { width: 60%; }
+		label ~ input[type="submit"] { 
+			width: auto; cursor: pointer; border: none; font-size: 14px;  
+			color: #888; text-shadow: rgba(0, 0, 0, 0.2) 1px 1px 2px;
+		}
+		input[name="post"] { float: right; margin-left: 25px; }
+		input[type="password"] { width: 200px; }
+		
+		/* browse list */
+		section > ol time { display: block; }
+		
+		/* content footer */
+		header + * > footer { position: absolute; height: 10px; bottom: 54px; left: 21px; right: 17px; border-top: solid 1px; }
+			header + * > footer > a { width: 12px; height: 28px; display: block; overflow: hidden; margin-top: -16px; text-shadow: none; }
+				header + * > footer > a:hover { color: #888; text-decoration: none; }
+				header + * > footer > a:before { content: "\A7"; display: block; margin-bottom: 5px; font: 25px/1 serif; }
+				header + * > footer > a:first-child { float: left; margin-left: -15px; }
+				header + * > footer > a + a { float: right; margin-right: -14px; }
+				header + * > footer > a + a ~ a:before { display: none; }
+				header + * > footer > a + a ~ a { font-size: 10px; margin: 0 15px; height: auto; width: auto; text-transform: uppercase; }
+	
+	/* --- page footer --- */
+	body > footer { position: absolute; bottom: 0; left: 0; right: 0; height: 50px; }
+		footer > form { float: left; margin: 15px 0 0 15px; }
+			footer [type="submit"] { float: left; border: solid 1px; border-color: #bbb #000 #000 #bbb; color: transparent; width: 25px; }
+			footer [type="search"] { 
+				float: right; border: none; margin-left: 5px; width: 145px; 
+				box-shadow: rgba(0, 0, 0, 0.5) 1px 1px 3px; -moz-box-shadow: rgba(0, 0, 0, 0.5) 1px 1px 3px; 
+				-webkit-box-shadow: rgba(0, 0, 0, 0.5) 1px 1px 3px; -webkit-appearance: textfield;
+			}
+		body > footer > a { display: block; margin: -3px 3px; float: right; font-size: 35px; text-decoration: none !important; } 
+		footer > small { display: block; text-align: center; font: 11px/20px verdana; text-transform: uppercase; letter-spacing: 1px; margin-top: 15px; }
+	
+	/* --- borders for page header and footer --- */
+	body > header:before, body > footer:before, 
+	body > header:after, body > footer:after { 
+		content: "\20"; display: block; border: 1px;
+		position: absolute; left: 4px; right: 4px; top: 4px; bottom: 4px;
+	}
+	body > header:before { bottom: auto; border-style: solid none none none; }
+	body > footer:before { top: auto; border-style: none none solid none; }
+	body > header:after, body > footer:after { right: auto; border-style: none none none solid; }
+	
+	/* --- scrollbar for js users --- */
+	html.scroll { padding: 10px 0; } 
+	html.scroll body { height: 100%; min-height: 0; margin-top: 0; padding-bottom: 190px; overflow: hidden; }
+	html.scroll body > header + * { height: 100%; margin-bottom: 15px; padding-bottom: 0; overflow: auto; overflow-style: scrollbar; text-overflow: ""; }
+	html.scroll body > footer { position: relative; overflow: hidden; clear: both; }
+
+/* --- color scheme --- */
+html { color: #303030; }
+body { border-color: #797e83; } 
+body > header, body > footer { background: #797e83; } 
+nav a, body > footer a { color: #fff; text-shadow: #000 1px 1px 1px; }
+h1 > a { color: #dadbd6; text-shadow: #48454c 3px 3px; }
+header > aside, figure, blockquote, 
+pre, input, textarea { background: #dadbd6; } 
+header > aside { border-color: #fff; }
+aside > ol { background: #48454c; }
+aside > ol a { color: #eee; }
+html, body, footer input { background: #eee; }
+
+body > header:before, body > header:after, 
+body > footer:before, body > footer:after, 
+header li, body > footer, nav a:hover, body > footer a:hover, 
+nav a[rel~="self"], nav a[rel~="related"] { color: #000; text-shadow: rgba(255, 255, 255, 0.15) 1px 1px; } 
+
+body:before, body:after, body > header + * > footer,
+h2, h3, h4, h5, h6, dt, header > time, 
+body > header + *:before, body > header + * > footer a { color: #48454c; }
+
+/* --- adjust design for mobile browsers --- */
+@media all and (max-width: 480px) {
+	body { -webkit-text-size-adjust: none; width: auto; margin: 8px; }
+		html:before, header > aside:before, footer > nav { display: none; }
+		aside > ol { width: 280px; }
+			aside li { width: 40px; }
+		footer > small { margin-top: 10px; }
+}

@@ -116,16 +116,6 @@
 				$text = preg_replace_callback('/<[^>]+>/', create_function('$m', 'return strtolower($m[0]);'), '<p>'.$text.'</p>');
 			}
 			
-			//truncate the text
-			if ($truncate && preg_match_all('/<(\w+)[^>]*>.+?<\/\1>|<[^\/>]+\/>/s', $text, $m)) {
-				$text = '';
-				foreach($m[0] as $element) {
-					if (strlen(preg_replace('/<[^>]+>|[\t\n\r]/', '', $text.$element)) > 2000) break;
-					$text .= $element;
-				}
-				$text .= '<ins>Continued&#x2026;</ins>';
-			}
-			
 			//replace <pre> elements with placeholder text so it doesn't get indented
 			$placeholders = array();
 			if (preg_match_all('/<pre>.+?<\/pre>/is', $text, $m)) {
