@@ -1,25 +1,27 @@
-			<form action="/" method="post">
+			<form action="/" method="POST">
 				{!@title;!@content;<h4>@name;</h4>}
 				{+@title;<fieldset>
-					<label><input type="checkbox" name="comments"}{+@comments; checked=""}{+@title; /> Allow Comments</label>
+					<label><input type="checkbox" name="comments"{+@comments; checked=""} /> Allow Comments</label>
 				</fieldset>}
 				{<label>Name:
 					<input type="text" required="" name="poster_name" value="@poster_name;" /></label>}
 				{<label>Email (will not be displayed):
-					<input type="e-mail" name="poster_email" value="@poster_email;" /></label>}
+					<input type="email" name="poster_email" value="@poster_email;" /></label>}
 				{<label>Website:
 					<input type="url" name="poster_site" value="@poster_site;" /></label>}
 				{<label>Article Title:
 					<input type="text" required="" name="title" value="@title;" /></label>}
 				{+@slug;<label>Article Slug:
 					<input type="text" name="id" /></label>}
+				{<label>Timestamp:
+					<input type="text" required="" name="timestamp" value="@timestamp;" /></label>}
 				<label>Message:
 					<textarea required="" name="content">@content;</textarea></label>
 				{<input type="hidden" name="id" value="@id;" />}
 				<input type="submit" name="post" value="@name;" />
 				<p><small>
 					Well-formed text-level <abbr title="HyperText Markup Language">HTML</abbr> is allowed. 
-					The <code>title, lang, &amp; dir</code> attributes are allowed on all elements. The 
-					<code>cite, href, &amp; rel</code> attributes are allowed on their respective elements.
+					The <code>title, lang, dir, cite, href, &amp; rel</code> attributes are allowed on their 
+					respective elements.
 				</small></p>
 			</form>

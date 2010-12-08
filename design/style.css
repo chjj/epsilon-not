@@ -1,158 +1,173 @@
-/* (c) Copyright 2010, epsilon-not.net. */
+/* (c) Copyright 2010, Christopher Jeffrey. (epsilon-not.net) */
 
-/* --- html5 elements --- */
+/* -=-=- html5 elements -=-=- */
 header, footer, nav, section, aside, 
 article, hgroup, figure, figcaption { display: block; }
 
-/* --- basic elements that generally don't appear in any one specific spot --- */
+/* -=-=- basic elements -=-=- */
 ::selection { background: rgba(0, 0, 0, 0.5); color: rgba(255, 255, 255, 0.8); }
 ::-moz-selection { background: rgba(0, 0, 0, 0.5); color: rgba(255, 255, 255, 0.8); }
 
-a { text-shadow: rgba(0, 0, 0, 0.1) 1px 1px; text-decoration: none; } 
-	a:hover, a:active, a:focus { text-decoration: underline; outline: none; } 
-
-abbr { border-bottom: currentColor solid 1px; cursor: help; }
-
-figure, blockquote, pre { 
-	border: #888 solid 1px; margin: 20px; padding: 20px; 
-	box-shadow: rgba(0, 0, 0, 0.15) -2px -2px 5px inset; 
-	-moz-box-shadow: rgba(0, 0, 0, 0.15) -2px -2px 5px inset; 
-	-webkit-box-shadow: rgba(0, 0, 0, 0.15) -2px -2px 5px inset; 
-}
-	figcaption { margin: 20px 20px 0 20px; }
-	blockquote { padding-left: 50px; padding-bottom: 2px; font-style: italic; }
-		blockquote:before { content: "\201C"; float: left; margin: 30px 0 0 -43px; font: 110px/10px arial; }
-		blockquote > cite { display: block; margin: 15px 40px; font-style: normal; }
-	pre { white-space: pre-wrap; }
-		pre > code[title]:before { float: right; content: "[" attr(title) "]"; }
-
-h2, h3, h4, h5, h6, dt { font: normal 27px/1.2 serif; letter-spacing: 0.2em; margin: 18px 0 9px 0; }
-	h1, h2 { font-weight: normal; margin: 0; }
-	h3 { font-size: 22px; }
-	h4, dt { font-size: 20px; }
-	h5 { font-size: 18px; }
-	h6 { font-size: 16px; }
-
-hr { height: auto; margin: 30px 0; border: none; text-align: center; clear: both; margin: 25px 0; } 
-	hr:before { content: "\A7"; color: #bbb; font: 40px/1 serif; font-style: italic; font-size: 60px; }
-
-img { outline: none; border: none; }
-
-input, textarea { 
-	display: block; height: 20px; font: inherit; 
-	margin: 0; padding: 0 2px; box-sizing: border-box; 
-	-moz-box-sizing: border-box; -webkit-box-sizing: border-box;
-}
-	input[type="checkbox"], input[type="radio"] { 
-		display: inline-block; height: auto; width: auto; 
-		margin: 0; padding: 0; vertical-align: bottom; 
-	}
-	input[type="submit"] { 
-		width: auto; background: transparent; box-shadow: none; 
-		-moz-box-shadow: none; -webkit-box-shadow: none;
-	}
-
-/* paragraphs */
-p { cursor: auto; text-align: left; line-height: 20px; margin: 0 0 18px 0; word-wrap: break-word; }
-p ~ p { text-indent: 20px; }
-header + p:first-line, h2 + p:first-line { font-weight: bold; font-variant: small-caps; font-family: serif; font-size: 15px; }
-blockquote > p:first-child:first-letter, 
-header + p:first-letter, h2 + p:first-letter, 
-form > p:first-letter { float: left; font: 40px/28px serif; margin: 8px 3px 0 0; }
-
+/* --- text level semantics --- */
+a { text-decoration: none; } 
+	a:hover, a:active, a:focus { text-decoration: underline; outline: none; }
+	p a, aside[role="note"] a { border-bottom: dotted 1px; text-decoration: none !important; }
+	
+abbr { border-bottom: rgba(0, 0, 0, 0.15) solid 1px; }
+	abbr[title] { cursor: help; }
+	
+mark { background: lightYellow; }
 small { font-size: 11px; }
 
 /* sub is styled differently in every browser, this makes things more consistent */
 sub { font-size: 75%; vertical-align: baseline; position: relative; right: 0.1em; top: 0.16em; }
 
+/* --- content flow --- */
+p, ul, ol, dl, figure, blockquote, pre, hr { margin: 0 0 20px; padding: 0; word-wrap: break-word; }
+
+/* --- content blocks --- */
+figure, blockquote, pre { padding: 20px; }
+	figcaption { margin: 20px 20px 0 20px; }
+	blockquote { margin-left: 40px; padding-bottom: 1px; font-style: italic; }
+		blockquote:before { content: "\201C"; float: left; margin: -30px 0 0 -60px; font: 100px/1 arial; }
+		blockquote > cite { display: block; margin: 20px 40px; font-style: normal; }
+	pre { white-space: pre-wrap; font-size: 11px; }
+		pre > code[title]:before { float: right; margin: -10px -5px 0 0; content: "[" attr(title) "]"; }
+
+h2, h3, h4, h5, h6, dt { font: normal 34px/1 serif; letter-spacing: 0.125em; padding: 0; margin: 0 0 0.5em; }
+	h3 { font-size: 22px; }
+	h4, dt { font-size: 20px; }
+	h5 { font-size: 18px; }
+	h6 { font-size: 16px; }
+
+hr { height: auto; border: none; text-align: center; clear: both; } 
+	hr:before { content: "\A7"; cursor: default; color: #bbb; font: italic 60px/1.2 serif; }
+
+img { display: block; outline: none; border: none; }
+	p > img { float: right; margin: 0 0 20px 20px; }
+	p:nth-of-type(even) > img { float: left; margin: 0 20px 20px 0; }
+
+aside[role="note"] { 
+	width: 100px; padding: 10px; margin: 5px -100px 5px 20px; 
+	float: right; border: solid 1px; font-size: 10px; -moz-border-radius: 5px; 
+	-webkit-border-radius: 5px; border-radius: 5px;
+}
+
+/* basic form controls */
+input, textarea { 
+	display: block; height: 20px; font: inherit; 
+	margin: 0; padding: 0 2px; -moz-box-sizing: border-box; 
+	-webkit-box-sizing: border-box; box-sizing: border-box; 
+}
+	input[type="checkbox"], input[type="radio"] { 
+		display: inline-block; height: auto; width: auto; 
+		margin: 0; padding: 0; vertical-align: middle; 
+	}
+	input[type="submit"] { 
+		width: auto; background: transparent; -moz-box-shadow: none; 
+		-webkit-box-shadow: none; box-shadow: none; 
+	}
+
+/* paragraphs */
+header + p, h2 + p, h4 + img + p { min-height: 40px; }
+header + p:first-line, h2 + p:first-line { font-weight: bold; font-variant: small-caps; font-family: serif; font-size: 15px; }
+blockquote > p:first-child:first-letter, 
+header + p:first-letter, h2 + p:first-letter, 
+form > p:first-letter { float: left; font: 40px/28px serif; margin: 8px 3px 0 0; }
+
 /* lists */
-ul, ol { margin: 5px 0 0 25px; padding: 0; line-height: 20px; }
-	ul ul, ol ol { margin: 0 0 0 5px; }
-	li { margin-bottom: 5px; }
 ul { list-style-type: square; }
 	ul ul { list-style-type: circle; }
-dl { margin: 20px 0; padding: 0; }
-	dd { margin: 0 0 0 20px; padding: 0; }
+ol { list-style-type: decimal; }
+	ol ol { list-style-type: lower-alpha; }
+li { margin: 0 0 10px; padding: 0; }
+	section li { margin-left: 20px; }
+	article li { margin-left: 40px; }
+dd { margin: 0 0 0 20px; padding: 0; }
 
-/* --- layout design: things are organized according to their order of appearance --- */
-html { height: 100%; padding: 0; font: 12px/1.2 verdana, sans-serif; cursor: default; overflow-y: scroll; }
-	html:before { content: "\20"; position: fixed; bottom: 0; left: 0; right: 0; top: 0; z-index: -1; border: rgba(0, 0, 0, 0.075) dashed 100px; border-top: none; }
+/* -=-=- layout design -=-=- */
+html { height: 100%; padding: 0; font: 12px/20px verdana, sans-serif; cursor: default; overflow-y: scroll; }
+	head { /* use head because some browsers don't allow ::before & ::after to be fixed */
+		display: block; content: "\20"; position: fixed; bottom: 0; left: 0; right: 0; top: 0; z-index: -1; 
+		border: 100px; border-color: #cfd0c8; border-color: rgba(0, 0, 0, 0.05); border-style: solid none; border-width: 0.1vh;
+	}
+		head > * { display: none; }
 body {
-	width: 960px; height: 100%; margin: 0 auto; padding: 0 0 68px 0; background: transparent; 
-	box-sizing: border-box;	-moz-box-sizing: border-box; -webkit-box-sizing: border-box; 
+	width: 960px; height: 100%; margin: 0 auto; padding: 27px 0 32px 0; background: transparent; 
+	-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
 }
 
 	/* --- page header -- */
 	body > header { position: relative; height: 25px; position: fixed; top: 0; left: 0; right: 0; z-index: 2; border-bottom: solid 2px; }
 		h1 { width: 960px; margin: 0 auto; }
-		h1 > a, h1 > a:hover, h1 > a:focus, h1 > a:active { 
-			display: block; height: 35px; width: 35px; margin: 10px 0 0 40px; position: absolute; 
-			font-size: 30px; text-align: center; text-decoration: none; line-height: 23px; text-indent: 2px;
+		h1 > a { 
+			display: block; position: absolute; z-index: 1; height: 35px; width: 35px; padding: 0; margin: 10px 0 0 40px;
+			font-size: 30px; font-weight: normal; line-height: 23px; text-indent: 2px; text-align: center;
 			border: solid 1px; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; 
 		}
-			h1 > a:hover { border-color: orange; }
+			h1 > a:hover, h1 > a:focus, h1 > a:active { border-color: orange; text-decoration: none; }
 		
 		/* header aside */
 		header > aside { width: 960px; margin: 0 auto; }
 			aside > ol { 
-				position: absolute; z-index: -1; margin: 28px 0 0 10px; width: 50px;
-				list-style-type: none; border: solid 2px; border-top: none; padding-top: 15px; 
+				position: absolute; margin: 27px 0 0 10px; width: 50px;
+				list-style: none; border: solid 2px; border-top: none; padding-top: 15px; 
+				opacity: 0.6; transition: all 0.3s; -moz-transition: all 0.3s; -webkit-transition: all 0.3s;
 			}
-				/* under construction: working on transition */
-				aside > ol { opacity: 0.15; transition: opacity 0.3s; -moz-transition: opacity 0.3s; -webkit-transition: opacity 0.3s; }
 				h1:hover + aside > ol, aside:hover > ol { opacity: 1; }
-				
 				aside > ol > li, aside > ol a { margin: 0; padding: 0; }
-				aside > ol a { display: block; height: 60px; text-align: center; }
-				aside > ol a:hover { color: orange; text-decoration: none; }
-				aside > ol a:before { display: block; content: "+"; font-size: 50px; line-height: 1; } 
-				aside a > time { display: none; }
+				aside > ol a { display: block; height: 60px; font-size: 50px; line-height: 1; text-align: center; }
+					aside > ol a:hover { color: orange; text-decoration: none; }
+					aside > ol a:before { content: "+"; } 
+					aside a > time { display: none; }
 		
 		/* header nav */
 		header > nav { width: 960px; margin: 0 auto; }
-			header ul { list-style-type: none; margin: 0px 100px; overflow: hidden; }
-				header > nav li { margin: 0 10px; float: left; line-height: 25px; letter-spacing: 2px; text-transform: lowercase; }
-					header > nav li:before { content: "\BB"; margin-right: 2px; font-size: 15px; line-height: 25px; vertical-align: top; }
+			header ul { list-style: none; margin: 7px 90px; }
+				header > nav li { margin: 0 10px; float: left; line-height: 1; letter-spacing: 2px; text-transform: lowercase; }
+					header > nav li:before { content: "\BB"; margin-right: 2px; font-size: 15px; line-height: 12px; vertical-align: bottom; }
 	
 	/* --- content section -- */
 	body > header + * { 
-		padding: 30px 40px 1px 40px; width: 700px; min-height: 100%; margin: 0 auto; background: #eee; 
-		border: 2px; border-style: none solid; box-shadow: rgba(0, 0, 0, 0.5) 2px 0 8px; 
-		-moz-box-shadow: rgba(0, 0, 0, 0.5) 2px 0 8px; -webkit-box-shadow: rgba(0, 0, 0, 0.5) 2px 0 8px; 
+		cursor: auto; padding: 1px 40px 32px 40px; width: 700px; min-height: 100%; margin: -1px auto 0; 
+		border: 2px; border-style: none solid; -moz-box-shadow: rgba(0, 0, 0, 0.5) 2px -8px 8px; 
+		-webkit-box-shadow: rgba(0, 0, 0, 0.5) 2px 0 8px; box-shadow: rgba(0, 0, 0, 0.5) 2px 0 8px; 
+		/* firefox wrongly adds the box shadow blur radius to the scrollHeight, 
+			so it needs to be subtracted from the y offset */
 	}
 	
 		/* content header */
-		body > header + * > :first-child { height: 30px; margin: 10px -20px; }
-			h2 > a { color: inherit; float: left; text-shadow: none; text-decoration: none !important; }
-				h2 > a:hover:after { content: "\20\AB"; }
+		h2 { margin: 20px -20px; }
+			h2 > a { color: inherit; text-shadow: none; text-decoration: none !important; }
+				h2 > a:hover:after { content: "\20\AB"; font-size: 1.1em; line-height: 0.8em; }
 			header > time { 
-				display: block; font: 15px/25px serif; letter-spacing: 0.15em; 
-				position: fixed; top: 0; margin-left: 580px; z-index: 2; 
-				width: 160px; white-space: pre; direction: rtl; /* right: 120px; */ 
+				display: block; position: fixed; top: 6px; z-index: 2; width: 735px; height: 0; 
+				font: 15px/1 serif; letter-spacing: 0.15em; text-align: right;
 			}
 				time > sup { font-size: 50%; line-height: 0; }
 		
 		/* article comments */
-		aside > h3 { text-indent: 20px; border-bottom: #888 solid 1px; }
+		aside > h3 { padding: 10px 0 5px 10px; border-bottom: rgba(0, 0, 0, 0.1) solid 1px; }
 			aside > article, aside > form { margin: 20px 30px; counter-increment: comment; }
 				aside h4 { margin-top: 0; margin-left: -10px; }
-					aside > article > h4:before { content: counter(comment) "."; float: right; }
-					h4 > a[rel~="author"]:before { content: "@"; color: #888; }
-				aside > article > img { display: block; float: left; margin: 0 8px 0 0; border: #888 solid 1px; height: 35px; width: 35px; }
-				aside > article > footer { text-align: right; margin: -18px 0px 0 0px; padding-top: 5px; clear: both; }
+					aside > article > h4:before { content: counter(comment) ". "; }
+					h4 > a { color: inherit; text-decoration: underline; }
+						h4 > a[rel~="author"] { text-decoration: none; background: rgba(0, 0, 0, 0.1); padding: 0 5px 0 10px; }
+				aside > article > img { float: left; margin: 0 8px 0 0; border: #888 solid 1px; height: 35px; width: 35px; }
+				aside > article > footer { text-align: right; margin: -10px 0 0 0; clear: both; overflow: hidden; }
 					footer > time { float: left; color: #888; }
 		
 		/* form controls */
 		fieldset { float: right; border: none; margin: 15px 10px 0 0; padding: 0; }
 		label { display: block; margin-bottom: 8px; }
 			label > input, label > textarea {
-				margin-top: 2px; border: #888 solid 1px;
-				box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 2px inset; 
-				-moz-box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 2px inset;
+				margin-top: 2px; border: #888 solid 1px; 
+				-moz-box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 2px inset; 
 				-webkit-box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 2px inset;
+				box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 2px inset; 
 			}
-			label > textarea { width: 100%; height: 180px; padding: 5px; }
-			h2 + form textarea { height: 400px; }
+			label > textarea { width: 100%; height: 180px; padding: 5px; resize: vertical; }
+			h2 + form textarea { height: 400px; font-size: 11px; line-height: 18px; }
 			label > input { width: 60%; }
 		label ~ input[type="submit"] { 
 			width: auto; cursor: pointer; border: none; font-size: 14px;  
@@ -165,50 +180,75 @@ body {
 		section > ol time { display: block; }
 		
 		/* content footer */
-		header + * > footer { position: fixed; top: 0; margin-left: 760px; borderz: #000 solid 1px; width: 60px; z-index: 2; }
+		header + * > footer { position: fixed; top: 0; margin-left: 760px; width: 60px; /* width: 820px; height: 0; */ z-index: 2; }
 			header + * > footer > a { 
-				text-align: center; display: block; position: absolute; right: 0; top: 0; height: 20px; padding: 2px;
-				overflow: hidden; width: 21px; margin-top: 12px; border: solid 1px;
+				display: block; position: absolute; right: 0; top: 0; height: 20px; padding: 2px;
+				overflow: hidden; width: 21px; margin-top: 13px; border: solid 1px;
 			}
 				header + * > footer > a:hover { text-decoration: none; border-color: orange; }
-				header + * > footer > a:before { display: block; font-size: 40px; line-height: 12px; font-family: arial, verdana; margin-bottom: 20px; }
+				header + * > footer > a:before { display: block; font: 40px/13px arial, verdana; text-align: center; margin-bottom: 20px; }
 					header + * > footer > a:first-child:before { content: "\AB"; }
 					header + * > footer > a:first-child + a:before { content: "\BB"; }
+					body > header + * > footer > a[rel~="bookmark"]:before { content: "#"; font-size: 25px; line-height: 20px; }
+				
 				footer > a:first-child { right: 35px; }
 				footer > a:first-child + a + a { margin-top: 50px; }
-				footer > a + a ~ a { margin-top: 10px; width: auto; height: auto; position: static; }
+				footer > a + a ~ a { margin-top: 10px; text-align: center; width: auto; height: auto; position: static; }
 	
-	/* --- page footer --- */
-	body > footer { position: absolute; left: 0; right: 0; height: 35px; border-top: solid 2px; }
-		footer > form { float: left; margin: 8px 0 0 5px; }
-			footer [type="submit"] { float: left; border: solid 1px; border-color: #bbb #000 #000 #bbb; color: transparent; width: 25px; }
+	/* --- page footer: tricky to get this working right without a wrapper div --- */
+	body > footer { 
+			position: fixed; left: 0; right: 0; bottom: 0; height: 30px; border-top: #fff solid 2px; 
+			-moz-box-shadow: rgba(0, 0, 0, 0.4) 0 -2px 10px; 
+			-webkit-box-shadow: rgba(0, 0, 0, 0.4) 0 -2px 10px; 
+			box-shadow: rgba(0, 0, 0, 0.4) 0 -2px 10px; 
+	}
+		body > footer > * { display: block; width: 780px; height: 0; margin: 0 auto; }
+		footer > form { margin-top: 5px; padding-left: 70px; }
+			footer [type="submit"] { float: left; margin-left: -175px; border: solid 1px; border-color: #bbb #000 #000 #bbb; color: transparent; width: 25px; }
 			footer [type="search"] { 
-				float: right; border: none; margin-left: 5px; width: 145px; 
-				box-shadow: rgba(0, 0, 0, 0.5) 1px 1px 3px; -moz-box-shadow: rgba(0, 0, 0, 0.5) 1px 1px 3px; 
-				-webkit-box-shadow: rgba(0, 0, 0, 0.5) 1px 1px 3px; -webkit-appearance: textfield;
+				float: left; border: none; width: 145px; -moz-box-shadow: rgba(0, 0, 0, 0.5) 1px 1px 3px; 
+				-webkit-box-shadow: rgba(0, 0, 0, 0.5) 1px 1px 3px; box-shadow: rgba(0, 0, 0, 0.5) 1px 1px 3px; 
+				-webkit-appearance: textfield;
 			}
-		body > footer > a { display: block; margin: 8px -45px 0 0; float: right; font-size: 28px; line-height: 16px; overflow: hidden; height: 20px; text-decoration: none !important; } 
-		footer > small { display: block; margin-top: 12px; font: 11px/1 verdana; text-align: center; text-transform: uppercase; letter-spacing: 1px; }
+		body > footer > a { padding-left: 80px; font-size: 28px; line-height: 26px; text-decoration: none !important; text-align: right; } 
+		footer > small { font: 11px/21px verdana; text-align: center; text-transform: uppercase; letter-spacing: 1px; }
 
 /* --- color scheme --- */
 html { 
-	color: #303030; 
-	background: no-repeat fixed #dadbd6;
-	/* background-image: linear-gradient(90deg, #eee 40%, #bbb 100%); 
-	background-image: -moz-linear-gradient(90deg, #eee 40%, #bbb 100%); 
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0.4, #bbb), color-stop(1.0, #eee)); */
+	color: #303030; background: no-repeat fixed #dadbd3; 
+	background-image: -moz-linear-gradient(90deg, #cdcec6 25%, #dadbd3 50%); 
+	background-image: -webkit-gradient(linear, 0% 100%, 0% 0%, color-stop(0.25, #cdcec6), color-stop(0.5, #dadbd3));
+	background-image: linear-gradient(90deg, #cdcec6 25%, #dadbd3 50%); 
 }
-body > header, body > footer, h1 > a, body:after { background: #797e83; } 
+body > header, body > footer, h1 > a { 
+	background: url("data:image/png;base64,\
+		iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAALHRFWHRDcmVhdGlvbiBUaW1lAFR\
+		1ZSAzMCBOb3YgMjAxMCAwOTo0NjoyMiAtMDYwMCVwtDEAAAAHdElNRQfaCx4PLiMaW7s3AAAACX\
+		BIWXMAAB7CAAAewgFu0HU+AAAABGdBTUEAALGPC/xhBQAAApRJREFUeNp9VMtOYkEQ7TvyKBOIG\
+		CEkJOiCFd/shhULVqgLiCG6MEYEeYm8lSCIqIgiKlwBde7pme65NHFuUjT9qjp16lRrj4+PZLPZ2Gw2Y29v\
+		b0zTNOb3+/Xj42MKBoMMew6HQ2fGl81mKRAIsLW1NT5Xv9FoROz7+5tbtVol8V+1XC63tAcg0WiUPj4\
+		+aDKZUL1e5yPfrFQq8sLX1xe1220+b7ValEgkqNfrEdCpTuEM43g85mOxWKSlqOolg4qFtZeXF7q7u6Pp\
+		dEqNRoPEfr/f56OGhefnZ+bxeHQg+vz85Ly5XC7mdDo5V5lMhsDt5uYmc7vdkj8gPDg4YODa6/Wy1dV\
+		VndVqNRLozs/PKR6PS0QgWUU8HA4X1sR9YfxH1/Wli0bFZTqDwYDMXF9eXtLr6yvd39+T4P3h4YGkw\
+		6enJ+mw0+mQcIjKqYHU4OBScI0sf3W7XVpfX5e8WCwWPq6srHB7f3//I4e/n91u1xEUqDE30Il7+sbGh\
+		s6jlMtlgmPIY3t7WyIQqe7v71MoFFpIX5iQmMiOa0dN6+joSK6hY0D89fX10rl0Ok3z+Zxubm5ooSgqIrM\
+		m0SW3t7dkFjKsUCgsBBBOWSwWkxulUokQFagh2p9aUU0XPEuE0NXFxYVcEFIw625vb4+ACJVXnYJ3j\
+		GdnZ7yD5AY4EpIw84WDKBpELigRQc38y5QhUrUD8vn8ktbwOCSTSUIv/48GTUQ1HDLjrZN6hAR8Ph/X\
+		mdVqleuiWEYz8H43tMc1iKy2trZ0fkDlxqwttFskEpHdcHJyQuJ9xDm8MkIFyIRhIqoEUk9PT8n8jP2U4uHh\
+		4YLQr66u/vWySixsZ2eHdnd3ybwuehvFCIfDlEql+LzZbMp7vwGFXfALGoMImAAAAABJRU5ErkJggg==\
+	") #797e83; 
+} 
 nav a, body > footer a, header > time { color: #fff; text-shadow: #000 1px 1px 1px; }
 h1 > a { color: #797e83; text-shadow: #000 1px 1px 2px; }
-figure, blockquote, pre, input, textarea { background: #dadbd6; } 
-aside > ol, header + * > footer > a { background: #48454c; }
-aside > ol a, header + * > footer > a { color: #fff; }
+figure, blockquote, pre, input, textarea { background: #dadbd4; } 
+aside > ol, header + * > footer > a, aside[role="note"] { background: #48454c; }
+aside > ol a, header + * > footer > a, 
+aside[role="note"], aside[role="note"] a { color: #fff; }
 body > header + *, footer input { background: #eee; }
 
 body > header, h1 > a, aside > ol, 
 body > header + *, body > footer, 
-header + * > footer > a, body:after { border-color: #fff; }
+header + * > footer > a { border-color: #fff; }
 
 header li, body > footer, nav a:hover, body > footer a:hover, 
 nav a[rel~="self"], nav a[rel~="related"] { color: #000; text-shadow: rgba(255, 255, 255, 0.15) 1px 1px; } 
@@ -216,31 +256,27 @@ nav a[rel~="self"], nav a[rel~="related"] { color: #000; text-shadow: rgba(255, 
 h2, h3, h4, h5, h6, dt { color: #48454c; } 
 
 /* box shadows */
-body > header, h1 > a, 
-aside > ol, header + * > footer > a { 
-	box-shadow: rgba(0, 0, 0, 0.4) 0 2px 10px; 
+body > header, h1 > a, aside > ol, 
+header + * > footer > a, aside[role="note"] { 
 	-moz-box-shadow: rgba(0, 0, 0, 0.4) 0 2px 10px; 
 	-webkit-box-shadow: rgba(0, 0, 0, 0.4) 0 2px 10px; 
+	box-shadow: rgba(0, 0, 0, 0.4) 0 2px 10px; 
 }
 
-/* i'd prefer to use a non-inset box shadow for this, but firefox is buggy */
-body > footer, body:after { 
-	box-shadow: rgba(0, 0, 0, 0.4) 0 -2px 8px inset; 
-	-moz-box-shadow: rgba(0, 0, 0, 0.4) 0 -2px 8px inset; 
-	-webkit-box-shadow: rgba(0, 0, 0, 0.4) 0 -2px 8px inset; 
-}
-
-/* --- adjust design for mobile browsers --- */
+/* --- adjust design for mobile browsers: under construction --- */
 @media all and (max-width: 480px) {
-	html { -webkit-text-size-adjust: none; }
+	html { -webkit-text-size-adjust: none; overflow-x: hidden; }
+		html:before { content: none; display: none; }
+	body, h1, body > header > aside, body > header > nav { width: 480px; }
+		nav li > a { letter-spacing: 0; }
+		nav li:last-child { display: none;}
+		body > header + * { width: 220px; font-size: 11px; }
+			header > time { position: static; margin: 0; height: auto; width: auto; text-align: left; color: inherit; text-shadow: inherit; margin-bottom: 20px; }
+			header + * > footer { margin-left: 280px; }
+		body > footer { bottom: auto; }
+			body > footer > * { width: 300px; }
+			body > footer > small { display: none; }
+	body > header, body > header + * > footer, 
+	body > footer { position: absolute; }
+	pre { font-size: 10px; }
 }
-
-/* html { background: #eee; }
-	body { background: none; background: red; }
-	body > header + * { background: none; background: yellow; border: none; box-shadow: none; -moz-box-shadow: none; -webkit-box-shadow: none; } */
-
-body > footer { 
-	z-index: 1; background: none; border: none; padding-top: 2px; left: auto; right: auto; width: 780px; margin: 0 90px; 
-	box-shadow: none; -moz-box-shadow: none; -webkit-box-shadow: none;
-}
-body:after { content: "\20"; position: absolute; overflow: hidden; left: 0; right: 0; height: 35px; border-top: #fff solid 2px; }

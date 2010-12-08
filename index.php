@@ -13,9 +13,9 @@
 				'title' => $_POST['title'],
 				'id' => ($slug = $_POST['id'] 
 					? $_POST['id'] : preg_replace('/[^\w]/', '', str_replace(' ', '_', strtolower($_POST['title'])))),
-				'timestamp' => time(),
+				'timestamp' => strtotime($_POST['timestamp']),
 				'content' => $_POST['content'],
-				'comments' => empty($_POST['comments']) ? null : 1
+				'comments' => isset($_POST['comments']) ? 1 : null
 			));
 		} elseif ($_POST['post'] == 'Post Comment') {
 			if (!APP_LOGIN) {
@@ -40,10 +40,11 @@
 		} elseif ($_POST['post'] == 'Edit Post') {
 			if (!APP_LOGIN) $page->error(403);
 			unset($_POST['post']);
-			if (isset($_POST['title'])) $_POST['comments'] = empty($_POST['comments']) ? null : 1;
+			if (isset($_POST['title'])) $_POST['comments'] = isset($_POST['comments']) ? 1 : null;
 				else $slug = $page->db->fetch('parent', 'comments', 'WHERE id=?', $_POST['id']);
+			$_POST['timestamp'] = strtotime($_POST['timestamp']);
 			$page->db->update((isset($_POST['title']) ? 'articles' : 'comments'), 'id=:id', $_POST);
-		} 
+		}
 		page::redirect(page::uri((isset($slug) ? $slug : $_POST['id']))); 
 	}
 	
@@ -52,7 +53,9 @@
 			if (!APP_LOGIN) $page->error(403);
 			$page->title = 'Post Article';
 			$page->content = template::parse('section', array( 
-				'title' => 'Post Article', 'content' => template::parse('form', array('name' => 'Post Article', 'title' => true, 'slug' => true)),
+				'title' => 'Post Article', 'content' => template::parse('form', 
+					array('name' => 'Post Article', 'title' => true, 'slug' => true, 'timestamp' => date('F jS, Y g:ia', time()))
+				),
 			));
 		} elseif (!$post_data = $page->db->fetch('*', (!is_numeric($_GET[0]) ? 'articles' : 'comments'), 'WHERE id=?', $_GET[0])) {
 			$page->error(404);
@@ -66,6 +69,7 @@
 			if (!APP_LOGIN) $page->error(403);
 			$page->title = $post_data['name'] = 'Edit Post';
 			$post_data['content'] = preg_replace('/\r?\n/', '&#x0A;', htmlspecialchars($post_data['content'], ENT_QUOTES));
+			$post_data['timestamp'] = date('F jS, Y g:ia', $post_data['timestamp']);
 			$page->content = template::parse('section', array('title' => 'Edit Post', 'content' => template::parse('form', $post_data)));
 		} elseif ($_GET[1] == 'delete') {
 			if (!APP_LOGIN) $page->error(403);
@@ -81,23 +85,26 @@
 	} elseif (isset($post_data)) {
 		if (isset($post_data['parent'])) 
 			page::redirect(page::uri($post_data['parent']));
-		if (isset($_GET[0]) && $post_data['comments']) {
-			$comments = array();
-			if ($rows = $page->db->fetch('*', 'comments', 'WHERE parent=? ORDER BY timestamp ASC', $post_data['id'], true)) {
-				foreach($rows as $comment) {
-					$comments[] = template::parse('comment', array(
-						'id' => $comment['id'],
-						'poster_rel' => ($comment['poster_ip'] == 'admin') ? 'author' : 'external',
-						'poster_name' => htmlspecialchars($comment['poster_name']),
-						'poster_site' => $comment['poster_site'] ? htmlspecialchars($comment['poster_site']) : false,
-						'post_date' => date('F j<\s\u\p>S</\s\u\p>, Y @ g:i a', $comment['timestamp']),
-						'datetime' => date('c', $comment['timestamp']),
-						'avatar' =>  'http://www.gravatar.com/avatar/'.
-							md5(strtolower(trim(!empty($comment['poster_email']) ? $comment['poster_email'] : 'example@abc.abc'))).'?s=35&amp;d=mm',
-						'content' => page::parse_markup($comment['content'], 4, true),
-						'edit_href' => APP_LOGIN ? page::uri($comment['id'], 'edit') : false,
-						'delete_href' => APP_LOGIN ? page::uri($comment['id'], 'delete') : false
-					));
+		if (isset($_GET[0])) {
+			//header('X-Pingback: http://'.$_SERVER['HTTP_HOST'].'/pingback');
+			if ($post_data['comments']) {
+				$comments = array();
+				if ($rows = $page->db->fetch('*', 'comments', 'WHERE parent=? ORDER BY timestamp ASC', $post_data['id'], true)) {
+					foreach($rows as $comment) {
+						$comments[] = template::parse('comment', array(
+							'id' => $comment['id'],
+							'poster_rel' => ($comment['poster_ip'] == 'admin') ? 'author' : 'external',
+							'poster_name' => htmlspecialchars($comment['poster_name'], ENT_QUOTES, 'UTF-8', false),
+							'poster_site' => $comment['poster_site'] ? htmlspecialchars($comment['poster_site'], ENT_QUOTES, 'UTF-8', false) : false,
+							'post_date' => date('F j<\s\u\p>S</\s\u\p>, Y @ g:i a', $comment['timestamp']),
+							'datetime' => date('c', $comment['timestamp']),
+							'avatar' =>  'http://www.gravatar.com/avatar/'.
+								md5(strtolower(trim(!empty($comment['poster_email']) ? $comment['poster_email'] : 'whatever@abc.abc'))).'?s=35&amp;d=mm',
+							'content' => page::parse_markup($comment['content'], 4, true),
+							'edit_href' => APP_LOGIN ? page::uri($comment['id'], 'edit') : false,
+							'delete_href' => APP_LOGIN ? page::uri($comment['id'], 'delete') : false
+						));
+					}
 				}
 			}
 		}
@@ -117,11 +124,11 @@
 			)) : false), 
 			'footer' => PHP_EOL."\t\t\t".
 				(($previous = $page->db->fetch('id, title', 'articles', 'WHERE timestamp < ? ORDER BY timestamp DESC LIMIT 0, 1', $post_data['timestamp']))
-						? '<a href="'.page::uri($previous['id']).'" rel="prev" title="Previous Article">'.$previous['title'].'</a>'
-						: '<a href="'.$permalink.'" rel="bookmark first" title="Current Article">Permalink</a>').PHP_EOL."\t\t\t".
+						? '<a href="'.page::uri($previous['id']).'" rel="prev" title="'.$previous['title'].'">Previous Article</a>'
+						: '<a href="'.$permalink.'" rel="bookmark first" title="Permalink">Current Article</a>').PHP_EOL."\t\t\t".
 				(($next = $page->db->fetch('id, title', 'articles', 'WHERE timestamp > ? ORDER BY timestamp ASC LIMIT 0, 1', $post_data['timestamp']))
-						? '<a href="'.page::uri($next['id']).'" rel="next" title="Next Article">'.$next['title'].'</a>'
-						: '<a href="'.$permalink.'" rel="bookmark last" title="Current Article">Permalink</a>').
+						? '<a href="'.page::uri($next['id']).'" rel="next" title="'.$next['title'].'">Next Article</a>'
+						: '<a href="'.$permalink.'" rel="bookmark last" title="Permalink">Current Article</a>').
 				(APP_LOGIN
 					? PHP_EOL."\t\t\t".'<a href="'.page::uri($post_data['id'], 'edit').'">Edit</a> <a href="'.page::uri($post_data['id'], 'delete').'">Delete</a>'. 
 						PHP_EOL."\t\t\t".'<a href="'.page::uri('post').'">Post</a> <a href="'.page::uri('admin').'">Admin</a>' 
