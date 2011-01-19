@@ -1,0 +1,32 @@
+	{+@login;<p>
+		Welcome back, good sir! Options are below. 
+		This area may server a better purpose in the future.
+	</p>
+	<h3>Options</h3>
+	<ul>
+		<li><a href="/post">Post Article</a></li>
+		<li><a href="/admin/logout">Logout</a></li>
+	</ul>
+	{+@local;<h3>Command Line</h3>
+	<pre>@output;</pre>
+	<form method="POST" action="/admin" style="overflow:hidden">
+		<label>Code:
+			<textarea name="code" spellcheck="false">@code;</textarea>
+		</label>
+		<input type="submit" value="Execute"/>
+	</form>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	<script src="data:application/javascript;charset=utf-8;base64,
+		JCgnZm9ybScpLmJpbmQoJ3N1Ym1pdCcsIGZ1bmN0aW9uKCkgewoJaWYgKC
+		QoJ3RleHRhcmVhJykudmFsKCkubWF0Y2goL15cJFxzKy8pKSB7CgkJJCgn
+		cHJlJykudGV4dChldmFsKCcoZnVuY3Rpb24oKSB7ICcKCQkJKyQoJ3RleH
+		RhcmVhJykudmFsKCkucmVwbGFjZSgvXlwkXHMrLywgJycpCgkJKyd9KSgp
+		OycpKTsKCX0gZWxzZSB7CgkJJC5wb3N0KCQodGhpcykuYXR0cignYWN0aW
+		9uJyksICQodGhpcykuc2VyaWFsaXplKCksIAoJCQlmdW5jdGlvbihkYXRh
+		KSB7ICQoJ3ByZScpLmh0bWwoZGF0YSk7IH0KCQkpOwoJfQoJJCgnaW5wdX
+		RbdHlwZT0ic3VibWl0Il0nKS5ibHVyKCk7CglyZXR1cm4gZmFsc2U7Cn0pOw==
+	"></script>}}
+	{!@login;<form method="POST" action="/admin">
+		<label>Password: <input type="password" name="password" required="" autofocus=""/></label>
+		<input type="submit" value="Login"/>
+	</form>}

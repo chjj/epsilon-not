@@ -1,0 +1,35 @@
+<!doctype html>
+<title>{@title; / }epsilon-not</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="/front/style.css" title="Black Liquorice"/>
+<link rel="alternate" type="application/atom+xml" href="/feed" title="Atom Feed"/>
+{+@msie;<script>a='header,footer,section,article,nav,aside,figure,figcaption,time,mark'.split(',');
+	for (i = 0; i < a.length; i++) document.createElement(a[i]);
+</script><body>}
+<!--//————————————————————————————————————————————————————————————————————————————————————//-->
+<header>
+	<h1><a href="/" rel="home{+@home; self}">ε<sub>0</sub></a></h1>
+	<nav><ul>
+		<li><a href="/browse" rel="archives{+@article; directory}">Articles</a></li>
+		<li><a href="/development" rel="section{+@development; self}">Development</a></li>
+		<li><a href="/about" rel="author{+@about; self}">About</a></li>
+		<li><a href="/feed" rel="alternate">Feed</a></li>
+	</ul></nav>
+	<aside><ol>
+		&[<li><a href="@_;" title="@_;">
+			<time>@_;</time>
+		</a></li>];
+	</ol></aside>
+</header>
+@content;
+<footer>
+	<a href="#">Top of Page</a>
+	<form action="/browse" method="GET" title="Search">
+		<input type="search" name="search" required=""/>
+		<input type="submit"/>
+	</form>
+	<small>© 2010-2011
+		<a href="http://creativecommons.org/licenses/by/3.0/" rel="license">▪</a> 
+		epsilon-not.net
+	</small>
+</footer>

@@ -1,20 +1,20 @@
 CREATE TABLE articles (
-  id TEXT,
-  timestamp INTEGER,
-  title TEXT,
-  content TEXT,
-  comments INTEGER
+	id TEXT,
+	timestamp INTEGER,
+	title TEXT,
+	content TEXT,
+	comments INTEGER
 );
 
 CREATE TABLE comments (
-  id INTEGER PRIMARY KEY,
-  parent TEXT,
-  timestamp INTEGER,
-  content TEXT,
-  poster_ip TEXT,
-  poster_name TEXT,
-  poster_email TEXT,
-  poster_site TEXT
+	id INTEGER PRIMARY KEY,
+	parent TEXT,
+	timestamp INTEGER,
+	content TEXT,
+	poster_ip TEXT,
+	poster_name TEXT,
+	poster_email TEXT,
+	poster_site TEXT
 );
 
 INSERT INTO articles (id, timestamp, title, content, comments) VALUES('test_article', 1287413024, 'Test Article', '<p>Non eram nescius, Brute, cum, quae summis ingeniis exquisitaque doctrina philosophi Graeco sermone tractavissent, ea Latinis litteris mandaremus, fore ut hic noster labor in varias reprehensiones incurreret. nam quibusdam, et iis quidem non admodum indoctis, totum hoc displicet philosophari. quidam autem non tam id reprehendunt, si remissius agatur, sed tantum studium tamque multam operam ponendam in eo non arbitrantur. erunt etiam, et ii quidem eruditi Graecis litteris, contemnentes Latinas, qui se dicant in Graecis.</p>', 1);

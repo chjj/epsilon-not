@@ -1,4 +1,5 @@
 User-agent: *
 Disallow: /design/
+Disallow: /misc/
 
 Sitemap: /sitemap

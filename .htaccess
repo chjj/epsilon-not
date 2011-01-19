@@ -1,28 +1,39 @@
-RewriteEngine On
 Options -MultiViews -Indexes
 
-AddType application/xml .xml
-AddType text/x-component .htc
+DirectoryIndex index.php index.html index.xhtml
+#DirectorySlash On
 
-ErrorDocument 403 /index.php
-ErrorDocument 404 /index.php
+AddType text/css .css
+AddType application/xml .xml .xbl .xsl
+AddType application/javascript .js
+#AddType text/x-component .htc
+
+#AddDefaultCharset utf-8
+AddCharset utf-8 .html .xhtml .xml .xbl .css .js .txt
+
+<IfModule mod_deflate.c>
+	AddOutputFilterByType DEFLATE text/html text/css text/plain application/javascript application/xml application/xhtml+xml application/atom+xml
+</IfModule>
+
+ErrorDocument 403 /
+ErrorDocument 404 /
 
 php_flag magic_quotes_gpc off
 php_flag short_open_tag off
 
+RewriteEngine On
+
 RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
-RewriteRule ^.*$ http://%1/$0 [R=301,L]
+RewriteRule ^ http://%1/$0 [R=301,L]
 
 RewriteCond %{REQUEST_FILENAME} -d [OR]
 RewriteCond %{REQUEST_FILENAME} -f
-RewriteRule ^.*$ - [QSA,L]
+RewriteRule ^ - [L]
 
-RewriteRule ^favicon\.ico$ /design/favicon.ico [NC,L]
+RewriteRule ^favicon\.ico$ /front/favicon.ico [NC,L]
 
-RewriteCond %{REQUEST_URI} ^/([^/]+).*$
+RewriteCond %{REQUEST_URI} ^/([^/\?]+).*$
 RewriteCond %{DOCUMENT_ROOT}/%1.php !-f
 RewriteRule ^.+$ /index/$0
 
-RewriteRule ^([^/]+)/?$ /$1.php [QSA,L]
-RewriteRule ^([^/]+)/([^/]+)/?$ /$1.php?0=$2 [QSA,L]
-RewriteRule ^([^/]+)/([^/]+)/([^/]+)/?$ /$1.php?0=$2&1=$3 [QSA,L]
+RewriteRule ^([^/]+).*$ /$1.php [L]
