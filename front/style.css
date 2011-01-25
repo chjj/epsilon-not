@@ -96,12 +96,12 @@ dd { margin-left: 20px; /*padding: 0;*/ }
 @media only all { 
 html { 
 	font: 12px/20px verdana, sans-serif; cursor: default; overflow-y: scroll; 
-	width: 960px; height: 100%; margin: 0 auto; padding-bottom: 50px; 
+	width: 960px; margin: 0 auto; height: 100%; padding-bottom: 50px; 
 	-webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;
 }
-headz { /* use head because some browsers don't allow ::before & ::after to be fixed */
-	display: block; position: fixed; z-index: -1; bottom: 0; left: 0; right: 0; top: 0;
-	border: rgba(0, 0, 0, 0.05) 100px; border-style: solid none; /*border-width: 0.1vh;*/
+head { /* use head because some browsers don't allow ::before & ::after to be fixed */
+	display: block; position: fixed; z-index: -1; top: 25px; bottom: 25px; left: 0; right: 0; 
+	border: rgba(0, 0, 0, 0.05) 50px; border-style: solid none; /*border-width: 0.1vh;*/
 }
 head > * { display: none; }
 body {
@@ -114,13 +114,17 @@ body {
 
 	/* /---/ page header /---/ */
 	body > header { height: 23px; position: fixed; top: 0; left: 0; right: 0; border-bottom: solid 2px; }
-		h1 { width: 960px; margin: 0 auto; }
+		body > header > * { width: 960px; margin: 0 auto; }
+		
+		/* /--/ header h1 /--/ */
 		h1 > a { 
-			display: block; position: absolute; z-index: 1; height: 35px; width: 35px; padding: 0; margin: 8px 0 0 43px;
-			font-size: 30px; font-weight: normal; line-height: 23px; text-indent: 2px; text-align: center;
+			display: block; position: absolute; z-index: 1; height: 35px; width: 35px; padding: 0; 
+			margin: 8px 0 0 43px; font: 30px/23px verdana; text-indent: 2px; overflow: hidden;
 			border: solid 1px; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; 
 		}
-		
+			h1 > a:before { content: "ε"; display: block; margin-left: 1px; padding-bottom: 30px; }
+			h1 > a:after { content: "0"; font-size: 75%; position: absolute; top: 6px; right: 4px; }
+			
 			/* make the logo spin every 10 seconds */
 			@-webkit-keyframes spin {
 				0% { -webkit-transform: rotate(-360deg); }
@@ -130,34 +134,30 @@ body {
 			h1 > a { -webkit-animation: spin 11s linear 0s infinite; }
 		
 		/* /--/ header nav /--/ */
-		header > nav { width: 960px; margin: 0 auto; } 
-			header ul { list-style: none; margin: 0 90px; padding-left: 5px; }
-				header > nav li { 
-					margin: 6px 20px 0 0; float: left; font: 12px/1 nobile, verdana; 
-					letter-spacing: 2px; text-transform: lowercase; 
-				}
-					header > nav li:before { content: "▪"; margin-right: 4px; }
+		nav > ul { list-style: none; margin: 0 90px; padding-left: 5px; }
+			nav li { 
+				margin: 6px 20px 0 0; float: left; font: 12px/1 nobile, verdana; 
+				letter-spacing: 2px; text-transform: lowercase; 
+			}
+				nav li:before { content: "▪"; margin-right: 4px; }
 		
 		/* /--/ header aside /--/ */
-		header > aside { width: 960px; margin: 0 auto; }
-			aside > ol { 
-				position: absolute; margin: 25px 0 0 10px; width: 50px; opacity: 0.6;
-				list-style: none; border: solid 2px; border-top: none; padding-top: 15px; 
-				-moz-transition: 0.2s; -webkit-transition: 0.2s;
-				-o-transition: 0.2s; transition: 0.2s; 
-			}
-				/* temporary fix for ff4.0b9 */
-				:-moz-any(aside) > ol { z-index: -1; }
-				
-				/* make the aside fade in on page load */
-				@-webkit-keyframes fade { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
-				aside > ol { -webkit-animation: fade 1s linear;  }
-				
-				h1:hover + aside > ol, aside:hover > ol { opacity: 1; }
-				aside > ol > li, aside > ol a { margin: 0; padding: 0; }
-				aside > ol a { display: block; height: 60px; font-size: 50px; line-height: 1; text-align: center; }
-					aside > ol a:before { content: "+"; } 
-					aside a > time { display: none; }
+		aside > ol { 
+			position: absolute; z-index: -1; margin: 25px 0 0 10px; width: 50px; opacity: 0.6;
+			list-style: none; border: solid 2px; border-top: none; padding-top: 15px; 
+			-webkit-transition: 0.2s; -moz-transition: 0.2s; -o-transition: 0.2s; transition: 0.2s; 
+		}
+		
+			/* make the aside fade in on page load */
+			@-webkit-keyframes fade { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+			aside > ol { -webkit-animation: fade 1s linear; }
+			
+			/* webkit bug: //bugs.webkit.org/show_bug.cgi?id=45168, id=18027, id=12520 */
+			h1:hover ~ aside > ol, aside:hover > ol { opacity: 1; }
+			aside > ol > li, aside > ol a { margin: 0; padding: 0; }
+			aside > ol a { display: block; height: 60px; font-size: 50px; line-height: 1; text-align: center; }
+				aside > ol a:before { content: "+"; } 
+				aside a > time { display: none; }
 		
 	/* /---/ content section /---/ */
 	body > header + * { cursor: auto; margin: 20px; padding: 0 20px; font-family: nobile, verdana, sans-serif; }
@@ -188,7 +188,7 @@ body {
 				aside > article h4 { margin-top: 0; margin-left: -10px; }
 					h4 > a:hover { text-decoration: underline; }
 						h4 > a:first-child { color: inherit; }
-							h4 > a[rel~="author"] { color: steelblue; }
+							h4 > a[rel~="related"] { color: steelblue; }
 						h4 > a[rel="bookmark"] { color: #888; }
 					h4 > img { float: left; margin-right: 10px; height: 18px; width: 18px; }
 				h4 + time { display: none; font: 15px/1.2 serif; color: #888; float: right; margin-top: -28px; }
@@ -324,6 +324,12 @@ body > footer > a, footer [type="submit"] {
 	box-shadow: rgba(0, 0, 0, 0.4) 0 2px 10px; 
 }
 
+footer > small { margin-top: 3px; line-height: 17px; }
+a[rel=license] { content: url("/front/by.svg"); vertical-align: top; padding-top: 1px; }
+
+/*body > header, body > footer { z-index: 1; }
+h2 + time, header + * > footer { z-index: 2; }*/
+
 } 
 
 /* /-=-=-/ media queries /-=-=-/ */
@@ -341,7 +347,7 @@ body > footer > a, footer [type="submit"] {
 /* /---/ adjust design for smaller resolutions /---/ */
 @media (max-width: 960px) { /* change design into a fluid layout */
 	@viewport { width: device-width; zoom: 1.0; /*user-zoom: fixed;*/ }
-	html, h1, header > nav, header > aside { width: auto; }
+	html, body > header > * { width: auto; }
 	header + * > footer { left: auto; margin-left: 0; right: 14px; }
 	h2 + time { margin-right: 0; right: 104px; }
 	body > footer > form { margin-left: 0; left: 35px; }

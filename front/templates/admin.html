@@ -1,4 +1,4 @@
-	{+@login;<p>
+	{+&:login;<p>
 		Welcome back, good sir! Options are below. 
 		This area may server a better purpose in the future.
 	</p>
@@ -7,11 +7,11 @@
 		<li><a href="/post">Post Article</a></li>
 		<li><a href="/admin/logout">Logout</a></li>
 	</ul>
-	{+@local;<h3>Command Line</h3>
-	<pre>@output;</pre>
-	<form method="POST" action="/admin" style="overflow:hidden">
+	{+&:local;<h3>Command Line</h3>
+	<pre>&:output;</pre>
+	<form action="/admin" method="POST" style="overflow:hidden">
 		<label>Code:
-			<textarea name="code" spellcheck="false">@code;</textarea>
+			<textarea name="code" spellcheck="false">&:code;</textarea>
 		</label>
 		<input type="submit" value="Execute"/>
 	</form>
@@ -26,7 +26,7 @@
 		KSB7ICQoJ3ByZScpLmh0bWwoZGF0YSk7IH0KCQkpOwoJfQoJJCgnaW5wdX
 		RbdHlwZT0ic3VibWl0Il0nKS5ibHVyKCk7CglyZXR1cm4gZmFsc2U7Cn0pOw==
 	"></script>}}
-	{!@login;<form method="POST" action="/admin">
+	{!&:login;<form action="/admin" method="POST">
 		<label>Password: <input type="password" name="password" required="" autofocus=""/></label>
 		<input type="submit" value="Login"/>
 	</form>}

@@ -1,5 +1,5 @@
 <?php
-require($_SERVER['DOCUMENT_ROOT'].'/init.php');
+require('./init.php');
 
 $page = new page();
 $page->title = 'Browse';
@@ -9,7 +9,7 @@ $list = array();
 if (isset($_GET['search'])) {
 	if (empty($_GET['search'])) $page->error(404, 'Please enter a search term.');
 	if ($_GET['search'] == '/') page::redirect(page::uri('admin'));
-	$subtitle = 'Search for '.($_GET['search'] = str_replace(
+	$page->title = 'Search for '.($_GET['search'] = str_replace(
 		array('_', '%'), array('', ''), trim($_GET['search'])
 	));
 	$articles = $page->db->fetch('*', 
@@ -21,7 +21,7 @@ if (isset($_GET['search'])) {
 		$year = $page->path[1];
 		if (isset($page->path[2]) && is_numeric($page->path[2])) 
 			$month = $page->path[2];
-		$subtitle = (isset($month) ? date('F', mktime(0, 0, 0, $month)).' ' : '').$year;
+		$page->title = (isset($month) ? date('F', mktime(0, 0, 0, $month)).' ' : '').$year;
 		$articles = $page->db->fetch('*', 
 			'articles', 'WHERE timestamp >= ? AND timestamp < ? ORDER BY timestamp DESC', 
 			array(
@@ -30,10 +30,9 @@ if (isset($_GET['search'])) {
 			), 
 		true);
 	} else {
-		$subtitle = 'All';
 		$year = date('Y'); $month = date('n');
 		$earliest = $page->db->fetch('timestamp', 'articles', 'ORDER BY timestamp ASC LIMIT 0, 1');
-		do {
+		if ($earliest) do {
 			$month_time = mktime(0, 0, 0, $month, 1, $year);
 			$num_articles = $page->db->fetch('COUNT(*)', 
 				'articles', 'WHERE timestamp >= ? AND timestamp < ?', 
@@ -52,16 +51,16 @@ if (isset($_GET['search'])) {
 	}
 }
 if (empty($list)) {
-	if (empty($articles))
+	if (empty($articles)) 
 		$page->error(404, 'No articles found.');
-	foreach ($articles as $article) 
-		array_push($list, 
-			page::uri($article['id']), $article['title'], date('c', $article['timestamp']), 
-			date('F j<\s\u\p>S</\s\u\p>, Y @ g:i a', $article['timestamp'])
-		);
+	foreach ($articles as $article) array_push($list, 
+		page::uri($article['id']), $article['title'], date('c', $article['timestamp']), 
+		date('F j<\s\u\p>S</\s\u\p>, Y @ g:i a', $article['timestamp'])
+	);
 }
+
 $page->content = template::parse('section', array(
-	'title' => 'Archives: '.htmlspecialchars($subtitle), 
+	'title' => 'Archives: '.($page->title = htmlspecialchars($page->title)), 
 	'content' => template::parse('browse', $list)
 ));
 

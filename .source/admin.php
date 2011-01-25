@@ -1,5 +1,5 @@
 <?php
-require($_SERVER['DOCUMENT_ROOT'].'/init.php');
+require('./init.php');
 
 $page = new page();
 $page->title = 'Admin Panel';

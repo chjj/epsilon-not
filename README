@@ -1,8 +1,12 @@
 epsilon-not.net system
 
-ideas:
-- server-side caching system: haven't found an efficient way to implement this yet
-- option to preview articles before posting and editing
-- a drafting system?
-- more convenient admin link
-- article categories/tags
+ideas and hypothetical features:
+ - server-side caching system
+   - haven't found an clean way to implement this yet
+ - option to preview articles before posting and editing
+   - possibly an article drafting feature
+ - more convenient admin link
+ - article categories/tags
+ - revise form templates
+ - add “last_update” field to articles
+ - allow for a separate admin stylesheet

@@ -1,5 +1,5 @@
 <?php
-require($_SERVER['DOCUMENT_ROOT'].'/init.php');
+require('./init.php');
 
 $page = new page();
 
@@ -10,8 +10,9 @@ if (isset($_POST['post'])) {
 			$page->error('Form Error', 'You must enter a title and content.');
 		$page->db->insert('articles', array(
 			'title' => $_POST['title'],
-			'id' => ($slug = $_POST['id'] 
-				? $_POST['id'] : preg_replace('/[^\w]/', '', str_replace(' ', '_', strtolower($_POST['title'])))),
+			'id' => ($slug = preg_replace('/[^\w]/', '', str_replace(' ', '_', 
+				strtolower($_POST['id'] ? $_POST['id'] : $_POST['title'])
+			))),
 			'timestamp' => strtotime($_POST['timestamp']),
 			'content' => $_POST['content'],
 			'comments' => isset($_POST['comments']) ? 1 : null
@@ -54,14 +55,12 @@ if (isset($_POST['post'])) {
 if (isset($page->path[0])) {
 	if ($page->path[0] == 'post') {
 		if (!APP_LOGIN) $page->error(403);
-		$page->title = 'Post Article';
 		$page->content = template::parse('section', array( 
-			'title' => 'Post Article', 'content' => template::parse('form', 
-				array(
-					'name' => 'Post Article', 'title' => true,
-					'slug' => true, 'timestamp' => date('F jS, Y g:ia', time())
-				)
-			),
+			'title' => $page->title = 'Post Article', 
+			'content' => template::parse('form', array(
+				'name' => 'Post Article', 'title' => true,
+				'slug' => true, 'timestamp' => date('F jS, Y g:ia', time())
+			))
 		));
 	} elseif (!$data = $page->db->fetch('*', 
 		(strstr($page->path[0], '.') ? 'comments' : 'articles'), 
@@ -70,18 +69,19 @@ if (isset($page->path[0])) {
 		$page->error(404);
 	}
 } else {
-	$data = $page->db->fetch('*', 'articles', 'ORDER BY timestamp DESC LIMIT 0, 1');
+	if (!$data = $page->db->fetch('*', 'articles', 'ORDER BY timestamp DESC LIMIT 0, 1'))
+		$page->error('Welcome', 'No articles currently exist here.');
 }
 
 if (isset($page->path[1])) {
 	if ($page->path[1] == 'edit') {
 		if (!APP_LOGIN) $page->error(403);
 		$page->title = $data['name'] = 'Edit Post';
-		$data = array_map('htmlspecialchars', $data);
-		$data['content'] = preg_replace('/\r?\n/', '&#x0A;', $data['content']);
+		if (isset($data['title'])) $data['title'] = htmlspecialchars($data['title']);
+		$data['content'] = preg_replace('/\r?\n/', '&#x0A;', htmlspecialchars($data['content']));
 		$data['timestamp'] = date('F jS, Y g:ia', $data['timestamp']);
 		$page->content = template::parse('section', array(
-			'title' => 'Edit Post', 
+			'title' => $page->title, 
 			'content' => template::parse('form', $data)
 		));
 	} elseif ($page->path[1] == 'delete') {
@@ -109,7 +109,7 @@ if (isset($page->path[1])) {
 			'WHERE parent=? ORDER BY timestamp ASC', $data['id'], true)) {
 				foreach ($rows as $i => $comment) $comments[] = template::parse('comment', array(
 					'id' => $i + 1,
-					'poster_rel' => ($comment['poster_ip'] == 'admin') ? 'author' : 'external',
+					'poster_rel' => ($comment['poster_ip'] == 'admin') ? 'related' : 'external',
 					'poster_name' => htmlspecialchars($comment['poster_name'], ENT_QUOTES, 'UTF-8', false),
 					'poster_site' => $comment['poster_site'] 
 						? htmlspecialchars($comment['poster_site'], ENT_QUOTES, 'UTF-8', false) : false,

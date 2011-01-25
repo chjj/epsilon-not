@@ -1,20 +1,22 @@
 <article>
 	<header>
-		<h2><a href="@permalink;" rel="bookmark">@title;</a></h2>
-		<time datetime="@datetime;" pubdate="">{<a href="@edit;">}
-			{@date;}
-		{+@edit;</a>}</time>
+		<h2><a href="&:permalink;" rel="bookmark">
+			{&:title;}
+		</a></h2>
+		<time datetime="&:datetime;" pubdate="">{<a href="&:edit;">}
+			{&:date;}
+		{+&:edit;</a>}</time>
 	</header>
-	@content;
+	&:content;
 	{<aside id="comments">
 		<h3>Comments</h3>
-		@comments;
-		@form;
+		&:comments;
+		&:form;
 	</aside>}
 	<footer>
-		{<a href="@prev_href;" rel="prev" title="@prev_title;">Previous Article</a>}
-		{!@next_href;!@comments;<a href="@permalink;" rel="bookmark last" title="Permalink">Current Article</a>}
-		{!@next_href;+@comments;<a href="#comments" rel="reply" title="Comments">Post Reply</a>}
-		{<a href="@next_href;" rel="next" title="@next_title;">Next Article</a>}
+		{<a href="&:prev_href;" rel="prev" title="&:prev_title;">Previous Article</a>}
+		{!&:next_href;!&:comments;<a href="&:permalink;" rel="bookmark last" title="Permalink">Current Article</a>}
+		{!&:next_href;+&:comments;<a href="#comments" rel="reply" title="Comments">Post Reply</a>}
+		{<a href="&:next_href;" rel="next" title="&:next_title;">Next Article</a>}
 	</footer>
 </article>

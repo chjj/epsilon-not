@@ -6,7 +6,7 @@ error_reporting($_SERVER['HTTP_HOST'] == 'localhost' ? E_ALL|E_STRICT : 0);
 date_default_timezone_set('US/Central');
 
 define('APP_DBTYPE', 'sqlite');
-define('APP_DBNAME', $_SERVER['DOCUMENT_ROOT'].'/../sqlite/epsilon.db');
+define('APP_DBNAME', $_SERVER['DOCUMENT_ROOT'].'/.source/data/content.sqlite');
 define('APP_PASSWORD', '45cceb16100239fc2028a82db1fcd2a0d669bb5722806777');
 define('APP_LOGIN', (isset($_COOKIE['epsilon_user']) 
 	? (hash('tiger192,4', base64_decode($_COOKIE['epsilon_user'])) == APP_PASSWORD) 
@@ -27,7 +27,7 @@ class db {
 			);
 		}
 		$this->handle->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
-		if (file_exists($sql = $_SERVER['DOCUMENT_ROOT'].'/tables.sql') && (
+		if (file_exists($sql = $_SERVER['DOCUMENT_ROOT'].'/.source/data/tables.sql') && (
 			(APP_DBTYPE == 'sqlite' && !$this->fetch('name', 'sqlite_master', 'WHERE type=?', 'table')) 
 			|| (APP_DBTYPE != 'sqlite' && !$this->query('SHOW TABLES'))
 		)) $this->exec(file_get_contents($sql));
@@ -66,6 +66,7 @@ class db {
 				foreach ($rows as $i => $val) $rows[$i] = $val[$field]; 
 			return ($all || count($rows) > 1) ? $rows : $rows[0];
 		}
+		return $all ? array() : null;
 	}
 	
 	public function update($table, $row = null, $vars) {
@@ -105,22 +106,21 @@ class page {
 		$text = str_replace(array("\x00", "\r\n", "\r"), array('', "\n", "\n"), trim($text));
 		
 		//replace contents of CDATA declarations with entities
-		$text = preg_replace_callback('/<!\[CDATA\[(.+?)\]\]>/s',
-			create_function('$m', 'return htmlspecialchars($m[1], ENT_QUOTES);'), 
+		$text = preg_replace_callback('/<!\[CDATA\[(.+?)\]\]>|`([^`]+)`/s',
+			create_function('$m', 'return htmlspecialchars($m[1] ? $m[1] : $m[2], ENT_QUOTES);'), 
 		$text);
 		
 		//sanitize the markup
 		if ($filter) {
 			//remove bad elements, attributes, and entities
-			$text = preg_replace(
-				array(
-					'/<\s*(?!\/?(?:'
-						.'a|br|b|i|strong|em|small|cite|ins|del|code|samp|kbd|dfn|abbr|mark|time|var|sub|sup|q'
-						.')(?:\s|>)).+?>/is',
-					'/<.+(?<!title|lang|dir|type|href|rel|cite)\s*=.+>/is',
-					'/&(?!lt|gt|amp|apos|quot)[^;]*;/'
-				), array('', '', ''), $text
-			);
+			$text = preg_replace(array(
+				'/<\s*(?!\/?(?:'
+					.'a|br|b|i|strong|em|small|cite|ins|del|code'
+					.'|samp|kbd|dfn|abbr|mark|time|var|sub|sup|q'
+				.')(?:\s|>)).+?>/is',
+				'/<.+(?<!title|lang|dir|type|href|cite)\s*=.+>/is',
+				'/&(?!lt|gt|amp|apos|quot)[^;]*;/'
+			), '', $text);
 			
 			//turn newlines into new paragraphs
 			$text = preg_replace(
@@ -165,8 +165,10 @@ class page {
 	
 	public function __construct() {
 		$this->db = new db();
-		$this->path = preg_match('/^\/(.+?)\/?(?:\?.*)?$/', strtolower($_SERVER['REQUEST_URI']), $m) 
-			? explode('/', $m[1]) : null;
+		$this->path = preg_match(
+			'/^\/(.+?)\/?(?:\?.*)?$/', 
+			strtolower($_SERVER['REQUEST_URI']), 
+		$m) ? explode('/', $m[1]) : null;
 		
 		if (@$_SERVER['REDIRECT_STATUS'] >= 400) 
 			$this->error($_SERVER['REDIRECT_STATUS']);
@@ -196,12 +198,13 @@ class page {
 		header('X-UA-Compatible: IE=Edge,chrome=1');
 		
 		$articles = array();
-		foreach ($this->db->fetch('*', 'articles', 'ORDER BY timestamp DESC LIMIT 0, 4', false, true) as $article) 
-			array_push(
-				$articles, self::uri($article['id']), 
-				htmlspecialchars($article['title']), 
-				date('Y-m-d', $article['timestamp'])
-			);
+		foreach ($this->db->fetch('*', 'articles', 
+			'ORDER BY timestamp DESC LIMIT 0, 4', 
+		false, true) as $article) array_push(
+			$articles, self::uri($article['id']), 
+			htmlspecialchars($article['title']), 
+			date('Y-m-d', $article['timestamp'])
+		);
 		
 		$html = template::parse('root', array_merge(array(
 			'title' => $this->title ? strtolower($this->title) : false,
@@ -248,21 +251,21 @@ class template {
 			self::load($template_name);
 		$template = self::$templates[$template_name];
 		if (strstr($template, '&[') && preg_match('/(\s+)&\[(.+?)\];/s', $template, $m)) {
-			$num_lines = max(array_keys($vars)) / ($num_vars = substr_count($m[2], '@_;'));
+			$num_lines = max(array_keys($vars)) / ($num_vars = substr_count($m[2], '&:_;'));
 			for ($line = 0; $line < $num_lines; $line++) {
 				$str = $m[2];
 				for ($var = 0; $var < $num_vars; $var++) 
-					$str = preg_replace('/(?<=@)_(?=;)/', ($var+$line*$num_vars), $str, 1); 
+					$str = preg_replace('/(?<=&:)_(?=;)/', ($var+$line*$num_vars), $str, 1); 
 				$lines[] = $str;
 			}
-			$template = str_replace($m[0], $m[1].implode($m[1], $lines), $template);
+			$template = str_replace($m[0], $m[1].@implode($m[1], $lines), $template);
 		}
-		if (strstr($template, '@')) { 
-			$template = preg_replace('/\t+(?=[!+]?@)/', '', $template).PHP_EOL;
+		if (strstr($template, '&:')) { 
+			$template = preg_replace('/\t+(?=[!+]?&:)/', '', $template).PHP_EOL;
 			while (preg_match('/{[^{}]+}/', $template, $m)) {
 				$span = $m[0];
 				$cond = $total = 0;
-				if (preg_match_all('/([!+]?)@([^\s]+?);/', $span, $m)) {
+				if (preg_match_all('/([!+]?)&:([^\s]+?);/', $span, $m)) {
 					for ($i = 0; $i < count($m[0]); $i++) {
 						$total += 1;
 						if (self::check($vars, $m[2][$i], $m[1][$i])) 
@@ -270,13 +273,13 @@ class template {
 					}
 					$template = ($cond == $total) 
 						? str_replace($span, substr($span, 1, -1), $template)
-						: str_replace($span, '', $template);
+						: str_replace($span, '', $template); //could replace with a nonexistent variable: +&:__fail__;
 				}
 			}
-			$template = preg_replace('/[!+]@[^\s]+?;/', '', $template);
-			preg_match_all('/@([^\s]+?);/', $template, $m);
+			$template = preg_replace('/[!+]&:[^\s]+?;/', '', $template);
+			preg_match_all('/&:([^\s]+?);/', $template, $m);
 			foreach ($m[1] as $var) 
-				$template = str_replace('@'.$var.';', self::check($vars, $var), $template);
+				$template = str_replace('&:'.$var.';', self::check($vars, $var), $template);
 		}
 		$template = str_replace(array("\r\n", "\r"), array("\n", "\n"), $template);
 		$template = preg_replace('/(?<=\n)\n+|\t+\n/', '', $template);

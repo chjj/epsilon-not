@@ -1,7 +1,7 @@
 <?php
 //pingbacks - not completely ready yet
 
-require($_SERVER['DOCUMENT_ROOT'].'/init.php');
+require('./init.php');
 header('Content-Type: text/xml'); //the xmlrpc spec says to use text/xml
 
 error_reporting(E_ALL);

@@ -1,7 +1,7 @@
 Options -MultiViews -Indexes
 
 DirectoryIndex index.php index.html index.xhtml
-#DirectorySlash On
+DirectorySlash On
 
 AddType text/css .css
 AddType application/xml .xml .xbl .xsl
@@ -15,25 +15,38 @@ AddCharset utf-8 .html .xhtml .xml .xbl .css .js .txt
 	AddOutputFilterByType DEFLATE text/html text/css text/plain application/javascript application/xml application/xhtml+xml application/atom+xml
 </IfModule>
 
-ErrorDocument 403 /
-ErrorDocument 404 /
+#ErrorDocument 403 /
+#ErrorDocument 404 /
 
 php_flag magic_quotes_gpc off
 php_flag short_open_tag off
 
 RewriteEngine On
 
+# no www subdomain
 RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
 RewriteRule ^ http://%1/$0 [R=301,L]
 
-RewriteCond %{REQUEST_FILENAME} -d [OR]
-RewriteCond %{REQUEST_FILENAME} -f
-RewriteRule ^ - [L]
-
+# need to rewrite the favicon
 RewriteRule ^favicon\.ico$ /front/favicon.ico [NC,L]
 
-RewriteCond %{REQUEST_URI} ^/([^/\?]+).*$
-RewriteCond %{DOCUMENT_ROOT}/%1.php !-f
-RewriteRule ^.+$ /index/$0
+# deny requests to any of the code
+RewriteCond %{THE_REQUEST} \s/\.source [NC]
+RewriteRule ^ - [F,L]
 
-RewriteRule ^([^/]+).*$ /$1.php [L]
+# stop on a real file or directory
+RewriteCond %{REQUEST_FILENAME} -d [OR]
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^/?.+?$ - [L]
+
+# no trailing slash!
+RewriteRule ^/?(.+?)/$ http://%{HTTP_HOST}/$1 [R=301,L]
+
+# articles or the home page
+RewriteCond %{REQUEST_URI} ^/([^/\?]+)?.*?$
+RewriteCond %{DOCUMENT_ROOT}/.source/%1.php !-f
+RewriteRule ^ /.source/article.php [L]
+
+# any other page
+RewriteRule ^/?([^/]+).*$ /.source/$1.php [L]
+
