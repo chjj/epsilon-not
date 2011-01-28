@@ -11,7 +11,7 @@ define('APP_PASSWORD', '45cceb16100239fc2028a82db1fcd2a0d669bb5722806777');
 define('APP_LOGIN', (isset($_COOKIE['epsilon_user']) 
 	? (hash('tiger192,4', base64_decode($_COOKIE['epsilon_user'])) == APP_PASSWORD) 
 	: false));
-define('APP_TEMPLATES', $_SERVER['DOCUMENT_ROOT'].'/front/templates');
+define('APP_TEMPLATES', $_SERVER['DOCUMENT_ROOT'].'/.source/templates');
 
 class db {
 	public $handle;
@@ -27,10 +27,10 @@ class db {
 			);
 		}
 		$this->handle->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
-		if (file_exists($sql = $_SERVER['DOCUMENT_ROOT'].'/.source/data/tables.sql') && (
+		if (
 			(APP_DBTYPE == 'sqlite' && !$this->fetch('name', 'sqlite_master', 'WHERE type=?', 'table')) 
 			|| (APP_DBTYPE != 'sqlite' && !$this->query('SHOW TABLES'))
-		)) $this->exec(file_get_contents($sql));
+		) $this->exec(file_get_contents($_SERVER['DOCUMENT_ROOT'].'/.source/data/tables.sql'));
 	}
 	
 	public function __destruct() {

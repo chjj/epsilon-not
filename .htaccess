@@ -27,11 +27,11 @@ RewriteEngine On
 RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
 RewriteRule ^ http://%1/$0 [R=301,L]
 
-# need to rewrite the favicon
-RewriteRule ^favicon\.ico$ /front/favicon.ico [NC,L]
+# need to rewrite the favicon and robots.txt
+RewriteRule ^(robots\.txt|favicon\.ico)$ /front/$1 [NC,L]
 
 # deny requests to any of the code
-RewriteCond %{THE_REQUEST} \s/\.source [NC]
+RewriteCond %{THE_REQUEST} /\.source [NC]
 RewriteRule ^ - [F,L]
 
 # stop on a real file or directory

@@ -26,9 +26,6 @@ abbr { border: none; text-decoration: none; }
 mark { background: lightYellow; }
 small { font-size: 11px; }
 
-/* sub is styled differently in every browser, this makes things more consistent */
-sub { font-size: 75%; vertical-align: baseline; position: relative; right: 0.1em; top: 0.16em; }
-
 /* /---/ content flow /---/ */
 p, ul, ol, dl, dd, figure, blockquote, pre, hr { margin: 0 0 20px; padding: 0; word-wrap: break-word; }
 
@@ -267,6 +264,8 @@ body {
 			display: block; margin-top: 6px; font: 11px/1 verdana, sans-serif;
 			text-align: center; text-transform: uppercase; letter-spacing: 2px; 
 		}
+			footer > small { margin-top: 3px; line-height: 17px; }
+			a[rel=license] { content: url("/front/by.svg"); vertical-align: top; padding-top: 1px; }
 		body > footer > a { 
 			height: 29px; width: 29px; font: 29px/27px arial, sans-serif; overflow: hidden;
 			position: absolute; left: 50%; top: -15px; margin-left: 420px; border: solid 1px; 
@@ -323,12 +322,6 @@ body > footer > a, footer [type="submit"] {
 	-webkit-box-shadow: rgba(0, 0, 0, 0.4) 0 2px 10px; 
 	box-shadow: rgba(0, 0, 0, 0.4) 0 2px 10px; 
 }
-
-footer > small { margin-top: 3px; line-height: 17px; }
-a[rel=license] { content: url("/front/by.svg"); vertical-align: top; padding-top: 1px; }
-
-/*body > header, body > footer { z-index: 1; }
-h2 + time, header + * > footer { z-index: 2; }*/
 
 } 
 

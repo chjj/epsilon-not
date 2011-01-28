@@ -27,7 +27,7 @@ if (isset($_POST['post'])) {
 				$page->error('Post Error', 'You have already posted 10 times today.');
 			if (
 			!$_POST['poster_name'] || strlen($_POST['poster_name']) > 25 || preg_match('/[^\w\x20]/', $_POST['poster_name']) 
-			|| ($_POST['poster_email'] && !preg_match('/[\w.\-]*@[\w.\-]*\.[a-z]{2,}/i', $_POST['poster_email'])) 
+			|| (!$_POST['poster_email'] || !preg_match('/[\w.\-]*@[\w.\-]*\.[a-z]{2,}/i', $_POST['poster_email'])) 
 			|| ($_POST['poster_site'] && preg_match('/[^\w\:;\/?&~.,\-_@#]/i', $_POST['poster_site']))
 			|| (!$_POST['content'] || strlen(trim($_POST['content'])) < 10 || strlen($_POST['content']) > 2000)
 			) $page->error('Form Error', 'All form fields must be entered and completed properly.');
