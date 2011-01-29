@@ -12,6 +12,7 @@ define('APP_LOGIN', (isset($_COOKIE['epsilon_user'])
 	? (hash('tiger192,4', base64_decode($_COOKIE['epsilon_user'])) == APP_PASSWORD) 
 	: false));
 define('APP_TEMPLATES', $_SERVER['DOCUMENT_ROOT'].'/.source/templates');
+define('APP_CACHE', $_SERVER['DOCUMENT_ROOT'].'/.source/cache');
 
 class db {
 	public $handle;
@@ -54,6 +55,8 @@ class db {
 	}
 	
 	public function exec($query, $vars = false) {
+		foreach (glob(APP_CACHE.'/*') as $file) 
+			if (is_file($file)) unlink($file);
 		return ($vars !== false)
 			? $this->query($query, $vars)->rowCount()
 			: $this->handle->exec($query);
@@ -89,6 +92,7 @@ class db {
 class page {
 	public $title;
 	public $content;
+	public $cache;
 	
 	public static function uri() {
 		$args = func_get_args();
@@ -164,6 +168,11 @@ class page {
 	}
 	
 	public function __construct() {
+		if ($_SERVER['REQUEST_METHOD'] == 'GET' && count(glob(APP_CACHE.'/*')) < 500) {
+			if (file_exists($this->cache = APP_CACHE.'/'.md5($_SERVER['REQUEST_URI'].APP_LOGIN))) 
+				exit($this->output(file_get_contents($this->cache)));
+		}
+		
 		$this->db = new db();
 		$this->path = preg_match(
 			'/^\/(.+?)\/?(?:\?.*)?$/', 
@@ -189,14 +198,10 @@ class page {
 		$this->content = template::parse('section', 
 			array('title' => ($this->title = $title), 'content' => '<p>'.$message.'</p>')
 		);
-		exit($this->build());
+		exit($this->build(false));
 	}
 	
-	public function build() {
-		header('Content-Type: text/html; charset=utf-8');
-		header('Content-Language: en-US');
-		header('X-UA-Compatible: IE=Edge,chrome=1');
-		
+	public function build($cache = true) {
 		$articles = array();
 		foreach ($this->db->fetch('*', 'articles', 
 			'ORDER BY timestamp DESC LIMIT 0, 4', 
@@ -215,6 +220,17 @@ class page {
 			)) => true,
 			'msie' => strstr(@$_SERVER['HTTP_USER_AGENT'], 'MSIE')
 		), $articles));
+		
+		return $this->output($html, $cache);
+	}
+	
+	public function output($html, $cache = false) {
+		header('Content-Type: text/html; charset=utf-8');
+		header('Content-Language: en-US');
+		header('X-UA-Compatible: IE=Edge,chrome=1');
+		
+		if ($this->cache && $cache) 
+			file_put_contents($this->cache, $html.'<!-- cached: '.str_replace('-', '.', date('c', time())).' -->');
 		
 		if (@str_replace('"', '', $_SERVER['HTTP_IF_NONE_MATCH']) == ($etag = md5($html))) {
 			header($_SERVER['SERVER_PROTOCOL'].' 304 Not Modified');

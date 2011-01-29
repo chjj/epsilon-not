@@ -5,13 +5,14 @@
 	<h3>Options</h3>
 	<ul>
 		<li><a href="/post">Post Article</a></li>
+		<li><a href="/admin/clear">Clear Cache</a></li>
 		<li><a href="/admin/logout">Logout</a></li>
 	</ul>
 	{+&:local;<h3>Command Line</h3>
 	<pre>&:output;</pre>
 	<form action="/admin" method="POST" style="overflow:hidden">
 		<label>Code:
-			<textarea name="code" spellcheck="false">&:code;</textarea>
+			<textarea name="code" spellcheck="false" style="height:350px">&:code;</textarea>
 		</label>
 		<input type="submit" value="Execute"/>
 	</form>

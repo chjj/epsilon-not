@@ -1,8 +1,6 @@
 epsilon-not.net system
 
 ideas and hypothetical features:
- - server-side caching system
-   - haven't found an clean way to implement this yet
  - option to preview articles before posting and editing
    - possibly an article drafting feature
  - more convenient admin link
