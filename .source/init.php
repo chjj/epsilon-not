@@ -168,9 +168,10 @@ class page {
 	}
 	
 	public function __construct() {
-		if ($_SERVER['REQUEST_METHOD'] == 'GET' && count(glob(APP_CACHE.'/*')) < 500) {
-			if (file_exists($this->cache = APP_CACHE.'/'.md5($_SERVER['REQUEST_URI'].APP_LOGIN))) 
-				exit($this->output(file_get_contents($this->cache)));
+		if ($_SERVER['REQUEST_METHOD'] == 'GET' && count(glob(APP_CACHE.'/*')) < 300) {
+			if (file_exists($file = APP_CACHE.'/'.md5($_SERVER['REQUEST_URI'].APP_LOGIN))) 
+				exit($this->output(file_get_contents($file)));
+			$this->cache = $file;
 		}
 		
 		$this->db = new db();
@@ -192,18 +193,21 @@ class page {
 			);
 			if (isset($response[$title])) {
 				if (!$message) $message = $response[$title][1];
-				header($_SERVER['SERVER_PROTOCOL'].' '.($title = $response[$title][0]));
+				header($_SERVER['SERVER_PROTOCOL'].' '.($this->title = $response[$title][0]));
 			}
 		}
-		$this->content = template::parse('section', 
-			array('title' => ($this->title = $title), 'content' => '<p>'.$message.'</p>')
-		);
-		exit($this->build(false));
+		$this->cache = null;
+		$this->content = template::parse('section', array(
+			'title' => $this->title, 
+			'content' => '<p>'.$message.'</p>'
+		));
+		exit($this->build());
 	}
 	
-	public function build($cache = true) {
+	public function build() {
 		$articles = array();
-		foreach ($this->db->fetch('*', 'articles', 
+		foreach ($this->db->fetch(
+			'id, title, timestamp', 'articles', 
 			'ORDER BY timestamp DESC LIMIT 0, 4', 
 		false, true) as $article) array_push(
 			$articles, self::uri($article['id']), 
@@ -211,7 +215,7 @@ class page {
 			date('Y-m-d', $article['timestamp'])
 		);
 		
-		$html = template::parse('root', array_merge(array(
+		return $this->output(template::parse('root', array_merge(array(
 			'title' => $this->title ? strtolower($this->title) : false,
 			'content' => $this->content,
 			(!$this->path ? 'home' : (
@@ -219,26 +223,24 @@ class page {
 					? $this->path[0] : 'article'
 			)) => true,
 			'msie' => strstr(@$_SERVER['HTTP_USER_AGENT'], 'MSIE')
-		), $articles));
-		
-		return $this->output($html, $cache);
+		), $articles)));
 	}
 	
-	public function output($html, $cache = false) {
+	public function output($data) {
 		header('Content-Type: text/html; charset=utf-8');
 		header('Content-Language: en-US');
 		header('X-UA-Compatible: IE=Edge,chrome=1');
 		
-		if ($this->cache && $cache) 
-			file_put_contents($this->cache, $html.'<!-- cached: '.str_replace('-', '.', date('c', time())).' -->');
+		if ($this->cache) 
+			file_put_contents($this->cache, $data.'<!-- '.date('c', time()).' -->');
 		
-		if (@str_replace('"', '', $_SERVER['HTTP_IF_NONE_MATCH']) == ($etag = md5($html))) {
+		if (@str_replace('"', '', $_SERVER['HTTP_IF_NONE_MATCH']) == ($tag = md5($data))) {
 			header($_SERVER['SERVER_PROTOCOL'].' 304 Not Modified');
 			exit;
-		} else {
-			header('ETag: "'.$etag.'"');
-			return $html;
 		}
+		
+		header('ETag: "'.$tag.'"');
+		return $data;
 	}
 }
 

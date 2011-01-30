@@ -1,11 +1,5 @@
 /* /-------------------------/ (c) Copyright 2010-2011, Christopher Jeffrey (epsilon-not.net) /-------------------------/ */
 
-/* /-=-=-/ fonts /-=-=-/ */
-@font-face {
-	font-family: nobile; font-style: normal; font-weight: normal;
-	src: local("Nobile"), url("http://themes.googleusercontent.com/font?kit=DG8QsMl4cLhwKd7DbhnV6A") format("truetype");
-}
-
 /* /-=-=-/ html5 elements /-=-=-/ */
 header, footer, nav, section, aside, 
 article, hgroup, figure, figcaption { display: block; }
@@ -40,7 +34,8 @@ figure, blockquote, pre { padding: 20px; }
 		pre > code { font-size: 11px; }
 		pre > code[title]:before { float: right; margin: -10px -5px 0 0; content: "[" attr(title) "]"; }
 
-h2, h3, h4, h5, h6, dt { font: normal 34px/1 serif; letter-spacing: 0.125em; padding: 0; margin: 0 0 0.5em; }
+h2, h3, h4, h5, h6, dt { font: normal 40px/20px serif; letter-spacing: 0.05em; padding: 0; margin: 0 0 20px; }
+	h2 { line-height: 40px; }
 	h3 { font-size: 22px; }
 	h4, dt { font-size: 20px; }
 	h5 { font-size: 18px; }
@@ -125,15 +120,14 @@ body {
 			/* make the logo spin every 10 seconds */
 			@-webkit-keyframes spin {
 				0% { -webkit-transform: rotate(-360deg); }
-				9% { -webkit-transform: none; }
-				100% { -webkit-transform: none; }
+				9%, 100% { -webkit-transform: none; }
 			}
 			h1 > a { -webkit-animation: spin 11s linear 0s infinite; }
 		
 		/* /--/ header nav /--/ */
 		nav > ul { list-style: none; margin: 0 90px; padding-left: 5px; }
 			nav li { 
-				margin: 6px 20px 0 0; float: left; font: 12px/1 nobile, verdana; 
+				margin: 6px 20px 0 0; float: left; font: 12px/1 verdana; 
 				letter-spacing: 2px; text-transform: lowercase; 
 			}
 				nav li:before { content: "▪"; margin-right: 4px; }
@@ -146,7 +140,7 @@ body {
 		}
 		
 			/* make the aside fade in on page load */
-			@-webkit-keyframes fade { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+			@-webkit-keyframes fade { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
 			aside > ol { -webkit-animation: fade 1s linear; }
 			
 			/* webkit bug: //bugs.webkit.org/show_bug.cgi?id=45168, id=18027, id=12520 */
@@ -157,14 +151,14 @@ body {
 				aside a > time { display: none; }
 		
 	/* /---/ content section /---/ */
-	body > header + * { cursor: auto; margin: 20px; padding: 0 20px; font-family: nobile, verdana, sans-serif; }
+	body > header + * { cursor: auto; margin: 20px; padding: 0 20px; font-family: verdana, sans-serif; }
 		
 		/* /--/ content header /--/ */
-		h2 { margin-left: -20px; margin-right: -20px; }
+		h2 { margin-left: -10px; margin-right: -10px; /* margin-top: -5px; exactly 40px from top */ }
 			h2 > a { color: inherit; }
-				h2 > a:hover:after { content: "«"; font: 1.1em/0.8em arial; margin-left: 0.5ex; }
+				h2 > a:hover:after { content: "«"; font: 1.1em/0.7em arial; margin-left: 0.2ex; }
 		h2 + time { 
-			display: block; position: fixed; top: 12px; right: 50%; height: 14px; margin-right: -376px; 
+			display: block; position: fixed; top: 12px; right: 50%; height: 14px; margin-right: -370px; 
 			padding: 4px; border: solid 1px; line-height: 1; letter-spacing: 2px; text-indent: 2px;
 		}
 			time > a { color: inherit; text-shadow: inherit; text-decoration: none !important; }
@@ -172,14 +166,14 @@ body {
 		
 		/* /--/ aside boxes /--/ */
 		aside[role="note"] { 
-			width: 100px; padding: 10px; margin: 5px -42px 5px 20px;
+			width: 100px; padding: 10px; margin: 10px -42px 10px 20px;
 			float: right; font-size: 10px; -webkit-border-radius: 5px 0 0 5px; 
 			-moz-border-radius: 5px 0 0 5px; border-radius: 5px 0 0 5px; 
 		}
 			aside[role="note"] a { border-bottom: dotted 1px; text-decoration: none !important; }
 		
 		/* /--/ article comments /--/ */
-		article > aside[id], article + h4 + form { border-top: rgba(0, 0, 0, 0.1) solid 1px; }
+		article > aside[id], article + h4 + form { border-top: rgba(0, 0, 0, 0.1) solid 1px; margin-top: -1px; }
 			aside > h3, aside > h4 { position: absolute; clip: rect(0, 0, 0, 0); }
 			aside > article { margin: 20px 30px; } 
 				aside > article h4 { margin-top: 0; margin-left: -10px; }
@@ -188,7 +182,7 @@ body {
 							h4 > a[rel~="related"] { color: steelblue; }
 						h4 > a[rel="bookmark"] { color: #888; }
 					h4 > img { float: left; margin-right: 10px; height: 18px; width: 18px; }
-				h4 + time { display: none; font: 15px/1.2 serif; color: #888; float: right; margin-top: -28px; }
+				h4 + time { display: none; font: 15px/20px serif; color: #888; float: right; margin-top: -40px; }
 					aside > article:hover time, aside > article:hover > footer { display: block; }
 				aside > article > footer { display: none; margin-top: -10px; }
 			aside > form { margin: 20px; } 
@@ -206,8 +200,8 @@ body {
 				-moz-box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 2px inset; 
 				box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 2px inset; 
 			}
-			textarea { width: 100%; height: 180px; padding: 5px; overflow-x: hidden; resize: vertical; margin: 10px 0 8px; }
-				h2 ~ form textarea { height: 400px; font-size: 11px; line-height: 18px; font-family: monospace; }
+			textarea { width: 100%; height: 188px; padding: 5px; overflow-x: hidden; resize: vertical; margin: 10px 0 8px; }
+				h2 ~ form textarea { height: 400px; font-size: 11px; font-family: monospace; }
 			label > input { width: 70%; float: right; }
 				label > input[type="checkbox"] { float: none; margin-left: -32px; margin-top: -5px; margin-right: 5px; }
 		label ~ input[type="submit"] { 
