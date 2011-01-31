@@ -20,11 +20,12 @@ if (APP_LOGIN) {
 	}
 	//a simple command line to test code on my local server
 	if ($_SERVER['HTTP_HOST'] == 'localhost' && isset($_POST['code'])) {
+		ob_start();
 		$output = eval($_POST['code']);
+		$output = ob_get_clean().$output;
 		if (@$_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
-			@header('Content-Type: text/plain; charset=utf-8');
-			if ($output) echo($output);
-			exit;
+			header('Content-Type: text/plain; charset=utf-8');
+			exit($output);
 		}
 	}
 }

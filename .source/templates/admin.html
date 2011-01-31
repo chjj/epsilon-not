@@ -2,17 +2,17 @@
 		Welcome back, good sir! Options are below. 
 		This area may server a better purpose in the future.
 	</p>
-	<h3>Options</h3>
+	<h2>Options</h2>
 	<ul>
 		<li><a href="/post">Post Article</a></li>
 		<li><a href="/admin/clear">Clear Cache</a></li>
 		<li><a href="/admin/logout">Logout</a></li>
 	</ul>
-	{+&:local;<h3>Command Line</h3>
+	{+&:local;<h2>Command Line</h2>
 	<pre>&:output;</pre>
 	<form action="/admin" method="POST" style="overflow:hidden">
 		<label>Code:
-			<textarea name="code" spellcheck="false" style="height:350px">&:code;</textarea>
+			<textarea name="code" spellcheck="false" style="height:300px">&:code;</textarea>
 		</label>
 		<input type="submit" value="Execute"/>
 	</form>

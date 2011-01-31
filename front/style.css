@@ -12,7 +12,7 @@ article, hgroup, figure, figcaption { display: block; }
 a { text-decoration: none; } /* i hate styling links */
 	a:focus { outline: none; }
 	nav a:hover, header + * a:hover { text-decoration: underline; }
-		h2 > a:hover, footer > a:hover { text-decoration: none; }
+		h1 > a:hover, footer > a:hover { text-decoration: none; }
 	
 abbr { border: none; text-decoration: none; }
 	abbr[title] { cursor: help; border-bottom: rgba(0, 0, 0, 0.15) solid 1px; }
@@ -34,18 +34,22 @@ figure, blockquote, pre { padding: 20px; }
 		pre > code { font-size: 11px; }
 		pre > code[title]:before { float: right; margin: -10px -5px 0 0; content: "[" attr(title) "]"; }
 
-h2, h3, h4, h5, h6, dt { font: normal 40px/20px serif; letter-spacing: 0.05em; padding: 0; margin: 0 0 20px; }
-	h2 { line-height: 40px; }
-	h3 { font-size: 22px; }
-	h4, dt { font-size: 20px; }
-	h5 { font-size: 18px; }
-	h6 { font-size: 16px; }
+h1, h2, h3, h4, h5, h6, dt { font: normal 43px/20px serif; letter-spacing: 0.05em; padding: 0; margin: 0 0 20px; }
+	h1 { line-height: 40px; }
+	h2 { font-size: 26px; }
+	h3, dt { font-size: 22px; }
+	h4 { font-size: 18px; }
+	h5, h6 { font-size: 16px; }
 
 hr { height: auto; border: none; text-align: center; clear: both; cursor: default; } 
-	hr:before { content: "∙ § ∙"; font: italic 40px/1 serif; color: rgba(0, 0, 0, 0.2); }
+	hr:before { content: "∙ § ∙"; font: italic 60px/1 serif; color: rgba(0, 0, 0, 0.2); }
 
-img { display: block; outline: none; border: #888 solid 1px; }
-	p > img { float: right; margin: 0 0 20px 20px; }
+img { display: block; outline: none; border: solid 1px; }
+	p > img { 
+		float: right; margin: 0 0 20px 20px; opacity: 0.4; -webkit-transition: 0.25s; 
+		-moz-transition: 0.25s; -o-transition: 0.25s; transition: 0.25s;
+	}
+		p > img:hover { opacity: 1; }
 	p:nth-of-type(even) > img { float: left; margin: 0 20px 20px 0; }
 
 /* /--/ basic form controls /--/ */
@@ -66,12 +70,12 @@ input, textarea {
 	}
 
 /* /--/ paragraphs /--/ */
-body > article > header + p, h2 + p { min-height: 40px; }
-body > article > header + p:first-line, h2 + p:first-line { font-weight: bold; }
+body > article > header + p, h1 + p { min-height: 40px; }
+body > article > header + p:first-line, h1 + p:first-line { font-weight: bold; }
 
 blockquote > p:first-child:first-letter, 
 body > article > header + p:first-letter, 
-h2 + p:first-letter, aside[role="note"]:first-letter,
+h1 + p:first-letter, aside[role="note"]:first-letter,
 form > p:first-letter { float: left; font: 40px/28px serif; padding: 8px 3px 0 0; }
 
 /* /--/ lists /--/ */
@@ -79,63 +83,54 @@ ul { list-style-type: square; }
 	ul ul { list-style-type: circle; }
 ol { list-style-type: decimal; }
 	ol ol { list-style-type: lower-alpha; }
-li { margin: 0 0 10px; padding: 0; }
+li { margin: 0 0 20px; padding: 0; }
 	section li { margin-left: 20px; }
 	article li { margin-left: 40px; }
-dd { margin-left: 20px; /*padding: 0;*/ }
+dd { margin-left: 20px; }
 
 /* /-=-=-/ layout design /-=-=-/ */
 @media only all { 
 html { 
 	font: 12px/20px verdana, sans-serif; cursor: default; overflow-y: scroll; 
-	width: 960px; margin: 0 auto; height: 100%; padding-bottom: 50px; 
+	width: 960px; margin: 0 auto; height: 100%; padding-bottom: 40px; 
 	-webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;
 }
-head { /* use head because some browsers don't allow ::before & ::after to be fixed */
-	display: block; position: fixed; z-index: -1; top: 25px; bottom: 25px; left: 0; right: 0; 
-	border: rgba(0, 0, 0, 0.05) 50px; border-style: solid none; /*border-width: 0.1vh;*/
-}
-head > * { display: none; }
 body {
-	min-height: 100%; padding: 25px 0; margin: 0 90px; border: 2px; border-style: none solid; 
-	-moz-box-shadow: rgba(0, 0, 0, 0.5) 2px -8px 8px; -webkit-box-shadow: rgba(0, 0, 0, 0.5) 2px 0 8px; 
-	box-shadow: rgba(0, 0, 0, 0.5) 2px 0 8px; 
+	min-height: 100%; padding: 20px 0; margin: 0 100px; -moz-box-shadow: rgba(0, 0, 0, 0.5) 0 -10px 10px; 
+	-webkit-box-shadow: rgba(0, 0, 0, 0.5) 0 0 10px; box-shadow: rgba(0, 0, 0, 0.5) 0 0 10px; 
 	/* firefox wrongly adds the box shadow blur radius to the scrollHeight, 
 	   so it needs to be subtracted from the y offset */
 }
 
 	/* /---/ page header /---/ */
-	body > header { height: 23px; position: fixed; top: 0; left: 0; right: 0; border-bottom: solid 2px; }
+	body > header { height: 24px; position: fixed; top: 0; left: 0; right: 0; border-bottom: solid 1px; }
 		body > header > * { width: 960px; margin: 0 auto; }
 		
 		/* /--/ header h1 /--/ */
-		h1 > a { 
-			display: block; position: absolute; z-index: 1; height: 35px; width: 35px; padding: 0; 
-			margin: 8px 0 0 43px; font: 30px/23px verdana; text-indent: 2px; overflow: hidden;
+		a[rel~=home] { 
+			position: absolute; z-index: 1; height: 35px; width: 35px; padding: 0; letter-spacing: 0;
+			margin: 8px 0 0 48px; font: 30px/23px verdana; text-indent: 2px; overflow: hidden;
 			border: solid 1px; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; 
 		}
-			h1 > a:before { content: "ε"; display: block; margin-left: 1px; padding-bottom: 30px; }
-			h1 > a:after { content: "0"; font-size: 75%; position: absolute; top: 6px; right: 4px; }
+			a[rel~=home]:before { content: "ε"; display: block; margin-left: 1px; padding-bottom: 30px; }
+			a[rel~=home]:after { content: "0"; font-size: 75%; position: absolute; top: 6px; right: 4px; }
 			
 			/* make the logo spin every 10 seconds */
-			@-webkit-keyframes spin {
-				0% { -webkit-transform: rotate(-360deg); }
-				9%, 100% { -webkit-transform: none; }
-			}
-			h1 > a { -webkit-animation: spin 11s linear 0s infinite; }
+			@-webkit-keyframes spin { 0% { -webkit-transform: rotate(-360deg); } 9%, 100% { -webkit-transform: none; } }
+			a[rel~=home] { -webkit-animation: spin 11s linear 0s infinite; }
 		
 		/* /--/ header nav /--/ */
-		nav > ul { list-style: none; margin: 0 90px; padding-left: 5px; }
+		nav > ul { list-style: none; margin: 0 100px; padding-left: 5px; }
 			nav li { 
 				margin: 6px 20px 0 0; float: left; font: 12px/1 verdana; 
 				letter-spacing: 2px; text-transform: lowercase; 
 			}
-				nav li:before { content: "▪"; margin-right: 4px; }
+				nav li:before { content: "▪"; margin-left: 1px; margin-right: 4px; }
 		
 		/* /--/ header aside /--/ */
 		aside > ol { 
-			position: absolute; z-index: -1; margin: 25px 0 0 10px; width: 50px; opacity: 0.6;
-			list-style: none; border: solid 2px; border-top: none; padding-top: 15px; 
+			position: absolute; z-index: -1; margin: 25px 0 0 15px; width: 50px; opacity: 0.6;
+			list-style: none; border: solid 1px; border-top: none; padding-top: 15px; 
 			-webkit-transition: 0.2s; -moz-transition: 0.2s; -o-transition: 0.2s; transition: 0.2s; 
 		}
 		
@@ -154,11 +149,11 @@ body {
 	body > header + * { cursor: auto; margin: 20px; padding: 0 20px; font-family: verdana, sans-serif; }
 		
 		/* /--/ content header /--/ */
-		h2 { margin-left: -10px; margin-right: -10px; /* margin-top: -5px; exactly 40px from top */ }
-			h2 > a { color: inherit; }
-				h2 > a:hover:after { content: "«"; font: 1.1em/0.7em arial; margin-left: 0.2ex; }
-		h2 + time { 
-			display: block; position: fixed; top: 12px; right: 50%; height: 14px; margin-right: -370px; 
+		header + * h1 { margin-left: -20px; margin-right: -20px; padding: 15px 0 10px; text-shadow: #fff 1px 1px; }
+			header + * h1 > a { color: inherit; }
+				header + * h1 > a:hover:after { position: absolute; content: "«"; font: 1.1em/0.7em arial; }
+		h1 + time { 
+			display: block; position: fixed; top: 12px; right: 50%; height: 14px; margin-right: -360px; 
 			padding: 4px; border: solid 1px; line-height: 1; letter-spacing: 2px; text-indent: 2px;
 		}
 			time > a { color: inherit; text-shadow: inherit; text-decoration: none !important; }
@@ -166,49 +161,47 @@ body {
 		
 		/* /--/ aside boxes /--/ */
 		aside[role="note"] { 
-			width: 100px; padding: 10px; margin: 10px -42px 10px 20px;
+			width: 100px; padding: 10px; margin: 10px -40px 10px 20px;
 			float: right; font-size: 10px; -webkit-border-radius: 5px 0 0 5px; 
 			-moz-border-radius: 5px 0 0 5px; border-radius: 5px 0 0 5px; 
 		}
 			aside[role="note"] a { border-bottom: dotted 1px; text-decoration: none !important; }
 		
 		/* /--/ article comments /--/ */
-		article > aside[id], article + h4 + form { border-top: rgba(0, 0, 0, 0.1) solid 1px; margin-top: -1px; }
-			aside > h3, aside > h4 { position: absolute; clip: rect(0, 0, 0, 0); }
+		article > aside[id], article + h3 + form { border-top: rgba(0, 0, 0, 0.1) solid 1px; margin-top: -1px; }
+			aside > h2, aside > h3 { position: absolute; clip: rect(0, 0, 0, 0); }
 			aside > article { margin: 20px 30px; } 
-				aside > article h4 { margin-top: 0; margin-left: -10px; }
-					h4 > a:hover { text-decoration: underline; }
-						h4 > a:first-child { color: inherit; }
-							h4 > a[rel~="related"] { color: steelblue; }
-						h4 > a[rel="bookmark"] { color: #888; }
-					h4 > img { float: left; margin-right: 10px; height: 18px; width: 18px; }
-				h4 + time { display: none; font: 15px/20px serif; color: #888; float: right; margin-top: -40px; }
+				aside > article h3 { margin-top: 0; margin-left: -10px; }
+					h3 > a:hover { text-decoration: underline; }
+						h3 > a:first-child { color: inherit; }
+					h3 > img { float: left; margin-right: 10px; height: 18px; width: 18px; }
+				h3 + time { display: none; font: 16px/20px serif; float: right; margin-top: -40px; }
 					aside > article:hover time, aside > article:hover > footer { display: block; }
 				aside > article > footer { display: none; margin-top: -10px; }
 			aside > form { margin: 20px; } 
-				article + h4 + form { padding-top: 20px; }
+				article + h3 + form { padding-top: 20px; }
 		
 		/* /--/ form controls /--/ */
 		fieldset { float: right; border: none; margin: -40px 0 0 0; padding: 0; }
 		label { 
 			display: block; margin-bottom: 8px; letter-spacing: 1px; text-transform: uppercase;
-			border-left: rgba(0, 0, 0, 0.075) solid 25px; padding-left: 15px; color: #888;
+			border-left: rgba(0, 0, 0, 0.075) solid 25px; padding-left: 15px; 
 		} 
 			label > input, textarea {
-				margin-top: 2px; border: #888 solid 1px; 
+				margin-top: 2px; border: solid 1px; 
 				-webkit-box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 2px inset;
 				-moz-box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 2px inset; 
 				box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 2px inset; 
 			}
 			textarea { width: 100%; height: 188px; padding: 5px; overflow-x: hidden; resize: vertical; margin: 10px 0 8px; }
-				h2 ~ form textarea { height: 400px; font-size: 11px; font-family: monospace; }
+				h1 ~ form textarea { height: 400px; font-size: 11px; font-family: monospace; }
 			label > input { width: 70%; float: right; }
 				label > input[type="checkbox"] { float: none; margin-left: -32px; margin-top: -5px; margin-right: 5px; }
 		label ~ input[type="submit"] { 
 			width: auto; height: auto; cursor: pointer; border: none; margin-top: 2px; 
-			font-size: 14px; color: #888; text-transform: uppercase; float: right; margin-left: 30px;
+			font-size: 14px; text-transform: uppercase; float: right; margin-left: 30px;
 		}
-		h2 + form[action*="admin"] { width: 50%; }
+		h1 + form[action*="admin"] { width: 50%; }
 			input[type="password"] { width: 200px; }
 		
 		/* /--/ browse list /--/ */
@@ -216,7 +209,7 @@ body {
 			section > ol time { display: block; }
 		
 		/* /--/ content footer /--/ */
-		header + * > footer { position: fixed; z-index: 2; top: 11px; left: 50%; margin-left: 404px; width: 62px; }
+		header + * > footer { position: fixed; z-index: 2; top: 11px; left: 50%; margin-left: 399px; width: 62px; }
 			header + * > footer > a { 
 				display: block; overflow: hidden; border: solid 1px; 
 				height: 20px; width: 21px; padding: 2px;
@@ -235,11 +228,11 @@ body {
 	
 	/* /---/ page footer /---/ */
 	body > footer { 
-		position: fixed; left: 0; right: 0; bottom: 0; height: 23px; border-top: solid 2px; 
+		position: fixed; left: 0; right: 0; bottom: 0; height: 24px; border-top: solid 1px; 
 		-webkit-box-shadow: rgba(0, 0, 0, 0.4) 0 -2px 10px; -moz-box-shadow: rgba(0, 0, 0, 0.4) 0 -2px 10px; 
 		box-shadow: rgba(0, 0, 0, 0.4) 0 -2px 10px; 
 	}
-		footer > form { position: absolute; top: -12px; left: 50%; margin-left: -445px; } 
+		footer > form { position: absolute; top: -12px; left: 50%; margin-left: -440px; } 
 			footer [type="submit"] { 
 				position: relative; z-index: 1; height: 29px; width: 29px; margin-left: -20px; margin-top: -4px;
 				border: solid 2px; -webkit-transform: rotate(45deg); -moz-transform: rotate(45deg); 
@@ -262,13 +255,13 @@ body {
 			a[rel=license] { content: url("/front/by.svg"); vertical-align: top; padding-top: 1px; }
 		body > footer > a { 
 			height: 29px; width: 29px; font: 29px/27px arial, sans-serif; overflow: hidden;
-			position: absolute; left: 50%; top: -15px; margin-left: 420px; border: solid 1px; 
+			position: absolute; left: 50%; top: -15px; margin-left: 415px; border: solid 1px; 
 		}
 			body > footer > a:before { content: "▲"; display: block; text-align: center; padding-bottom: 15px; }
 
 /* /---/ color scheme /---/ */
-html { color: #303030; background: #dadbd3; /*color: #222;*/ }
-body > header, body > footer, h1 > a, h2 + time { 
+html { color: #303030; background: #dadbd3; }
+body > header, body > footer, a[rel~=home], h1 + time { 
 	background: url("data:image/png;base64,\
 		iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAALHRFWHRDcmVhdGlvbiBUaW1lAFR1ZSAzMCBOb3YgMjA\
 		xMCAwOTo0NjoyMiAtMDYwMCVwtDEAAAAHdElNRQfaCx4PLiMaW7s3AAAACXBIWXMAAB7CAAAewgFu0HU+AAAABGdBTU\
@@ -283,10 +276,10 @@ body > header, body > footer, h1 > a, h2 + time {
 		bwOCSTSUIv/48GTUQ1HDLjrZN6hAR8Ph/XmdVqleuiWEYz8H43tMc1iKy2trZ0fkDlxqwttFskEpHdcHJyQuJ9xDm8M\
 		kIFyIRhIqoEUk9PT8n8jP2U4uHh4YLQr66u/vWySixsZ2eHdnd3ybwuehvFCIfDlEql+LzZbMp7vwGFXfALGoMImAAA\
 		AABJRU5ErkJggg==\
-	") #797e83; 
+	") #787c88;
 }
-nav a, body > footer a, h2 + time { color: #fff; text-shadow: #000 1px 1px 1px; }
-h1 > a { color: #797e83; text-shadow: #000 1px 1px 2px; }
+nav a, body > footer a, h1 + time { color: #fff; text-shadow: #000 1px 1px 1px; }
+a[rel~=home] { color: #787c88; text-shadow: #000 1px 1px 2px; }
 figure, blockquote, pre, input, textarea { background: #dadbd4; } 
 aside > ol, header + * > footer > a, 
 aside[role="note"], body > footer > a, footer [type="submit"] { background: #48454c; }
@@ -294,39 +287,94 @@ aside > ol a, header + * > footer > a,
 aside[role="note"], aside[role="note"] a { color: #fff; }
 body, footer [type="search"] { background: #eee; }
 
-body > header, h1 > a, aside > ol, 
-body, body > footer, header + * > footer > a,
+body > header, a[rel~=home], aside > ol, 
+body > footer, header + * > footer > a,
 footer [type="submit"], footer [type="search"] { border-color: #fff; }
 
 header li, body > footer, nav a:hover, time > a:hover, 
 body > footer a:hover, nav a[rel~="self"], 
 nav a[rel~="directory"], footer [type="search"] { color: #000; text-shadow: rgba(255, 255, 255, 0.15) 1px 1px; } 
 
-h2, h3, h4, h5, h6, dt, footer [type="submit"] { color: #48454c; } 
+h1, h2, h3, h4, h5, h6, dt, footer [type="submit"] { color: #48454c; } 
 
-h1 > a:hover, h1 > a:focus, h1 > a:active, 
+a[rel~=home]:hover, a[rel~=home]:focus, a[rel~=home]:active, 
 footer > a:hover, footer [type="submit"]:hover { border-color: orange; }
 aside > ol a:hover, label:hover { color: orange; }
 
+h3 > a[rel~="related"] { color: steelblue; }
+
+h3 > a[rel="bookmark"], h3 + time, label, label ~ input[type=submit] { color: #888; } /*, hr:before*/
+img, label > input, textarea { border-color: #888; } /*, label, article > aside[id], article + h4 + form*/
+
 /* /---/ box shadows /---/ */
-body > header, h1 > a, aside > ol, h2 + time,
-header + * > footer > a, aside[role="note"],
-body > footer > a, footer [type="submit"] { 
+body > header, a[rel~=home], aside > ol, h1 + time,
+header + * > footer > a, body > footer > a, 
+footer [type="submit"] { 
 	-moz-box-shadow: rgba(0, 0, 0, 0.4) 0 2px 10px; 
 	-webkit-box-shadow: rgba(0, 0, 0, 0.4) 0 2px 10px; 
 	box-shadow: rgba(0, 0, 0, 0.4) 0 2px 10px; 
 }
+
+/* /---/ potential changes /---/ */
+
+/* transparent body and even flow */
+:root body { background: transparent; border: none; box-shadow: none; }
+:root body > header + * { padding: 0; }
+:root pre, :root blockquote, :root figure,
+:root textarea, :root label > input:not([type=submit]) { background: rgba(0, 0, 0, 0.05); }
+:root aside[role=note] { margin-right: -20px; border-radius: 10px; }
+
+:root body > header + *, :root header + * h1 { margin-left: 0; margin-right: 0; }
+:root aside[role=note] { margin-right: 0; }
+
+:root h1 + time { margin-right: -380px; }
+:root nav > ul { padding-left: 0; }
+
+/* decrease the site width */
+:root, body { outlinez: solid 1px;}
+:root, :root body > header > * { width: 920px; }
+:root header + * > footer { margin-left: 379px; }
+:root header > h1 + time { margin-right: -360px; }
+:root body > footer > form { margin-left: -420px; }
+:root body > footer > a { margin-left: 395px; }
+
+/* new scheme */
+h3 > a[rel="bookmark"], h3 + time, label, label ~ input[type=submit] { color: #eee; } 
+img, label > input, textarea { border-color: #333; } 
+h3 > a[rel~="related"] { color: orange; }
+a { color: #eee; }
+nav a, h1 + time > a { color: #fff; text-shadow: #333 1px 1px; }
+header + * h1, h2, h3, h4, h5, h6, dt, 
+blockquote:before, hr:before { color: #000; text-shadow: rgba(255, 255, 255, 0.3) 1px 1px 1px; padding: 0; }
+
+dt > a, h3 > a[rel=bookmark] { text-shadow: none; }
+body > header, body > footer, h1 > a[rel~=home] { background-image: none; }
+
+:root h1 + time { padding: 0; border: none; background: transparent; box-shadow: none; top: 6px; margin-right: -380px; }
+:root { 
+	color: #000; background: fixed no-repeat 0 100% #787c88;
+	/*background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop(0.8, rgba(255, 255, 255, 0.1)), color-stop(1.0, rgba(0, 0, 0, 0.1))); 
+	background-image: -moz-linear-gradient(-90deg, rgba(255, 255, 255, 0.1) 80%, rgba(0, 0, 0, 0.1) 100%); 
+	background-image: linear-gradient(-90deg, rgba(255, 255, 255, 0.1) 80%, rgba(0, 0, 0, 0.1) 100%);*/
+	
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop(0.8, rgba(255, 255, 255, 0.25)), color-stop(1.0, rgba(255, 255, 255, 0.05))); 
+	background-image: -moz-linear-gradient(-90deg, rgba(255, 255, 255, 0.25) 80%, rgba(255, 255, 255, 0.05) 100%); 
+	background-image: linear-gradient(-90deg, rgba(255, 255, 255, 0.25) 80%, rgba(255, 255, 255, 0.05) 100%); 
+	
+}
+
+body > header, body > footer, h1 + time, header + * > footer { z-index: 1; }
 
 } 
 
 /* /-=-=-/ media queries /-=-=-/ */
 @media print {
 	body, aside[role="note"] { -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; }
-	head, body > header, body > footer, header + * > footer, h2 + time, form { display: none; }
+	head, body > header, body > footer, header + * > footer, h1 + time, form { display: none; }
 	html { width: auto; padding: 0; }
 	body { margin: 0; padding: 0; }
-	h2 { margin-left: 0; margin-right: 0; margin-top: 0; }
-	h2, h3, h4, h5, h6 { page-break-after: avoid; }
+	header + * h1 { margin-left: 0; margin-right: 0; margin-top: 0; }
+	h1, h2, h3, h4, h5, h6 { page-break-after: avoid; }
 	pre, blockquote, figure, aside[role="note"] { page-break-inside: avoid; }
 	aside[role="note"] { margin-right: 0; padding: 0; }
 }
@@ -335,10 +383,10 @@ body > footer > a, footer [type="submit"] {
 @media (max-width: 960px) { /* change design into a fluid layout */
 	@viewport { width: device-width; zoom: 1.0; /*user-zoom: fixed;*/ }
 	html, body > header > * { width: auto; }
-	header + * > footer { left: auto; margin-left: 0; right: 14px; }
-	h2 + time { margin-right: 0; right: 104px; }
-	body > footer > form { margin-left: 0; left: 35px; }
-	body > footer > a { left: auto; margin-left: 0; right: 30px; }
+	header + * > footer { left: auto; margin-left: 0; right: 19px; }
+	h1 + time { margin-right: 0; right: 120px; }
+	body > footer > form { margin-left: 0; left: 40px; }
+	body > footer > a { left: auto; margin-left: 0; right: 35px; }
 }
 
 @media (max-width: 760px) {
@@ -348,7 +396,7 @@ body > footer > a, footer [type="submit"] {
 }
 
 @media (max-width: 690px) {
-	h2 + time { display: none; }
+	h1 + time { display: none; }
 	label > input { width: 50%; }
 }
 
@@ -357,8 +405,8 @@ body > footer > a, footer [type="submit"] {
 @media (max-width: 600px) {
 	html { overflow: auto; }
 	body { margin: 0; position: relative; border: none; overflow: hidden; }
-	h1 > a { margin-left: 10px; }
-	h2 { padding-top: 20px; }
+	a[rel~=home] { margin-left: 10px; }
+	header + * h1 { padding-top: 20px; }
 	body > footer > a { right: 10px; }
 	nav ul { margin-left: 50px; }
 	header > aside { display: none; }

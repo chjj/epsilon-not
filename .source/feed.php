@@ -17,7 +17,7 @@ foreach ($db->fetch('*', 'articles', 'ORDER BY timestamp DESC LIMIT 0, 10', fals
 		date(DATE_ATOM, $article['timestamp']), 
 		date(DATE_ATOM, $updated),
 		preg_replace(
-			'/(<\/?h)(\d)/ie', '"$1".($2-2)', 
+			'/(?<=h)\d(?=>)/ie', '($0-1)', 
 			page::parse_markup($article['content'], 3, false)
 		)
 	);
