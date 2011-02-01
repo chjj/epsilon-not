@@ -170,7 +170,7 @@ class page {
 	public function __construct() {
 		if ($_SERVER['REQUEST_METHOD'] == 'GET' && count(glob(APP_CACHE.'/*')) < 300) {
 			if (file_exists($file = APP_CACHE.'/'.md5($_SERVER['REQUEST_URI'].APP_LOGIN))) 
-				exit($this->output(file_get_contents($file)));
+				exit($this->output(file_get_contents($file))); //file_get_contents('php://input') ??
 			$this->cache = $file;
 		}
 		
@@ -193,13 +193,13 @@ class page {
 			);
 			if (isset($response[$title])) {
 				if (!$message) $message = $response[$title][1];
-				header($_SERVER['SERVER_PROTOCOL'].' '.($this->title = $response[$title][0]));
+				header($_SERVER['SERVER_PROTOCOL'].' '.($title = $response[$title][0]));
 			}
 		}
 		$this->cache = null;
 		$this->content = template::parse('section', array(
-			'title' => $this->title, 
-			'content' => '<p>'.$message.'</p>'
+			'title' => $this->title = $title, 
+			'content' => "\x09".'<p>'.$message.'</p>'
 		));
 		exit($this->build());
 	}
@@ -222,7 +222,7 @@ class page {
 				strstr('development|about|admin', $this->path[0]) 
 					? $this->path[0] : 'article'
 			)) => true,
-			'msie' => strstr(@$_SERVER['HTTP_USER_AGENT'], 'MSIE')
+			'msie' => @strstr($_SERVER['HTTP_USER_AGENT'], 'MSIE')
 		), $articles)));
 	}
 	

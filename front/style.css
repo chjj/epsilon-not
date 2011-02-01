@@ -41,15 +41,15 @@ h1, h2, h3, h4, h5, h6, dt { font: normal 43px/20px serif; letter-spacing: 0.05e
 	h4 { font-size: 18px; }
 	h5, h6 { font-size: 16px; }
 
-hr { height: auto; border: none; text-align: center; clear: both; cursor: default; } 
-	hr:before { content: "∙ § ∙"; font: italic 60px/1 serif; color: rgba(0, 0, 0, 0.2); }
+hr { height: auto; border: none; text-align: center; cursor: default; } 
+	hr:before { content: "∙ § ∙"; font: italic 40px/1 serif; color: rgba(0, 0, 0, 0.2); }
 
-img { display: block; outline: none; border: solid 1px; }
-	p > img { 
-		float: right; margin: 0 0 20px 20px; opacity: 0.4; -webkit-transition: 0.25s; 
-		-moz-transition: 0.25s; -o-transition: 0.25s; transition: 0.25s;
-	}
-		p > img:hover { opacity: 1; }
+img { 
+	display: block; outline: none; border: solid 1px; opacity: 0.6; -webkit-transition: 0.25s; 
+	-moz-transition: 0.25s; -o-transition: 0.25s; transition: 0.25s; 
+}
+	:hover > img, img:hover { opacity: 1; }
+	p > img { float: right; margin: 0 0 20px 20px; }
 	p:nth-of-type(even) > img { float: left; margin: 0 20px 20px 0; }
 
 /* /--/ basic form controls /--/ */
@@ -79,13 +79,8 @@ h1 + p:first-letter, aside[role="note"]:first-letter,
 form > p:first-letter { float: left; font: 40px/28px serif; padding: 8px 3px 0 0; }
 
 /* /--/ lists /--/ */
-ul { list-style-type: square; }
-	ul ul { list-style-type: circle; }
-ol { list-style-type: decimal; }
-	ol ol { list-style-type: lower-alpha; }
-li { margin: 0 0 20px; padding: 0; }
-	section li { margin-left: 20px; }
-	article li { margin-left: 40px; }
+ol, ul { padding-left: 40px; }
+	li { margin: 0 0 10px; padding: 0; }
 dd { margin-left: 20px; }
 
 /* /-=-=-/ layout design /-=-=-/ */
@@ -103,7 +98,7 @@ body {
 }
 
 	/* /---/ page header /---/ */
-	body > header { height: 24px; position: fixed; top: 0; left: 0; right: 0; border-bottom: solid 1px; }
+	body > header { height: 24px; position: fixed; z-index: 1; top: 0; left: 0; right: 0; border-bottom: solid 1px; }
 		body > header > * { width: 960px; margin: 0 auto; }
 		
 		/* /--/ header h1 /--/ */
@@ -129,7 +124,7 @@ body {
 		
 		/* /--/ header aside /--/ */
 		aside > ol { 
-			position: absolute; z-index: -1; margin: 25px 0 0 15px; width: 50px; opacity: 0.6;
+			position: absolute; z-index: -1; margin: 25px 0 0 15px; padding: 0; width: 50px; opacity: 0.6;
 			list-style: none; border: solid 1px; border-top: none; padding-top: 15px; 
 			-webkit-transition: 0.2s; -moz-transition: 0.2s; -o-transition: 0.2s; transition: 0.2s; 
 		}
@@ -153,7 +148,7 @@ body {
 			header + * h1 > a { color: inherit; }
 				header + * h1 > a:hover:after { position: absolute; content: "«"; font: 1.1em/0.7em arial; }
 		h1 + time { 
-			display: block; position: fixed; top: 12px; right: 50%; height: 14px; margin-right: -360px; 
+			position: fixed; z-index: 1; top: 12px; right: 50%; height: 14px; margin-right: -360px; 
 			padding: 4px; border: solid 1px; line-height: 1; letter-spacing: 2px; text-indent: 2px;
 		}
 			time > a { color: inherit; text-shadow: inherit; text-decoration: none !important; }
@@ -170,14 +165,13 @@ body {
 		/* /--/ article comments /--/ */
 		article > aside[id], article + h3 + form { border-top: rgba(0, 0, 0, 0.1) solid 1px; margin-top: -1px; }
 			aside > h2, aside > h3 { position: absolute; clip: rect(0, 0, 0, 0); }
-			aside > article { margin: 20px 30px; } 
+			aside > article { margin: 20px 30px; position: relative; } 
 				aside > article h3 { margin-top: 0; margin-left: -10px; }
 					h3 > a:hover { text-decoration: underline; }
 						h3 > a:first-child { color: inherit; }
 					h3 > img { float: left; margin-right: 10px; height: 18px; width: 18px; }
-				h3 + time { display: none; font: 16px/20px serif; float: right; margin-top: -40px; }
-					aside > article:hover time, aside > article:hover > footer { display: block; }
-				aside > article > footer { display: none; margin-top: -10px; }
+				aside [pubdate] { display: none; font-size: 12px; position: absolute; top: 1px; right: -10px; }
+					aside > article:hover [pubdate] { display: block; }
 			aside > form { margin: 20px; } 
 				article + h3 + form { padding-top: 20px; }
 		
@@ -209,7 +203,7 @@ body {
 			section > ol time { display: block; }
 		
 		/* /--/ content footer /--/ */
-		header + * > footer { position: fixed; z-index: 2; top: 11px; left: 50%; margin-left: 399px; width: 62px; }
+		header + * > footer { position: fixed; z-index: 1; top: 11px; left: 50%; margin-left: 399px; width: 62px; }
 			header + * > footer > a { 
 				display: block; overflow: hidden; border: solid 1px; 
 				height: 20px; width: 21px; padding: 2px;
@@ -228,7 +222,7 @@ body {
 	
 	/* /---/ page footer /---/ */
 	body > footer { 
-		position: fixed; left: 0; right: 0; bottom: 0; height: 24px; border-top: solid 1px; 
+		position: fixed; z-index: 1; left: 0; right: 0; bottom: 0; height: 24px; border-top: solid 1px; 
 		-webkit-box-shadow: rgba(0, 0, 0, 0.4) 0 -2px 10px; -moz-box-shadow: rgba(0, 0, 0, 0.4) 0 -2px 10px; 
 		box-shadow: rgba(0, 0, 0, 0.4) 0 -2px 10px; 
 	}
@@ -318,52 +312,66 @@ footer [type="submit"] {
 /* /---/ potential changes /---/ */
 
 /* transparent body and even flow */
-:root body { background: transparent; border: none; box-shadow: none; }
-:root body > header + * { padding: 0; }
-:root pre, :root blockquote, :root figure,
-:root textarea, :root label > input:not([type=submit]) { background: rgba(0, 0, 0, 0.05); }
-:root aside[role=note] { margin-right: -20px; border-radius: 10px; }
+body { background: transparent; border: none; -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; }
+body > header + * { padding: 0; }
+pre, blockquote, figure,
+textarea, input { background: rgba(0, 0, 0, 0.05); }
+aside[role=note] { margin-right: 0; -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px; }
 
-:root body > header + *, :root header + * h1 { margin-left: 0; margin-right: 0; }
-:root aside[role=note] { margin-right: 0; }
+body > header + *, header + * h1 { margin-left: 0; margin-right: 0; }
 
-:root h1 + time { margin-right: -380px; }
-:root nav > ul { padding-left: 0; }
-
-/* decrease the site width */
-:root, body { outlinez: solid 1px;}
-:root, :root body > header > * { width: 920px; }
-:root header + * > footer { margin-left: 379px; }
-:root header > h1 + time { margin-right: -360px; }
-:root body > footer > form { margin-left: -420px; }
-:root body > footer > a { margin-left: 395px; }
+h1 + time { margin-right: -380px; }
+nav > ul { padding-left: 0; }
 
 /* new scheme */
-h3 > a[rel="bookmark"], h3 + time, label, label ~ input[type=submit] { color: #eee; } 
+h3 > a[rel="bookmark"], aside [pubdate], label, label ~ input[type=submit] { color: #eee; } 
 img, label > input, textarea { border-color: #333; } 
-h3 > a[rel~="related"] { color: orange; }
-a { color: #eee; }
+h3 > a[rel~="related"] { color: darkred; }
+a { color: #eee; color: #fff; }
 nav a, h1 + time > a { color: #fff; text-shadow: #333 1px 1px; }
 header + * h1, h2, h3, h4, h5, h6, dt, 
-blockquote:before, hr:before { color: #000; text-shadow: rgba(255, 255, 255, 0.3) 1px 1px 1px; padding: 0; }
+blockquote:before, hr:before { color: #000; text-shadow: rgba(255, 255, 255, 0.3) 1px 1px 1px; }
 
 dt > a, h3 > a[rel=bookmark] { text-shadow: none; }
 body > header, body > footer, h1 > a[rel~=home] { background-image: none; }
 
-:root h1 + time { padding: 0; border: none; background: transparent; box-shadow: none; top: 6px; margin-right: -380px; }
-:root { 
-	color: #000; background: fixed no-repeat 0 100% #787c88;
-	/*background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop(0.8, rgba(255, 255, 255, 0.1)), color-stop(1.0, rgba(0, 0, 0, 0.1))); 
-	background-image: -moz-linear-gradient(-90deg, rgba(255, 255, 255, 0.1) 80%, rgba(0, 0, 0, 0.1) 100%); 
-	background-image: linear-gradient(-90deg, rgba(255, 255, 255, 0.1) 80%, rgba(0, 0, 0, 0.1) 100%);*/
-	
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop(0.8, rgba(255, 255, 255, 0.25)), color-stop(1.0, rgba(255, 255, 255, 0.05))); 
-	background-image: -moz-linear-gradient(-90deg, rgba(255, 255, 255, 0.25) 80%, rgba(255, 255, 255, 0.05) 100%); 
-	background-image: linear-gradient(-90deg, rgba(255, 255, 255, 0.25) 80%, rgba(255, 255, 255, 0.05) 100%); 
-	
+/*h1 + time { padding: 0; border: none; background: transparent; box-shadow: none; top: 6px; }*/
+
+html { 
+	color: #000; background: #9ea1aa;
+	/* ch12-5 */
+	background-image: url("data:image/png;base64,\
+		iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAAXNSR0IArs4c6QAAAAZiS0dEAAAAAAAA+\
+		UO7fwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9sCAQgeJJAA+P8AAAAdaVRYdENvbW1lbnQAAA\
+		AAAENyZWF0ZWQgd2l0aCBHSU1QZC5lBwAAAB5JREFUCNdj+P//v/z////lGaCAiQENMMIYMFUYKgDY4wl\
+		aBcZalAAAAABJRU5ErkJggg==\
+	");
+	/* ch7-5 */
+	background-imagez: url("data:image/png;base64,\
+		iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/o\
+		L2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9sCAQoSBARfQ1UAAAAdaVRYdENvbW1lbnQAAA\
+		AAAENyZWF0ZWQgd2l0aCBHSU1QZC5lBwAAAB1JREFUCNdjYGBgEIZiBgYGBgYmBjTAiMQWxqoCAAvEAD9\
+		FQ660AAAAAElFTkSuQmCC\
+	");
 }
 
-body > header, body > footer, h1 + time, header + * > footer { z-index: 1; }
+/* decrease the site width */
+html, body > header > * { width: 920px; }
+header + * > footer { margin-left: 379px; }
+h1 + time { margin-right: -360px; }
+footer > form { margin-left: -420px; }
+body > footer > a { margin-left: 395px; }
+
+/* misc changes */
+html { 
+	height: auto; padding-bottom: 0; -webkit-box-sizing: content-box; 
+	-moz-box-sizing: content-box; box-sizing: content-box; 
+}
+body { min-height: 0; }
+
+/* make sure the margins exist even if there is no section or article element */
+body > header + * { margin: 0; }
+body:before, body:after { content: "\20"; display: block; margin-bottom: 20px; }
 
 } 
 
@@ -380,11 +388,11 @@ body > header, body > footer, h1 + time, header + * > footer { z-index: 1; }
 }
 
 /* /---/ adjust design for smaller resolutions /---/ */
-@media (max-width: 960px) { /* change design into a fluid layout */
+@media (max-width: 920px) { /* change design into a fluid layout */
 	@viewport { width: device-width; zoom: 1.0; /*user-zoom: fixed;*/ }
 	html, body > header > * { width: auto; }
 	header + * > footer { left: auto; margin-left: 0; right: 19px; }
-	h1 + time { margin-right: 0; right: 120px; }
+	h1 + time { margin-right: 0; right: 120px; right: 100px; }
 	body > footer > form { margin-left: 0; left: 40px; }
 	body > footer > a { left: auto; margin-left: 0; right: 35px; }
 }
@@ -405,10 +413,11 @@ body > header, body > footer, h1 + time, header + * > footer { z-index: 1; }
 @media (max-width: 600px) {
 	html { overflow: auto; }
 	body { margin: 0; position: relative; border: none; overflow: hidden; }
+	body > header + * { margin: 0 20px; } /* test */
 	a[rel~=home] { margin-left: 10px; }
 	header + * h1 { padding-top: 20px; }
 	body > footer > a { right: 10px; }
-	nav ul { margin-left: 50px; }
+	nav ul { margin-left: 50px; margin-left: 60px; }
 	header > aside { display: none; }
 	footer > small { text-indent: 40px; }
 	body > header, body > footer, 

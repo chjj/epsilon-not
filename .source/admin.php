@@ -15,7 +15,7 @@ if (isset($_POST['password']) && hash('tiger192,4', $_POST['password']) == APP_P
 if (APP_LOGIN) {
 	if (isset($page->path[1]) && $page->path[1] == 'clear') {
 		foreach (glob(APP_CACHE.'/*') as $file) 
-			if (is_file($file)) unlink($file);
+			if (is_file($file)) unlink($file); //perhaps make this a separate function?
 		page::redirect(page::uri('admin'));
 	}
 	//a simple command line to test code on my local server
