@@ -10,7 +10,7 @@ if (isset($_GET['search'])) {
 	if (empty($_GET['search'])) $page->error(404, 'Please enter a search term.');
 	if ($_GET['search'] == '/') page::redirect(page::uri('admin'));
 	$page->title = 'Search for '.($_GET['search'] = str_replace(
-		array('_', '%'), array('', ''), trim($_GET['search'])
+		array('_', '%'), '', trim($_GET['search'])
 	));
 	$articles = $page->db->fetch('*', 
 		'articles', 'WHERE (title LIKE :s OR content LIKE :s)', 

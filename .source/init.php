@@ -1,7 +1,7 @@
 <?php 
 //initialize the page and define functions/classes
 
-error_reporting($_SERVER['HTTP_HOST'] == 'localhost' ? E_ALL|E_STRICT : 0);
+error_reporting($_SERVER['SERVER_ADDR'] == '127.0.0.1' ? E_ALL|E_STRICT : 0);
 
 date_default_timezone_set('US/Central');
 
@@ -11,6 +11,7 @@ define('APP_PASSWORD', '45cceb16100239fc2028a82db1fcd2a0d669bb5722806777');
 define('APP_LOGIN', (isset($_COOKIE['epsilon_user']) 
 	? (hash('tiger192,4', base64_decode($_COOKIE['epsilon_user'])) == APP_PASSWORD) 
 	: false));
+define('APP_HOST', $_SERVER['SERVER_ADDR'] == '127.0.0.1' ? 'localhost' : 'epsilon-not.net');
 define('APP_TEMPLATES', $_SERVER['DOCUMENT_ROOT'].'/.source/templates');
 define('APP_CACHE', $_SERVER['DOCUMENT_ROOT'].'/.source/cache');
 
@@ -99,9 +100,9 @@ class page {
 		return '/'.(!empty($args) ? implode('/', $args) : '');
 	}
 	
-	public static function redirect($url, $response = 303) {
-		$url = preg_replace('/\/{2,}/', '/', '/'.str_replace('&amp;', '&', $url));
-		header('Location: http://'.$_SERVER['HTTP_HOST'].$url, true, $response);
+	public static function redirect($uri, $response = 303) {
+		$uri = preg_replace('/\/{2,}/', '/', '/'.str_replace('&amp;', '&', $uri));
+		header('Location: http://'.APP_HOST.$uri, true, $response);
 		exit;
 	}
 	
@@ -170,15 +171,18 @@ class page {
 	public function __construct() {
 		if ($_SERVER['REQUEST_METHOD'] == 'GET' && count(glob(APP_CACHE.'/*')) < 300) {
 			if (file_exists($file = APP_CACHE.'/'.md5($_SERVER['REQUEST_URI'].APP_LOGIN))) 
-				exit($this->output(file_get_contents($file))); //file_get_contents('php://input') ??
+				exit($this->output(file_get_contents($file))); 
 			$this->cache = $file;
 		}
 		
-		$this->db = new db();
+		$this->db = new db();    //'/^\/([^\?]+?)\/?(?:\?.*)?$/', 
 		$this->path = preg_match(
-			'/^\/(.+?)\/?(?:\?.*)?$/', 
+			'/^(?:[^:\/]+:\/\/[^\/]+)?\/([^\?]+?)\/?(?:\?.*)?$/', 
 			strtolower($_SERVER['REQUEST_URI']), 
 		$m) ? explode('/', $m[1]) : null;
+		
+		//this may be better assuming there are no absolute URLs
+		//$this->path = explode('/', trim(current(explode('?', $_SERVER['REQUEST_URI'], 2)), '/'));
 		
 		if (@$_SERVER['REDIRECT_STATUS'] >= 400) 
 			$this->error($_SERVER['REDIRECT_STATUS']);
@@ -193,7 +197,7 @@ class page {
 			);
 			if (isset($response[$title])) {
 				if (!$message) $message = $response[$title][1];
-				header($_SERVER['SERVER_PROTOCOL'].' '.($title = $response[$title][0]));
+				header($_SERVER['SERVER_PROTOCOL']."\x20".($title = $response[$title][0]));
 			}
 		}
 		$this->cache = null;
@@ -211,7 +215,7 @@ class page {
 			'ORDER BY timestamp DESC LIMIT 0, 4', 
 		false, true) as $article) array_push(
 			$articles, self::uri($article['id']), 
-			htmlspecialchars($article['title']), 
+			$article['title'], //htmlspecialchars($article['title']), 
 			date('Y-m-d', $article['timestamp'])
 		);
 		
@@ -231,8 +235,11 @@ class page {
 		header('Content-Language: en-US');
 		header('X-UA-Compatible: IE=Edge,chrome=1');
 		
-		if ($this->cache) 
-			file_put_contents($this->cache, $data.'<!-- '.date('c', time()).' -->');
+		if ($this->cache) file_put_contents($this->cache, $data.(
+			$_SERVER['SERVER_ADDR'] == '127.0.0.1' 
+				? '<!-- cached : '.str_replace('-', '.', date('c', time())).' -->' 
+				: ''
+		));
 		
 		if (@str_replace('"', '', $_SERVER['HTTP_IF_NONE_MATCH']) == ($tag = md5($data))) {
 			header($_SERVER['SERVER_PROTOCOL'].' 304 Not Modified');
@@ -248,7 +255,10 @@ class template {
 	private static $templates = array();
 	
 	public static function load($name) {
-		return (self::$templates[$name] = file_get_contents(APP_TEMPLATES.'/'.$name.(!strstr($name, '.') ? '.html' : '')));
+		return (self::$templates[$name] = file_get_contents(
+			APP_TEMPLATES.'/'.$name
+			.(!strstr($name, '.') ? '.html' : '')
+		));
 	}
 	
 	private static function check($vars, $var, $bool = null) {

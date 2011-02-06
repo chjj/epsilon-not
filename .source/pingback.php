@@ -39,12 +39,12 @@ function rpc_fault($fault_code, $str = null) {
 function request_url($url) {
 	if (function_exists('curl_init')) {
 		$request = curl_init();
-		curl_setopt($request, CURLOPT_URL, $url);
+		curl_setopt($request, CURLOPT_TIMEOUT, 5);
+		curl_setopt($request, CURLOPT_MAXREDIRS, 1);
 		curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($request, CURLOPT_HEADER, false);
-		curl_setopt($request, CURLOPT_TIMEOUT, 5);
+		curl_setopt($request, CURLOPT_URL, $url);
 		curl_setopt($request, CURLOPT_CUSTOMREQUEST, 'GET');
-		curl_setopt($request, CURLOPT_MAXREDIRS, 1);
 		$response = curl_exec($request);
 		curl_close($request);
 		return $response;
@@ -67,18 +67,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && @stristr($_SERVER['CONTENT_TYPE'], '
 if (!empty($body) && strstr($body, '<methodName>pingback.ping</methodName>')) {
 	//look for the uri's with a regex
 	if (preg_match_all('/
-		<name>\s*([^<]+?)\s*<\/name>\s*
-		<value>\s*<string>\s*(?:<!\[CDATA\[)?(.+?)(?:\]\]>)?\s*<\/string>\s*<\/value>
+		<param>\s*<value>\s*(?:<string>)?\s*
+			(?:<!\[CDATA\[)?([^<>]+?)(?:\]\]>)?
+		\s*(?:<\/string>)?\s*<\/value>\s*<\/param>
 	/sx', $body, $m)) {
 		$db = new db();
 		
 		//grab the uri's
-		for ($i = 0; $i < count($m[0]); $i++) {
-			if ($m[1][$i] == 'sourceURI') 
-				$source_uri = str_replace('&amp;', '&', trim($m[2][$i]));
-			elseif ($m[1][$i] == 'targetURI') 
-				$target_uri = str_replace('&amp;', '&', trim($m[2][$i]));
-		}
+		$source_uri = str_replace('&amp;', '&', trim($m[1][0]));
+		$target_uri = str_replace('&amp;', '&', trim($m[1][1]));
 		
 		//make sure they're not the same
 		($source_uri == $target_uri) && rpc_fault(33);
@@ -148,7 +145,7 @@ if (!empty($body) && strstr($body, '<methodName>pingback.ping</methodName>')) {
 		rpc_fault(16);
 	}
 } else {
-	rpc_fault(0);
+	rpc_fault(0); //Fault Code: -32601 Requested method not found
 }
 exit(
 	'<?xml version="1.0"?>'."\n".
@@ -158,4 +155,62 @@ exit(
 	'	</param></params>'."\n".
 	'</methodResponse>'
 );
+
+
+/* potential functionality for sending a pingback on article post
+function send_pingback($data) {
+//parse the post to check for external links ()
+if (preg_match_all('/href=[\'"]?(https?:\/\/[^\s"\'>]+)/i', $data['content'], $s)) for ($s[1] as $target_uri) {
+	//make sure it's not an internal link
+	if (stristr($target_uri, APP_HOST)) continue;
+	
+	//request the first 5kb of the link to look for pingback header/link
+	$request = curl_init();
+	curl_setopt($request, CURLOPT_TIMEOUT, 5);
+	curl_setopt($request, CURLOPT_MAXREDIRS, 1);
+	curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($request, CURLOPT_HEADER, true);
+	curl_setopt($request, CURLOPT_URL, $target_uri);
+	curl_setopt($request, CURLOPT_CUSTOMREQUEST, 'GET');
+	curl_setopt($request, CURLOPT_HTTPHEADER, array('Range: bytes=0-5120'));
+	list($headers, $body) = explode("\r\n\r\n", curl_exec($request), 2);
+	curl_close($request);
+	
+	//examine the headers and body
+	if ($headers && $body) {
+		//check for X-Pingback header and link/@rel=pingback and grab the pingback url
+		if (preg_match('/\r\nX-Pingback:([^\r\n]+)/i', $headers, $m)) {
+			$pingback_url = $m[1];
+		} elseif (preg_match('/<link[^>]+pingback[^>]+>/i', $body, $m)) {
+			$pingback_url = preg_replace('/^<[^>]+href=[\'"]?([^\s\'"]+)[\'"]?[^>]+>/', '$1', $m[0]);
+		}
+		
+		//send a pingback with the appropriate data
+		if (isset($pingback_url)) {
+			$source_uri = 'http://'.APP_HOST.page::uri($data['id']);
+			
+			$request = curl_init();
+			curl_setopt($request, CURLOPT_TIMEOUT, 5);
+			curl_setopt($request, CURLOPT_MAXREDIRS, 1);
+			curl_setopt($request, CURLOPT_RETURNTRANSFER, false);
+			curl_setopt($request, CURLOPT_URL, trim($pingback_url));
+			curl_setopt($request, CURLOPT_CUSTOMREQUEST, 'POST');
+			curl_setopt($request, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+			curl_setopt($request, CURLOPT_POSTFIELDS, (
+				'<?xml version="1.0"?>'."\n".
+				'<methodCall>'."\n".
+				'	<methodName>pingback.ping</methodName>'."\n".
+				'	<params>'."\n".
+				'		<param><value><string><![CDATA['.$source_uri.']]></string></value></param>'."\n".
+				'		<param><value><string><![CDATA['.$target_uri.']]></string></value></param>'."\n".
+				'	</params>'."\n".
+				'</methodCall>'
+			));
+			curl_exec($request);
+			curl_close($request);
+		}
+	}
+}
+}*/
+
 ?>

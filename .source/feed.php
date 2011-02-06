@@ -3,7 +3,7 @@ require('./init.php');
 header('Content-Type: application/atom+xml; charset=utf-8');
 
 $db = new db();
-$data = array('host' => $_SERVER['HTTP_HOST']);
+$data = array('host' => APP_HOST);
 
 foreach ($db->fetch('*', 'articles', 'ORDER BY timestamp DESC LIMIT 0, 10', false, true) as $article) {
 	$updated = $article['timestamp'];
@@ -12,7 +12,7 @@ foreach ($db->fetch('*', 'articles', 'ORDER BY timestamp DESC LIMIT 0, 10', fals
 	array_push($data, 
 		htmlspecialchars($article['title']), 
 		page::uri($article['id']), 
-		'tag:'.$_SERVER['HTTP_HOST'].','
+		'tag:'.APP_HOST.','
 			.date('Y', $article['timestamp']).':'.$article['id'],
 		date(DATE_ATOM, $article['timestamp']), 
 		date(DATE_ATOM, $updated),

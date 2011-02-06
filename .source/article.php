@@ -101,8 +101,8 @@ if (isset($page->path[1])) {
 	if (isset($data['parent'])) 
 		page::redirect(page::uri($data['parent']));
 	if ($page->path[0]) {
-		header('X-Pingback: http://'.$_SERVER['HTTP_HOST'].'/pingback');
-		$page->title = $data['title'];
+		header('X-Pingback: http://'.APP_HOST.page::uri('pingback'));
+		$page->title = htmlspecialchars(preg_replace('/<[^>]+>/', '', $data['title']));
 		if ($data['comments']) {
 			$comments = array();
 			if ($rows = $page->db->fetch('*', 'comments', 
@@ -123,6 +123,7 @@ if (isset($page->path[1])) {
 			}
 		}
 	} else {
+		//this may not work because google is stupid
 		header('Link: <'.page::uri($data['id']).'>; rel=canonical');
 	}
 	$prev = $page->db->fetch('id, title', 'articles', 'WHERE timestamp < ? ORDER BY timestamp DESC LIMIT 0, 1', 

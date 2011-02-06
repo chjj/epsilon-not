@@ -19,7 +19,7 @@ if (APP_LOGIN) {
 		page::redirect(page::uri('admin'));
 	}
 	//a simple command line to test code on my local server
-	if ($_SERVER['HTTP_HOST'] == 'localhost' && isset($_POST['code'])) {
+	if ($_SERVER['SERVER_ADDR'] == '127.0.0.1' && isset($_POST['code'])) {
 		ob_start();
 		$output = eval($_POST['code']);
 		$output = ob_get_clean().$output;
@@ -34,7 +34,7 @@ $page->content = template::parse('section', array(
 	'title' => $page->title, 
 	'content' => template::parse('admin', array(
 		'login' => APP_LOGIN,
-		'local' => ($_SERVER['HTTP_HOST'] == 'localhost'),
+		'local' => ($_SERVER['SERVER_ADDR'] == '127.0.0.1'),
 		'code' => (isset($_POST['code']) ? $_POST['code'] : 'return 1;'),
 		'output' => (isset($output) ? $output : 'No result.')
 	))

@@ -9,7 +9,7 @@ article, hgroup, figure, figcaption { display: block; }
 ::-moz-selection { background: rgba(0, 0, 0, 0.5); color: rgba(255, 255, 255, 0.8); }
 
 /* /---/ text level semantics /---/ */
-a { text-decoration: none; } /* i hate styling links */
+a { text-decoration: none; text-shadow: none; } /* i hate styling links */
 	a:focus { outline: none; }
 	nav a:hover, header + * a:hover { text-decoration: underline; }
 		h1 > a:hover, footer > a:hover { text-decoration: none; }
@@ -25,24 +25,24 @@ p, ul, ol, dl, dd, figure, blockquote, pre, hr { margin: 0 0 20px; padding: 0; w
 
 /* /---/ content blocks /---/ */
 figure, blockquote, pre { padding: 20px; }
-	figure > *, blockquote > *, pre > * { padding: 0; }
+	figure > *, blockquote > *, pre > * { padding: 0; background: transparent; }
 	figcaption { margin: 20px 20px 0 20px; }
-	blockquote { margin-left: 45px; padding-bottom: 1px; }
+	blockquote { margin-left: 45px; padding-bottom: 1px; margin-top: -1px; }
 		blockquote:before { content: "“"; float: left; margin: -30px 0 0 -65px; font: 90px/1 serif; }
 		blockquote > cite { display: block; margin: 20px 40px; font-style: italic; }
 	pre { white-space: pre-wrap; }
 		pre > code { font-size: 11px; }
 		pre > code[title]:before { float: right; margin: -10px -5px 0 0; content: "[" attr(title) "]"; }
 
-h1, h2, h3, h4, h5, h6, dt { font: normal 43px/20px serif; letter-spacing: 0.05em; padding: 0; margin: 0 0 20px; }
-	h1 { line-height: 40px; }
+h1, h2, h3, h4, h5, h6, dt { font: normal 60px/20px serif; letter-spacing: 0.05em; padding: 0; margin: 0 0 20px; }
+	h1 { line-height: 60px; }
 	h2 { font-size: 26px; }
 	h3, dt { font-size: 22px; }
 	h4 { font-size: 18px; }
 	h5, h6 { font-size: 16px; }
 
-hr { height: auto; border: none; text-align: center; cursor: default; } 
-	hr:before { content: "∙ § ∙"; font: italic 40px/1 serif; color: rgba(0, 0, 0, 0.2); }
+hr { height: auto; border: none; text-align: center; cursor: default; color: inherit; } 
+	hr:before { content: "∙ § ∙"; font: italic 40px/1 serif; }
 
 img { 
 	display: block; outline: none; border: solid 1px; opacity: 0.6; -webkit-transition: 0.25s; 
@@ -76,49 +76,44 @@ body > article > header + p:first-line, h1 + p:first-line { font-weight: bold; }
 blockquote > p:first-child:first-letter, 
 body > article > header + p:first-letter, 
 h1 + p:first-letter, aside[role="note"]:first-letter,
-form > p:first-letter { float: left; font: 40px/28px serif; padding: 8px 3px 0 0; }
+form > p:first-letter { 
+	float: left; font: 40px/28px serif; padding: 8px 3px 0 0; 
+	text-shadow: rgba(255, 255, 255, 0.3) 1px 1px 1px; 
+}
 
 /* /--/ lists /--/ */
 ol, ul { padding-left: 40px; }
 	li { margin: 0 0 10px; padding: 0; }
+		li:nth-child(odd):last-child { padding-bottom: 10px; }
 dd { margin-left: 20px; }
 
 /* /-=-=-/ layout design /-=-=-/ */
-@media only all { 
-html { 
-	font: 12px/20px verdana, sans-serif; cursor: default; overflow-y: scroll; 
-	width: 960px; margin: 0 auto; height: 100%; padding-bottom: 40px; 
-	-webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;
-}
-body {
-	min-height: 100%; padding: 20px 0; margin: 0 100px; -moz-box-shadow: rgba(0, 0, 0, 0.5) 0 -10px 10px; 
-	-webkit-box-shadow: rgba(0, 0, 0, 0.5) 0 0 10px; box-shadow: rgba(0, 0, 0, 0.5) 0 0 10px; 
-	/* firefox wrongly adds the box shadow blur radius to the scrollHeight, 
-	   so it needs to be subtracted from the y offset */
-}
+@media only all {
+html, body > header > * { width: 920px; margin: 0 auto; }
+html { font: 12px/20px verdana, sans-serif; overflow-y: scroll; }
+body { padding: 20px 0; margin: 0 100px; }
 
 	/* /---/ page header /---/ */
 	body > header { height: 24px; position: fixed; z-index: 1; top: 0; left: 0; right: 0; border-bottom: solid 1px; }
-		body > header > * { width: 960px; margin: 0 auto; }
 		
 		/* /--/ header h1 /--/ */
-		a[rel~=home] { 
+		a[rel~="home"] { 
 			position: absolute; z-index: 1; height: 35px; width: 35px; padding: 0; letter-spacing: 0;
-			margin: 8px 0 0 48px; font: 30px/23px verdana; text-indent: 2px; overflow: hidden;
+			margin: 8px 0 0 48px; font: 30px/23px verdana; overflow: hidden;
 			border: solid 1px; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; 
 		}
-			a[rel~=home]:before { content: "ε"; display: block; margin-left: 1px; padding-bottom: 30px; }
-			a[rel~=home]:after { content: "0"; font-size: 75%; position: absolute; top: 6px; right: 4px; }
+			a[rel~="home"]:before { content: "ε"; display: block; margin-left: 3px; padding-bottom: 30px; }
+			a[rel~="home"]:after { content: "0"; font-size: 75%; position: absolute; top: 6px; right: 4px; }
 			
 			/* make the logo spin every 10 seconds */
 			@-webkit-keyframes spin { 0% { -webkit-transform: rotate(-360deg); } 9%, 100% { -webkit-transform: none; } }
-			a[rel~=home] { -webkit-animation: spin 11s linear 0s infinite; }
+			a[rel~=home] { -webkit-animationz: spin 11s linear 0s infinite; }
 		
 		/* /--/ header nav /--/ */
-		nav > ul { list-style: none; margin: 0 100px; padding-left: 5px; }
+		nav > ul { list-style: none; margin: 0 100px; padding: 0; }
 			nav li { 
-				margin: 6px 20px 0 0; float: left; font: 12px/1 verdana; 
-				letter-spacing: 2px; text-transform: lowercase; 
+				margin: 6px 20px 0 0; float: left; line-height: 1;
+				letter-spacing: 2px; text-transform: lowercase;
 			}
 				nav li:before { content: "▪"; margin-left: 1px; margin-right: 4px; }
 		
@@ -141,24 +136,23 @@ body {
 				aside a > time { display: none; }
 		
 	/* /---/ content section /---/ */
-	body > header + * { cursor: auto; margin: 20px; padding: 0 20px; font-family: verdana, sans-serif; }
-		
+	body:before, body:after { content: "\20"; display: block; margin-bottom: 20px; }
+	
 		/* /--/ content header /--/ */
-		header + * h1 { margin-left: -20px; margin-right: -20px; padding: 15px 0 10px; text-shadow: #fff 1px 1px; }
-			header + * h1 > a { color: inherit; }
-				header + * h1 > a:hover:after { position: absolute; content: "«"; font: 1.1em/0.7em arial; }
+		header + * h1 { padding: 10px 0; }
+			header + * h1 > a { color: inherit; text-shadow: inherit; }
 		h1 + time { 
-			position: fixed; z-index: 1; top: 12px; right: 50%; height: 14px; margin-right: -360px; 
-			padding: 4px; border: solid 1px; line-height: 1; letter-spacing: 2px; text-indent: 2px;
+			position: fixed; z-index: 1; top: 6px; right: 50%; height: 14px; margin-right: -360px; 
+			padding: 0; line-height: 1; letter-spacing: 2px; text-indent: 2px;
 		}
 			time > a { color: inherit; text-shadow: inherit; text-decoration: none !important; }
 			time sup { font-size: 70%; line-height: 0; text-transform: none; }
 		
 		/* /--/ aside boxes /--/ */
 		aside[role="note"] { 
-			width: 100px; padding: 10px; margin: 10px -40px 10px 20px;
-			float: right; font-size: 10px; -webkit-border-radius: 5px 0 0 5px; 
-			-moz-border-radius: 5px 0 0 5px; border-radius: 5px 0 0 5px; 
+			width: 100px; padding: 10px; margin: 10px 0 10px 20px;
+			float: right; font-size: 10px; -webkit-border-radius: 5px; 
+			-moz-border-radius: 5px; border-radius: 5px; 
 		}
 			aside[role="note"] a { border-bottom: dotted 1px; text-decoration: none !important; }
 		
@@ -168,7 +162,7 @@ body {
 			aside > article { margin: 20px 30px; position: relative; } 
 				aside > article h3 { margin-top: 0; margin-left: -10px; }
 					h3 > a:hover { text-decoration: underline; }
-						h3 > a:first-child { color: inherit; }
+						h3 > a:first-child { color: inherit; text-shadow: inherit; }
 					h3 > img { float: left; margin-right: 10px; height: 18px; width: 18px; }
 				aside [pubdate] { display: none; font-size: 12px; position: absolute; top: 1px; right: -10px; }
 					aside > article:hover [pubdate] { display: block; }
@@ -203,7 +197,7 @@ body {
 			section > ol time { display: block; }
 		
 		/* /--/ content footer /--/ */
-		header + * > footer { position: fixed; z-index: 1; top: 11px; left: 50%; margin-left: 399px; width: 62px; }
+		header + * > footer { position: fixed; z-index: 1; top: 11px; left: 50%; margin-left: 379px; width: 62px; }
 			header + * > footer > a { 
 				display: block; overflow: hidden; border: solid 1px; 
 				height: 20px; width: 21px; padding: 2px;
@@ -218,20 +212,20 @@ body {
 					a[rel~="next"]:before { content: "»"; }
 					a[href="#comments"]:before, 
 					footer > a[rel~="bookmark"]:before { content: "#"; font-size: 25px; line-height: 20px; }
-					a[title~="Delete"]:before { content: "x"; font-size: 37px; }
+					a[title^="Delete"]:before { content: "x"; font-size: 37px; }
 	
 	/* /---/ page footer /---/ */
 	body > footer { 
 		position: fixed; z-index: 1; left: 0; right: 0; bottom: 0; height: 24px; border-top: solid 1px; 
-		-webkit-box-shadow: rgba(0, 0, 0, 0.4) 0 -2px 10px; -moz-box-shadow: rgba(0, 0, 0, 0.4) 0 -2px 10px; 
-		box-shadow: rgba(0, 0, 0, 0.4) 0 -2px 10px; 
+		-webkit-box-shadow: rgba(0, 0, 0, 0.4) 0 -2px 8px; -moz-box-shadow: rgba(0, 0, 0, 0.4) 0 -2px 8px; 
+		box-shadow: rgba(0, 0, 0, 0.4) 0 -2px 8px; 
 	}
-		footer > form { position: absolute; top: -12px; left: 50%; margin-left: -440px; } 
+		footer > form { position: absolute; top: -11px; left: 50%; margin-left: -420px; } 
 			footer [type="submit"] { 
-				position: relative; z-index: 1; height: 29px; width: 29px; margin-left: -20px; margin-top: -4px;
+				position: relative; z-index: 1; width: 28px; height: 28px; margin-left: -20px; margin-top: -3px;
 				border: solid 2px; -webkit-transform: rotate(45deg); -moz-transform: rotate(45deg); 
 				-o-transform: rotate(45deg); -ms-transform: rotate(45deg); transform: rotate(45deg);
-				float: left; cursor: pointer; color: rgba(0, 0, 0, 0) !important;
+				float: left; cursor: pointer; color: rgba(0,0,0,0); /* opera doesnt support transparent */
 			}
 			footer [type="search"] { 
 				float: right; width: 45px; height: 22px; margin-left: -11px; -moz-box-shadow: rgba(0, 0, 0, 0.4) 1px 1px 10px;
@@ -242,149 +236,109 @@ body {
 			}
 				form:hover > [type="search"], [type="search"]:focus { width: 145px; }
 		footer > small { 
-			display: block; margin-top: 6px; font: 11px/1 verdana, sans-serif;
-			text-align: center; text-transform: uppercase; letter-spacing: 2px; 
+			display: block; text-align: center; text-transform: uppercase; letter-spacing: 2px; 
+			font-size: 11px; line-height: 1; margin-top: 5px; /*17px && 3px*/
 		}
-			footer > small { margin-top: 3px; line-height: 17px; }
-			a[rel=license] { content: url("/front/by.svg"); vertical-align: top; padding-top: 1px; }
+			/*a[rel="license"] { content: url("/front/by.svg"); vertical-align: top; padding-top: 1px; }*/
+			a[rel="license"] { 
+				display: inline-block; width: 16px; height: 16px; overflow: hidden;
+				vertical-align: middle; position: relative; top: -1px; 
+			}
+				a[rel="license"]:before { content: url("/front/by.svg"); }
 		body > footer > a { 
 			height: 29px; width: 29px; font: 29px/27px arial, sans-serif; overflow: hidden;
-			position: absolute; left: 50%; top: -15px; margin-left: 415px; border: solid 1px; 
+			position: absolute; left: 50%; top: -15px; margin-left: 395px; border: solid 1px; 
 		}
 			body > footer > a:before { content: "▲"; display: block; text-align: center; padding-bottom: 15px; }
 
-/* /---/ color scheme /---/ */
-html { color: #303030; background: #dadbd3; }
-body > header, body > footer, a[rel~=home], h1 + time { 
-	background: url("data:image/png;base64,\
-		iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAALHRFWHRDcmVhdGlvbiBUaW1lAFR1ZSAzMCBOb3YgMjA\
-		xMCAwOTo0NjoyMiAtMDYwMCVwtDEAAAAHdElNRQfaCx4PLiMaW7s3AAAACXBIWXMAAB7CAAAewgFu0HU+AAAABGdBTU\
-		EAALGPC/xhBQAAApRJREFUeNp9VMtOYkEQ7TvyKBOIGCEkJOiCFd/shhULVqgLiCG6MEYEeYm8lSCIqIgiKlwBde7pm\
-		e65NHFuUjT9qjp16lRrj4+PZLPZ2Gw2Y29vb0zTNOb3+/Xj42MKBoMMew6HQ2fGl81mKRAIsLW1NT5Xv9FoROz7+5tb\
-		tVol8V+1XC63tAcg0WiUPj4+aDKZUL1e5yPfrFQq8sLX1xe1220+b7ValEgkqNfrEdCpTuEM43g85mOxWKSlqOolg4q\
-		FtZeXF7q7u6PpdEqNRoPEfr/f56OGhefnZ+bxeHQg+vz85Ly5XC7mdDo5V5lMhsDt5uYmc7vdkj8gPDg4YODa6/Wy1d\
-		VVndVqNRLozs/PKR6PS0QgWUU8HA4X1sR9YfxH1/Wli0bFZTqDwYDMXF9eXtLr6yvd39+T4P3h4YGkw6enJ+mw0+mQc\
-		IjKqYHU4OBScI0sf3W7XVpfX5e8WCwWPq6srHB7f3//I4e/n91u1xEUqDE30Il7+sbGhs6jlMtlgmPIY3t7WyIQqe7v\
-		71MoFFpIX5iQmMiOa0dN6+joSK6hY0D89fX10rl0Ok3z+Zxubm5ooSgqIrMm0SW3t7dkFjKsUCgsBBBOWSwWkxulUok\
-		QFagh2p9aUU0XPEuE0NXFxYVcEFIw625vb4+ACJVXnYJ3jGdnZ7yD5AY4EpIw84WDKBpELigRQc38y5QhUrUD8vn8kt\
-		bwOCSTSUIv/48GTUQ1HDLjrZN6hAR8Ph/XmdVqleuiWEYz8H43tMc1iKy2trZ0fkDlxqwttFskEpHdcHJyQuJ9xDm8M\
-		kIFyIRhIqoEUk9PT8n8jP2U4uHh4YLQr66u/vWySixsZ2eHdnd3ybwuehvFCIfDlEql+LzZbMp7vwGFXfALGoMImAAA\
-		AABJRU5ErkJggg==\
-	") #787c88;
+/* /---/ color scheme /---/ (ch12-5.png) */
+html { 
+	color: #000; background: #aaacb3; /*#9ea1aa;#aaacb3;#b0b2b9;*/
+	background-image: url("data:image/png;base64,\
+		iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAAXNSR0IArs4c6QAAAAZiS0dEAAAAAAAA+UO7fwAAAA\
+		lwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9sCAQgeJJAA+P8AAAAdaVRYdENvbW1lbnQAAAAAAENyZWF0ZWQgd2l0\
+		aCBHSU1QZC5lBwAAAB5JREFUCNdj+P//v/z////lGaCAiQENMMIYMFUYKgDY4wlaBcZalAAAAABJRU5ErkJggg==\
+	");
 }
-nav a, body > footer a, h1 + time { color: #fff; text-shadow: #000 1px 1px 1px; }
-a[rel~=home] { color: #787c88; text-shadow: #000 1px 1px 2px; }
-figure, blockquote, pre, input, textarea { background: #dadbd4; } 
+body > header, body > footer, a[rel~="home"] { background: #787c88; }
+
+nav a, body > footer a, h1 + time { color: #fff; text-shadow: #333 1px 1px; }
+a[rel~="home"] { color: #787c88; text-shadow: #000 1px 1px 1px; }
+
+pre, blockquote, figure, textarea, input { background: rgba(0, 0, 0, 0.05); }
 aside > ol, header + * > footer > a, 
 aside[role="note"], body > footer > a, footer [type="submit"] { background: #48454c; }
-aside > ol a, header + * > footer > a, 
-aside[role="note"], aside[role="note"] a { color: #fff; }
-body, footer [type="search"] { background: #eee; }
 
-body > header, a[rel~=home], aside > ol, 
+footer [type="search"] { background: #fff; }
+
+body > header, a[rel~="home"], aside > ol, 
 body > footer, header + * > footer > a,
 footer [type="submit"], footer [type="search"] { border-color: #fff; }
 
 header li, body > footer, nav a:hover, time > a:hover, 
 body > footer a:hover, nav a[rel~="self"], 
-nav a[rel~="directory"], footer [type="search"] { color: #000; text-shadow: rgba(255, 255, 255, 0.15) 1px 1px; } 
+nav a[rel~="directory"], footer [type="search"],
+header + * h1, h2, h3, h4, h5, h6, dt, 
+blockquote:before, hr:before { color: #000; text-shadow: rgba(255, 255, 255, 0.25) 1px 1px 1px; } 
 
-h1, h2, h3, h4, h5, h6, dt, footer [type="submit"] { color: #48454c; } 
-
-a[rel~=home]:hover, a[rel~=home]:focus, a[rel~=home]:active, 
+a[rel~="home"]:hover, a[rel~="home"]:focus, a[rel~="home"]:active, 
 footer > a:hover, footer [type="submit"]:hover { border-color: orange; }
-aside > ol a:hover, label:hover { color: orange; }
+aside > ol a:hover { color: orange; }
+label:hover, h3 > a[rel~="related"] { color: darkred; }
 
-h3 > a[rel~="related"] { color: steelblue; }
+a { color: #fff; }
+aside > ol a, header + * > footer > a, 
+aside[role="note"], aside[role="note"] a { color: #fff; }
 
-h3 > a[rel="bookmark"], h3 + time, label, label ~ input[type=submit] { color: #888; } /*, hr:before*/
-img, label > input, textarea { border-color: #888; } /*, label, article > aside[id], article + h4 + form*/
+h3 > a[rel="bookmark"], aside [pubdate], 
+label, label ~ input[type="submit"] { color: #fff; } 
+img, label > input, textarea { border-color: #333; } 
 
 /* /---/ box shadows /---/ */
-body > header, a[rel~=home], aside > ol, h1 + time,
+body > header, a[rel~="home"], aside > ol,
 header + * > footer > a, body > footer > a, 
 footer [type="submit"] { 
-	-moz-box-shadow: rgba(0, 0, 0, 0.4) 0 2px 10px; 
-	-webkit-box-shadow: rgba(0, 0, 0, 0.4) 0 2px 10px; 
-	box-shadow: rgba(0, 0, 0, 0.4) 0 2px 10px; 
+	-webkit-box-shadow: rgba(0, 0, 0, 0.4) 0 2px 8px; 
+	-moz-box-shadow: rgba(0, 0, 0, 0.4) 0 2px 8px; 
+	box-shadow: rgba(0, 0, 0, 0.4) 0 2px 8px; 
 }
 
-/* /---/ potential changes /---/ */
 
-/* transparent body and even flow */
-body { background: transparent; border: none; -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; }
-body > header + * { padding: 0; }
-pre, blockquote, figure,
-textarea, input { background: rgba(0, 0, 0, 0.05); }
-aside[role=note] { margin-right: 0; -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px; }
+/* /---/ potential changes || in the midst of rethinking the design /---/ */
 
-body > header + *, header + * h1 { margin-left: 0; margin-right: 0; }
-
-h1 + time { margin-right: -380px; }
-nav > ul { padding-left: 0; }
-
-/* new scheme */
-h3 > a[rel="bookmark"], aside [pubdate], label, label ~ input[type=submit] { color: #eee; } 
-img, label > input, textarea { border-color: #333; } 
-h3 > a[rel~="related"] { color: darkred; }
-a { color: #eee; color: #fff; }
-nav a, h1 + time > a { color: #fff; text-shadow: #333 1px 1px; }
-header + * h1, h2, h3, h4, h5, h6, dt, 
-blockquote:before, hr:before { color: #000; text-shadow: rgba(255, 255, 255, 0.3) 1px 1px 1px; }
-
-dt > a, h3 > a[rel=bookmark] { text-shadow: none; }
-body > header, body > footer, h1 > a[rel~=home] { background-image: none; }
-
-/*h1 + time { padding: 0; border: none; background: transparent; box-shadow: none; top: 6px; }*/
-
+/* more tangible body (chb10.png) */
 html { 
-	color: #000; background: #9ea1aa;
-	/* ch12-5 */
 	background-image: url("data:image/png;base64,\
-		iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAAXNSR0IArs4c6QAAAAZiS0dEAAAAAAAA+\
-		UO7fwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9sCAQgeJJAA+P8AAAAdaVRYdENvbW1lbnQAAA\
-		AAAENyZWF0ZWQgd2l0aCBHSU1QZC5lBwAAAB5JREFUCNdj+P//v/z////lGaCAiQENMMIYMFUYKgDY4wl\
-		aBcZalAAAAABJRU5ErkJggg==\
-	");
-	/* ch7-5 */
-	background-imagez: url("data:image/png;base64,\
-		iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/o\
-		L2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9sCAQoSBARfQ1UAAAAdaVRYdENvbW1lbnQAAA\
-		AAAENyZWF0ZWQgd2l0aCBHSU1QZC5lBwAAAB1JREFUCNdjYGBgEIZiBgYGBgYmBjTAiMQWxqoCAAvEAD9\
-		FQ660AAAAAElFTkSuQmCC\
-	");
+		iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAA\
+		lwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9sCAQoQIApqxQYAAAAdaVRYdENvbW1lbnQAAAAAAENyZWF0ZWQgd2l0\
+		aCBHSU1QZC5lBwAAAB1JREFUCNdjYGBgkIRiBgYGBgYmBjTAiMSWxKoCAA8wAFHTUlJiAAAAAElFTkSuQmCC\
+	"); 
+	height: 100%; padding-bottom: 80px; -webkit-box-sizing: border-box; 
+	-moz-box-sizing: border-box; box-sizing: border-box; 
+} 
+html:after { content: "\20"; display: block; height: 1px; margin-top: -1px; }
+body { 
+	padding: 0 19px; margin: 39px 100px; min-height: 100%; background: #b0b2b9; 
+	border: rgba(255, 255, 255, 0.75) solid 1px; -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0 0 10px; 
+	-moz-box-shadow: rgba(0, 0, 0, 0.3) 0 0 10px; box-shadow: rgba(0, 0, 0, 0.3) 0 0 10px; 
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop(0, rgba(255, 255, 255, 0.25)), color-stop(1.0, transparent)), -webkit-gradient(linear, 0 100%, 0 0, color-stop(0, rgba(255, 255, 255, 0.25)), color-stop(1.0, transparent));
+	-webkit-background-size: 80px, 80px; 
+	background-image: -moz-linear-gradient(-90deg, rgba(255, 255, 255, 0.25) 0, transparent 80px), -moz-linear-gradient(90deg, rgba(255, 255, 255, 0.25) 0, transparent 80px); 
+	background-image: linear-gradient(-90deg, rgba(255, 255, 255, 0.25) 0, transparent 80px), linear-gradient(90deg, rgba(255, 255, 255, 0.25) 0, transparent 80px); 
+	background-position: 0 0, 0 100%; background-repeat: repeat-x;
 }
-
-/* decrease the site width */
-html, body > header > * { width: 920px; }
-header + * > footer { margin-left: 379px; }
-h1 + time { margin-right: -360px; }
-footer > form { margin-left: -420px; }
-body > footer > a { margin-left: 395px; }
-
-/* misc changes */
-html { 
-	height: auto; padding-bottom: 0; -webkit-box-sizing: content-box; 
-	-moz-box-sizing: content-box; box-sizing: content-box; 
-}
-body { min-height: 0; }
-
-/* make sure the margins exist even if there is no section or article element */
-body > header + * { margin: 0; }
-body:before, body:after { content: "\20"; display: block; margin-bottom: 20px; }
+header + * h1 { padding: 0; }
 
 } 
 
 /* /-=-=-/ media queries /-=-=-/ */
 @media print {
-	body, aside[role="note"] { -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; }
-	head, body > header, body > footer, header + * > footer, h1 + time, form { display: none; }
 	html { width: auto; padding: 0; }
 	body { margin: 0; padding: 0; }
-	header + * h1 { margin-left: 0; margin-right: 0; margin-top: 0; }
+	body:before, body:after, body > header, 
+	footer, h1 + time, form { display: none; }
 	h1, h2, h3, h4, h5, h6 { page-break-after: avoid; }
 	pre, blockquote, figure, aside[role="note"] { page-break-inside: avoid; }
-	aside[role="note"] { margin-right: 0; padding: 0; }
 }
 
 /* /---/ adjust design for smaller resolutions /---/ */
@@ -392,7 +346,7 @@ body:before, body:after { content: "\20"; display: block; margin-bottom: 20px; }
 	@viewport { width: device-width; zoom: 1.0; /*user-zoom: fixed;*/ }
 	html, body > header > * { width: auto; }
 	header + * > footer { left: auto; margin-left: 0; right: 19px; }
-	h1 + time { margin-right: 0; right: 120px; right: 100px; }
+	h1 + time { margin-right: 0; right: 100px; }
 	body > footer > form { margin-left: 0; left: 40px; }
 	body > footer > a { left: auto; margin-left: 0; right: 35px; }
 }
@@ -411,9 +365,8 @@ body:before, body:after { content: "\20"; display: block; margin-bottom: 20px; }
 /* at this point, its safe to assume the person is probably using 
    a mobile device that doesnt support position: fixed */
 @media (max-width: 600px) {
-	html { overflow: auto; }
-	body { margin: 0; position: relative; border: none; overflow: hidden; }
-	body > header + * { margin: 0 20px; } /* test */
+	html { overflow: auto; padding: 0; }
+	body { margin: 0; padding: 20px; position: relative; border: none; overflow: hidden; }
 	a[rel~=home] { margin-left: 10px; }
 	header + * h1 { padding-top: 20px; }
 	body > footer > a { right: 10px; }
@@ -424,13 +377,13 @@ body:before, body:after { content: "\20"; display: block; margin-bottom: 20px; }
 	body > header + * > footer { position: absolute; }
 }
 
-@media (max-width: 450px) {
+@media (max-width: 460px) {
 	nav li:nth-child(2) { display: none; }
 	footer > small { letter-spacing: 0; }
 	label > input { width: 35%; }
 }
 
-@media (max-width: 310px) {
+@media (max-width: 320px) {
 	footer > small { font-size: 8px; }
 	nav li:last-child { display: none; }
 }

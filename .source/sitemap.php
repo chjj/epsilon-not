@@ -4,9 +4,9 @@ header('Content-Type: application/xml; charset=utf-8');
 
 $db = new db();
 
-$data = array($_SERVER['HTTP_HOST'].page::uri(), null, 0);
+$data = array(APP_HOST.page::uri(), null, 0);
 foreach ($db->fetch('id, timestamp, title', 'articles') as $article) 
-	array_push($data, $_SERVER['HTTP_HOST'].page::uri($article['id']), date('c', $article['timestamp']), null);
+	array_push($data, APP_HOST.page::uri($article['id']), date('c', $article['timestamp']), '0.5');
 
 exit(template::parse('sitemap.xml', $data));
 ?>
