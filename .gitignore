@@ -1,0 +1,5 @@
+.source/cache/*
+.source/data/*.sqlite
+front/*.css
+front/*.png
+front/*.ico

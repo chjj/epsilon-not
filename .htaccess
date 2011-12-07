@@ -6,13 +6,13 @@ DirectorySlash On
 AddType text/css .css
 AddType application/xml .xml .xbl .xsl
 AddType application/javascript .js
-#AddType text/x-component .htc
+AddType text/x-component .htc
 
 #AddDefaultCharset utf-8
 AddCharset utf-8 .html .xhtml .xml .xbl .css .js .txt
 
 <IfModule mod_deflate.c>
-	AddOutputFilterByType DEFLATE text/html text/css text/plain application/javascript application/xml application/xhtml+xml application/atom+xml
+  AddOutputFilterByType DEFLATE text/html text/css text/plain application/javascript application/xml application/xhtml+xml application/atom+xml
 </IfModule>
 
 #ErrorDocument 403 /
@@ -41,6 +41,10 @@ RewriteRule ^/?.+?$ - [L]
 
 # no trailing slash!
 RewriteRule ^/?(.+?)/$ http://%{HTTP_HOST}/$1 [R=301,L]
+
+# only way of passing the request line to php
+RewriteCond %{THE_REQUEST} ^.+$ 
+RewriteRule ^ - [E=REQUEST_LINE:%0]
 
 # articles or the home page
 RewriteCond %{REQUEST_URI} ^/([^/\?]+)?.*?$

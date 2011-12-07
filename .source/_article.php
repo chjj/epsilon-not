@@ -1,20 +1,21 @@
 <?php
 require('./init.php');
 
-$page = new page();
+$cache = page_cache(APP_CACHE);
+$path = page_path();
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($page->path[0])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($path[0])) {
   $data = array_map('trim', $_POST);
-  if (empty($data)) $page->error(400);
+  if (empty($data)) page_error(400);
   
-  if ($page->path[0] === 'post') {
-    if (!APP_LOGIN) $page->error(403);
+  if ($path[0] === 'post') {
+    if (!APP_LOGIN) page_error(403);
     
     if (strlen($data['title']) < 5 || strlen($data['content']) < 20) {
-      $page->error('Form Error', 'You must enter a title and content.');
+      page_error('Form Error', 'You must enter a title and content.');
     }
     
-    $page->db->insert('articles', array(
+    db_insert('articles', array(
       'title' => $data['title'],
       'id' => ($slug = preg_replace('/[^\w\-]/', '', str_replace("\x20", '-', 
         strtolower($data['slug'] ? $data['slug'] : $data['title'])
@@ -23,44 +24,44 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($page->path[0])) {
       'content' => $data['content'],
       'allow_comments' => isset($data['allow_comments']) ? 1 : null
     ));
-  } elseif (isset($page->path[1])) {
-    if (!APP_LOGIN) $page->error(403);
+  } elseif (isset($path[1])) {
+    if (!APP_LOGIN) page_error(403);
     
-    $table = strstr($page->path[0], 'comment-') ? 'comments' : 'articles';
+    $table = strstr($path[0], 'comment-') ? 'comments' : 'articles';
     
-    if (!$page->db->grab('id', $table, 
-      'WHERE id=?', ($data['id'] = str_replace('comment-', '', $page->path[0]))
-    )) $page->error(404);
+    if (!db_grab('id', $table, 
+      'WHERE id=?', ($data['id'] = str_replace('comment-', '', $path[0]))
+    )) page_error(404);
     
     if ($table === 'comments') {
-      $slug = $page->db->grab('parent', 'comments', 'WHERE id=?', $data['id']);
+      $slug = db_grab('parent', 'comments', 'WHERE id=?', $data['id']);
     }
     
-    if ($page->path[1] === 'edit') {
+    if ($path[1] === 'edit') {
       if ($table === 'articles') {
-        $slug = $page->path[0];
+        $slug = $path[0];
         $data['allow_comments'] = isset($data['allow_comments']) ? 1 : null;
       }
       $data['timestamp'] = strtotime($data['timestamp']);
-      $page->db->update($table, 'id=:id', $data);
-    } elseif ($page->path[1] == 'delete') {
+      db_update($table, 'id=:id', $data);
+    } elseif ($path[1] == 'delete') {
       if ($table === 'articles') $slug = null;
-      $page->db->delete($table, 'id=?', $data['id']);
+      db_delete($table, 'id=?', $data['id']);
     }
   } else {
-    if (!$page->db->grab('allow_comments', 'articles', 'WHERE id=?', $page->path[0])) {
-      $page->error(
+    if (!db_grab('allow_comments', 'articles', 'WHERE id=?', $path[0])) {
+      page_error(
         'Post Error', 
         'This article either does not exist or allow comments.'
       );
     }
     if (!APP_LOGIN) {
-      $last_post = $page->db->grab('timestamp', 'comments', 
+      $last_post = db_grab('timestamp', 'comments', 
         'WHERE poster_ip=? ORDER BY timestamp DESC LIMIT 10, 1', 
         $_SERVER['REMOTE_ADDR']
       );
       if ($last_post && $last_post > (time() - 86400)) {
-        $page->error('Post Error', 'You have already posted 10 times today.');
+        page_error('Post Error', 'You have already posted 10 times today.');
       }
       //form validation is annoying
       if (
@@ -83,13 +84,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($page->path[0])) {
           || strlen($data['content']) < 10 
           || strlen($data['content']) > 2000
         )
-      ) $page->error(
+      ) page_error(
         'Form Error', 
         'All form fields must be entered and completed properly.'
       );
     }
-    $page->db->insert('comments', array(
-      'parent' => $slug = $page->path[0],
+    db_insert('comments', array(
+      'parent' => $slug = $path[0],
       'poster_ip' => APP_LOGIN ? 'admin' : $_SERVER['REMOTE_ADDR'], 
       'poster_name' => $data['poster_name'], 
       'poster_email' => $data['poster_email'],
@@ -98,15 +99,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($page->path[0])) {
       'content' => $data['content']
     ));
   }
-  page::redirect(page::uri($slug)); 
+  redirect(uri($slug)); 
 }
 
-if (isset($page->path[0])) {
-  if ($page->path[0] === 'post') {
-    if (!APP_LOGIN) $page->error(403);
-    $page->content = template::parse('section', array( 
-      'title' => $page->title = 'Post Article', 
-      'content' => template::parse('form', array(
+if (isset($path[0])) {
+  if ($path[0] === 'post') {
+    if (!APP_LOGIN) page_error(403);
+    $content = template_parse('section', array( 
+      'title' => $title = 'Post Article', 
+      'content' => template_parse('form', array(
         'name' => 'Post Article', 
         'title' => true,
         'slug' => true, 
@@ -115,31 +116,31 @@ if (isset($page->path[0])) {
       ))
     ));
   } else {
-    $data = $page->db->grab('*', 
-      (strstr($page->path[0], 'comment-') ? 'comments' : 'articles'), 
-      'WHERE id=?', str_replace('comment-', '', $page->path[0])
+    $data = db_grab('*', 
+      (strstr($path[0], 'comment-') ? 'comments' : 'articles'), 
+      'WHERE id=?', str_replace('comment-', '', $path[0])
     );
-    if (!$data) $page->error(404);
+    if (!$data) page_error(404);
   }
 } else {
-  $data = $page->db->grab('*', 'articles', 'ORDER BY timestamp DESC LIMIT 0, 1');
+  $data = db_grab('*', 'articles', 'ORDER BY timestamp DESC LIMIT 0, 1');
   if (!$data) {
-    $page->error('Welcome', 'No articles currently exist here.');
+    page_error('Welcome', 'No articles currently exist here.');
   }
 }
 
-if (isset($page->path[1])) {
-  if ($page->path[1] === 'edit') {
-    if (!APP_LOGIN) $page->error(403);
+if (isset($path[1])) {
+  if ($path[1] === 'edit') {
+    if (!APP_LOGIN) page_error(403);
     
-    $page->title = $data['name'] = 'Edit Post';
+    $title = $data['name'] = 'Edit Post';
     if (isset($data['title'])) {
       $data['title'] = htmlspecialchars($data['title']);
     }
     
-    $page->content = template::parse('section', array(
-      'title' => $page->title, 
-      'content' => template::parse('form', array_merge($data, array(
+    $content = template_parse('section', array(
+      'title' => $title, 
+      'content' => template_parse('form', array_merge($data, array(
         'content' => preg_replace(
           '/\r?\n/', '&#x0A;', 
           htmlspecialchars($data['content'])
@@ -148,31 +149,31 @@ if (isset($page->path[1])) {
         'action' => $_SERVER['REQUEST_URI']
       )))
     ));
-  } elseif ($page->path[1] === 'delete') {
-    if (!APP_LOGIN) $page->error(403);
-    $page->title = 'Delete Post';
-    $page->content = template::parse('section', array(
-      'title' => $page->title, 
-      'content' => template::parse('confirm', array(
+  } elseif ($path[1] === 'delete') {
+    if (!APP_LOGIN) page_error(403);
+    $title = 'Delete Post';
+    $content = template_parse('section', array(
+      'title' => $title, 
+      'content' => template_parse('confirm', array(
         'id' => (!isset($data['title']) ? 'comment-' : '').$data['id']
       ))
     ));
   } 
 } elseif (isset($data)) {
   if (isset($data['parent'])) {
-    page::redirect(page::uri($data['parent']));
+    redirect(uri($data['parent']));
   }
   
-  if (isset($page->path[0])) {
-    $page->name = 'article';
-    $page->title = $data['title'];
-    header('X-Pingback: http://'.APP_HOST.page::uri('pingback'));
+  if (isset($path[0])) {
+    $name = 'article';
+    $title = $data['title'];
+    header('X-Pingback: http://'.APP_HOST.uri('pingback'));
     if ($data['allow_comments']) {
       $comments = array();
-      if ($rows = $page->db->fetch('*', 'comments', 
+      if ($rows = db_fetch('*', 'comments', 
         'WHERE parent=? ORDER BY timestamp ASC', $data['id']
       )) foreach ($rows as $i => $comment) {
-        $comments[] = template::parse('comment', array(
+        $comments[] = template_parse('comment', array(
           'id' => $comment['id'], //$i + 1,
           'poster_rel' => ($comment['poster_ip'] == 'admin') 
             ? 'related' : 'external',
@@ -189,40 +190,40 @@ if (isset($page->path[1])) {
           'datetime' => date('c', $comment['timestamp']),
           'avatar' => !empty($comment['poster_email']) 
             ? md5(strtolower($comment['poster_email'])) : false,
-          'content' => page::parse_markup($comment['content'], 3, true),
+          'content' => parse_markup($comment['content'], 3, true),
           'edit' => APP_LOGIN 
-            ? page::uri('comment-'.$comment['id'], 'edit') : false
+            ? uri('comment-'.$comment['id'], 'edit') : false
         ));
       }
     }
   } else {
-    $page->name = 'home';
-    $page->canonical = page::uri($data['id']);
+    $name = 'home';
+    $canonical = uri($data['id']);
     
     //this may not work because google is stupid
-    //header('Link: <'.page::uri($data['id']).'>; rel=canonical');
+    //header('Link: <'.uri($data['id']).'>; rel=canonical');
   }
   
-  $prev = $page->db->grab('id, title', 'articles', 
+  $prev = db_grab('id, title', 'articles', 
     'WHERE timestamp < ? ORDER BY timestamp DESC LIMIT 0, 1', 
     $data['timestamp']
   );
-  $next = $page->db->grab('id, title', 'articles', 
+  $next = db_grab('id, title', 'articles', 
     'WHERE timestamp > ? ORDER BY timestamp ASC LIMIT 0, 1', 
     $data['timestamp']
   );
   
-  $page->content = template::parse('article', array(
+  $content = template_parse('article', array(
     'title' => $data['title'],
-    'permalink' => page::uri($data['id']),
+    'permalink' => uri($data['id']),
     'datetime' => date('c', $data['timestamp']),
     'date' => explode('.', date('F j.S., Y', $data['timestamp'])),
-    'content' => page::parse_markup(
+    'content' => parse_markup(
       $data['content'], 1, false, 
-      !isset($page->path[0])
+      !isset($path[0])
     ),
     'comments' => (isset($comments) ? implode($comments) : false), 
-    'form' => (isset($comments) ? template::parse('form', array(
+    'form' => (isset($comments) ? template_parse('form', array(
       'name' => 'Post Comment',
       'action' => $_SERVER['REQUEST_URI'],
       'poster_name' => true, 
@@ -230,15 +231,15 @@ if (isset($page->path[1])) {
       'poster_site' => true
     )) : false), 
     'prev' => array(
-      'href' => $prev ? page::uri($prev['id']) : false,
+      'href' => $prev ? uri($prev['id']) : false,
       'title' => $prev ? htmlspecialchars($prev['title']) : false
     ),
     'next' => array(
-      'href' => $next ? page::uri($next['id']) : false,
+      'href' => $next ? uri($next['id']) : false,
       'title' => $next ? htmlspecialchars($next['title']) : false
     ),
-    'edit' => APP_LOGIN ? page::uri($data['id'], 'edit') : false
+    'edit' => APP_LOGIN ? uri($data['id'], 'edit') : false
   ));
 }
-exit($page->build());
+exit(page_build($content, $title, $name, $cache, $canonical));
 ?>

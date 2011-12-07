@@ -1,22 +1,22 @@
 <article>
-	<header>
-		<h1><a href="&:permalink;" rel="bookmark">
-			{&:title;}
-		</a></h1>
-		<time datetime="&:datetime;" pubdate="">{<a href="&:edit;">}
-			{&:date;}
-		{+&:edit;</a>}</time>
-	</header>
-	&:content;
-	{<aside id="comments">
-		<h2>Comments</h2>
-		&:comments;
-		&:form;
-	</aside>}
-	<footer>
-		{<a href="&:prev_href;" rel="prev" title="&:prev_title;">Previous Article</a>}
-		{!&:next_href;!&:comments;<a href="&:permalink;" rel="bookmark last" title="Permalink">Current Article</a>}
-		{!&:next_href;+&:comments;<a href="#comments" rel="reply" title="Comments">Post Reply</a>}
-		{<a href="&:next_href;" rel="next" title="&:next_title;">Next Article</a>}
-	</footer>
+  <header>
+    <h1><a href="&:permalink;" rel="bookmark">
+      {&:title;}
+    </a></h1>
+    <time datetime="&:datetime;" pubdate="">{<a href="&:edit;">}
+      {&:date#0;<sup>&:date#1;</sup>&:date#2;}
+    {!!&:edit;</a>}</time>
+  </header>
+  &:content;
+  {<aside id="comments">
+    <h2>Comments</h2>
+    &:comments;
+    &:form;
+  </aside>}
+  <footer>
+    {<a href="&:prev#href;" rel="prev" title="&:prev#title;">Previous Article</a>}
+    {!&:next#href;!&:comments;<a href="&:permalink;" rel="bookmark last" title="Permalink">Current Article</a>}
+    {!&:next#href;!!&:comments;<a href="#comments" rel="reply" title="Comments">Reply</a>}
+    {<a href="&:next#href;" rel="next" title="&:next#title;">Next Article</a>}
+  </footer>
 </article>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-	&[<url>
-		<loc>http://&:_;</loc>
-		{<lastmod>&:_;</lastmod>}
-		{<priority>&:_;</priority>}
-	</url>];
+  &:[<url>
+    <loc>http://&:this#loc;</loc>
+    {<lastmod>&:this#lastmod;</lastmod>}
+    {<priority>&:this#priority;</priority>}
+  </url>];
 </urlset>

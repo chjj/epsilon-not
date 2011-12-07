@@ -1,12 +1,19 @@
 <?php
 require('./init.php');
-header('Content-Type: application/xml; charset=utf-8');
 
-$db = new db();
+$page = new page('application/xml');
 
-$data = array(APP_HOST.page::uri(), null, 0);
-foreach ($db->fetch('id, timestamp, title', 'articles') as $article) 
-	array_push($data, APP_HOST.page::uri($article['id']), date('c', $article['timestamp']), '0.5');
+$urls = array();
+foreach ($page->db->fetch('id, timestamp, title', 'articles') as $article) {
+  $urls[] = array(
+    'loc' => APP_HOST.page::uri($article['id']), 
+    'lastmod' => date('c', $article['timestamp']), 
+    'priority' => '0.5'
+  );
+}
 
-exit(template::parse('sitemap.xml', $data));
+//set the home page priority to zero
+$urls[] = array('loc' => APP_HOST.page::uri(), 'priority' => 0);
+
+exit($page->output(template::parse('sitemap.xml', $urls)));
 ?>

@@ -1,33 +1,16 @@
-	{+&:login;<p>
-		Welcome back, good sir! Options are below. 
-		This area may server a better purpose in the future.
-	</p>
-	<h2>Options</h2>
-	<ul>
-		<li><a href="/post">Post Article</a></li>
-		<li><a href="/admin/clear">Clear Cache</a></li>
-		<li><a href="/admin/logout">Logout</a></li>
-	</ul>
-	{+&:local;<h2>Command Line</h2>
-	<pre>&:output;</pre>
-	<form action="/admin" method="POST" style="overflow:hidden">
-		<label>Code:
-			<textarea name="code" spellcheck="false" style="height:275px">&:code;</textarea>
-		</label>
-		<input type="submit" value="Execute"/>
-	</form>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-	<script src="data:application/javascript;charset=utf-8;base64,
-		JCgnZm9ybScpLmJpbmQoJ3N1Ym1pdCcsIGZ1bmN0aW9uKCkgewoJaWYgKC
-		QoJ3RleHRhcmVhJykudmFsKCkubWF0Y2goL15cJFxzKy8pKSB7CgkJJCgn
-		cHJlJykudGV4dChldmFsKCcoZnVuY3Rpb24oKSB7ICcKCQkJKyQoJ3RleH
-		RhcmVhJykudmFsKCkucmVwbGFjZSgvXlwkXHMrLywgJycpCgkJKyd9KSgp
-		OycpKTsKCX0gZWxzZSB7CgkJJC5wb3N0KCQodGhpcykuYXR0cignYWN0aW
-		9uJyksICQodGhpcykuc2VyaWFsaXplKCksIAoJCQlmdW5jdGlvbihkYXRh
-		KSB7ICQoJ3ByZScpLmh0bWwoZGF0YSk7IH0KCQkpOwoJfQoJJCgnaW5wdX
-		RbdHlwZT0ic3VibWl0Il0nKS5ibHVyKCk7CglyZXR1cm4gZmFsc2U7Cn0pOw==
-	"></script>}}
-	{!&:login;<form action="/admin" method="POST">
-		<label>Password: <input type="password" name="password" required="" autofocus=""/></label>
-		<input type="submit" value="Login"/>
-	</form>}
+  {!!&:login;<p>
+    Welcome back, good sir! Options are below. 
+    This area may server a better purpose in the future.
+  </p>
+  <h2>Options</h2>
+  <ul>
+    <li><a href="/post">Post Article</a></li>
+    <li><form action="/admin" method="POST" role="button">
+      <input type="submit" name="clear" value="Clear Cache"/>
+    </form></li>
+    <li><a href="/admin/logout">Logout</a></li>
+  </ul>}
+  {!&:login;<form action="/admin" method="POST">
+    <label>Password: <input type="password" name="password" required="" autofocus=""/></label>
+    <input type="submit" value="Login"/>
+  </form>}

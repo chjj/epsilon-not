@@ -1,34 +1,33 @@
-		{!&:title;!&:content;<h3>&:name;</h3>}
-		<form action="/" method="POST">
-			{+&:title;<fieldset><label>
-				<input type="checkbox" name="comments"{+&:comments; checked=""}/> 
-				Allow Comments
-			</label></fieldset>}
-			{<label>Your Name:
-				<input type="text" name="poster_name" required="" value="&:poster_name;"/>
-			</label>}
-			{<label>Email Address: 
-				<input type="email" name="poster_email" required="" value="&:poster_email;"/>
-			</label>}
-			{<label>Website URL:
-				<input type="url" name="poster_site" value="&:poster_site;"/>
-			</label>}
-			{<label>Article Title:
-				<input type="text" name="title" required="" value="&:title;"/>
-			</label>}
-			{+&:slug;<label>Article Slug: 
-				<input type="text" name="id"/>
-			</label>}
-			{<label>Timestamp:
-				<input type="text" name="timestamp" required="" value="&:timestamp;"/>
-			</label>}
-			<textarea name="content" required="">&:content;</textarea>
-			{<input type="hidden" name="id" value="&:id;"/>}
-			<input type="submit" name="post" value="&:name;"/>
-			<p><small>
-				Well-formed text-level <abbr title="HyperText Markup Language">HTML</abbr> is allowed. 
-				The <code>title, lang, dir, cite, href, &amp; rel</code> attributes are allowed on their 
-				respective elements.
-			</small></p>
-		</form>
-	{+&:content;<footer><a href="delete" title="Delete Post">Delete</a></footer>}
+    {<h3>&:name;</h3>!&:timestamp;}
+    <form action="&:action;" method="POST">
+      {<label>Your Name:
+        <input type="text" name="poster_name" required="" value="&:poster_name;"/>
+      </label>
+      <label>Email Address: 
+        <input type="email" name="poster_email" required="" value="&:poster_email;"/>
+      </label>
+      <label>Website URL:
+        <input type="url" name="poster_site" value="&:poster_site;"/>
+      </label>}
+      {<fieldset><label>
+        <input type="checkbox" name="allow_comments"{!!&:allow_comments; checked=""}/> 
+        Allow Comments
+      </label></fieldset>
+      <label>Article Title:
+        <input type="text" name="title" required="" value="&:title;"/>
+      </label>}
+      {<label>Article Slug: 
+        <input type="text" name="slug"/>
+      </label>!!&:slug;}
+      {<label>Timestamp:
+        <input type="text" name="timestamp" required="" value="&:timestamp;"/>
+      </label>}
+      <textarea name="content" required="">&:content;</textarea>
+      <input type="submit" value="&:name;"/>
+      <p><small>
+        Well-formed text-level <abbr title="HyperText Markup Language">HTML</abbr> is allowed. 
+        The <code>title, lang, dir, cite, href, &amp; rel</code> attributes are allowed on their 
+        respective elements.
+      </small></p>
+    </form>
+    {<footer><a href="delete" title="Delete Post">Delete</a></footer>!!&:content;}

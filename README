@@ -1,10 +1,12 @@
 epsilon-not.net system
 
+- no longer readily maintained
+
 ideas and hypothetical features:
- - option to preview articles before posting and editing
-   - possibly an article drafting feature
- - more convenient admin link
- - article categories/tags
- - revise form templates
- - add “last_update” field to articles
- - allow for a separate admin stylesheet
+  - option to preview articles before posting and editing
+    - possibly an article drafting feature
+  - more convenient admin link
+  - article categories/tags
+  - revise form templates
+  - add “last_update” field to articles
+  - allow for a separate admin stylesheet
