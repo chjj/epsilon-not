@@ -5,7 +5,7 @@ $page = new page('application/atom+xml');
 
 $entries = array();
 $articles = $page->db->fetch(
-  '*', 'articles', 
+  '*', 'articles',
   'ORDER BY timestamp DESC LIMIT 0, 10'
 );
 
@@ -15,14 +15,14 @@ foreach ($articles as $article) {
     foreach ($m[0] as $t) if (($t=@strtotime($t)) > $updated) $updated = $t;
   }
   $entries[] = array(
-    'title' => htmlspecialchars($article['title']), 
-    'href' => page::uri($article['id']), 
+    'title' => htmlspecialchars($article['title']),
+    'href' => page::uri($article['id']),
     'id' => 'tag:'.APP_HOST.','
       .date('Y', $article['timestamp']).':'.$article['id'],
-    'published' => date(DATE_ATOM, $article['timestamp']), 
+    'published' => date(DATE_ATOM, $article['timestamp']),
     'updated' => date(DATE_ATOM, $updated),
     'content' => preg_replace(
-      '/(?<=h)\d(?=>)/ie', '($0-1)', 
+      '/(?<=h)\d(?=>)/ie', '($0-1)',
       page::parse_markup($article['content'], 3, false)
     )
   );
@@ -31,13 +31,16 @@ foreach ($articles as $article) {
   }
 }
 
-exit($page->output(template::parse('feed.xml', array(
-  'host' => APP_HOST, 
-  //'title' => 'articles',
-  'self' => page::uri('feed'),
-  'alternate' => page::uri(),
-  'id' => 'tag:'.APP_HOST.',2010:index', //'index' - tag:&:host;,2010:&:id;
-  'updated' => date(DATE_ATOM, $last_update),
-  'entries' => $entries
-))));
+exit($page->output(
+  template::parse('feed.xml', array(
+    'host' => APP_HOST,
+    //'title' => 'articles',
+    'self' => page::uri('feed'),
+    'alternate' => page::uri(),
+    //'index' - tag:&:host;,2010:&:id;
+    'id' => 'tag:'.APP_HOST.',2010:index',
+    'updated' => date(DATE_ATOM, $last_update),
+    'entries' => $entries
+  ))
+));
 ?>

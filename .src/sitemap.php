@@ -4,10 +4,12 @@ require('./init.php');
 $page = new page('application/xml');
 
 $urls = array();
-foreach ($page->db->fetch('id, timestamp, title', 'articles') as $article) {
+$articles = $page->db->fetch('id, timestamp, title', 'articles');
+
+foreach ($articles as $article) {
   $urls[] = array(
-    'loc' => APP_HOST.page::uri($article['id']), 
-    'lastmod' => date('c', $article['timestamp']), 
+    'loc' => APP_HOST.page::uri($article['id']),
+    'lastmod' => date('c', $article['timestamp']),
     'priority' => '0.5'
   );
 }

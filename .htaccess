@@ -31,7 +31,7 @@ RewriteRule ^ http://%1/$0 [R=301,L]
 RewriteRule ^(robots\.txt|favicon\.ico)$ /front/$1 [NC,L]
 
 # deny requests to any of the code
-RewriteCond %{THE_REQUEST} /\.source [NC]
+RewriteCond %{THE_REQUEST} /\.src [NC]
 RewriteRule ^ - [F,L]
 
 # stop on a real file or directory
@@ -48,9 +48,8 @@ RewriteRule ^ - [E=REQUEST_LINE:%0]
 
 # articles or the home page
 RewriteCond %{REQUEST_URI} ^/([^/\?]+)?.*?$
-RewriteCond %{DOCUMENT_ROOT}/.source/%1.php !-f
-RewriteRule ^ /.source/article.php [L]
+RewriteCond %{DOCUMENT_ROOT}/.src/%1.php !-f
+RewriteRule ^ /.src/article.php [L]
 
 # any other page
-RewriteRule ^/?([^/]+).*$ /.source/$1.php [L]
-
+RewriteRule ^/?([^/]+).*$ /.src/$1.php [L]
