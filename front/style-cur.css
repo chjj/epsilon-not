@@ -1,7 +1,7 @@
 /* /-------------------------/ (c) Copyright 2010-2011, Christopher Jeffrey (epsilon-not.net) /-------------------------/ */
 
 /* /-=-=-/ html5 elements /-=-=-/ */
-header, footer, nav, section, aside, 
+header, footer, nav, section, aside,
 article, hgroup, figure, figcaption { display: block; }
 
 /* /-=-=-/ basic elements /-=-=-/ */
@@ -9,7 +9,7 @@ article, hgroup, figure, figcaption { display: block; }
 ::-moz-selection { background: rgba(0, 0, 0, 0.5); color: rgba(255, 255, 255, 0.8); }
 
 /* /---/ text level semantics /---/ */
-a, h1 > a:hover { text-decoration: none; } 
+a, h1 > a:hover { text-decoration: none; }
   a:focus { outline: none; }
   a:hover, a:focus { text-decoration: underline; }
 
@@ -40,35 +40,35 @@ h1, h2, h3, h4, h5, h6, dt { font: normal 60px/20px serif; letter-spacing: 0.05e
   h4 { font-size: 18px; }
   h5, h6 { font-size: 16px; }
 
-hr { 
+hr {
   height: auto; border: none; font: italic 60px/50px serif; text-align: center; cursor: default;
-  margin: 0 auto 10px; width: 30px; height: 60px; 
+  margin: 0 auto 10px; width: 30px; height: 60px;
   -webkit-transform: rotate(71deg); -moz-transform: rotate(71deg);
   -o-transform: rotate(71deg); transform: rotate(71deg);
 }
 hr:before { content: "§"; }
 
-img { 
-  display: block; outline: none; border: solid 1px; opacity: 0.6; -webkit-transition: 0.25s; 
-  -moz-transition: 0.25s; -o-transition: 0.25s; transition: 0.25s; 
+img {
+  display: block; outline: none; border: solid 1px; opacity: 0.6; -webkit-transition: 0.25s;
+  -moz-transition: 0.25s; -o-transition: 0.25s; transition: 0.25s;
 }
   :hover > img, img:hover { opacity: 1; }
   p > img { float: right; margin: 0 0 20px 20px; }
   p:nth-of-type(even) > img { float: left; margin: 0 20px 20px 0; }
 
 /* /--/ basic form controls /--/ */
-input, textarea { 
+input, textarea {
   display: block; height: 20px; font: inherit; text-shadow: inherit;
-  margin: 0; padding: 0 2px; -webkit-box-sizing: border-box; 
+  margin: 0; padding: 0 2px; -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box; box-sizing: border-box;
 }
   /* get rid of google chrome outline */
-  input:focus, textarea:focus { outline: none; } 
-  input[type="checkbox"] { 
-    display: inline-block; height: auto; width: auto; 
-    margin: 0; padding: 0; vertical-align: middle; 
+  input:focus, textarea:focus { outline: none; }
+  input[type="checkbox"] {
+    display: inline-block; height: auto; width: auto;
+    margin: 0; padding: 0; vertical-align: middle;
   }
-  input[type="submit"] { 
+  input[type="submit"] {
     width: auto; background: transparent; -webkit-box-shadow: none;
     -moz-box-shadow: none; box-shadow: none; overflow: hidden;
   }
@@ -78,12 +78,12 @@ p { font: 16px/20px serif; }
 body > article > header + p, h1 + p { min-height: 40px; }
 body > article > header + p:first-line, h1 + p:first-line { font-weight: bold; }
 
-blockquote > p:first-child:first-letter, 
-body > article > header + p:first-letter, 
+blockquote > p:first-child:first-letter,
+body > article > header + p:first-letter,
 h1 + p:first-letter, aside[role="note"]:first-letter,
-form > p:first-letter { 
-  float: left; font: 40px/28px serif; padding: 8px 3px 0 0; 
-  text-shadow: rgba(255, 255, 255, 0.3) 1px 1px 1px; 
+form > p:first-letter {
+  float: left; font: 40px/28px serif; padding: 8px 3px 0 0;
+  text-shadow: rgba(255, 255, 255, 0.3) 1px 1px 1px;
 }
 
 /* /--/ lists /--/ */
@@ -99,197 +99,197 @@ textarea { height: 200px; width: 100%; }
 /* /-=-=-/ layout design /-=-=-/ */
 @media only all {
 html, body > header > * { width: 840px; margin: 0 auto; }
-html { 
+html {
   font: 12px/20px verdana, sans-serif; overflow-y: scroll;
-  height: 100%; padding-bottom: 65px; -webkit-box-sizing: border-box; 
+  height: 100%; padding-bottom: 65px; -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box; box-sizing: border-box; max-width: none;
 }
 /*html:after { content: "\20"; display: block; height: 1px; margin-top: -1px; }*/
-head { 
-  display: block; position: fixed; z-index: 1; left: 0; right: 0; bottom: 0; 
-  height: 9px; border-top: solid 1px; 
+head {
+  display: block; position: fixed; z-index: 1; left: 0; right: 0; bottom: 0;
+  height: 9px; border-top: solid 1px;
 }
 head > * { display: none; }
-body { 
-  margin: 39px 60px 24px 60px; min-height: 100%; padding: 1px 40px; 
+body {
+  margin: 39px 60px 24px 60px; min-height: 100%; padding: 1px 40px;
 }
 
   /* /---/ page header /---/ */
   body > header { height: 24px; position: fixed; z-index: 1; top: 0; left: 0; right: 0; border-bottom: solid 1px; }
-    
+
     /* /--/ header h1 /--/ */
-    a[rel~="home"] { 
+    a[rel~="home"] {
       position: absolute; z-index: 1; height: 35px; width: 35px; padding: 0; letter-spacing: 0;
       margin: 8px 0 0 11px; font: 90px/30px verdana; overflow: hidden; border: solid 1px;
     }
       a[rel~="home"]:before { content: "ε"; display: block; margin-left: 3px; padding-bottom: 30px; }
-      
+
       /* make the logo animate every 10 seconds */
-      @-webkit-keyframes heartbeat { 
-        4% { text-shadow: #fff 1px 1px 20px; } 
-        0%, 9%, 100% { text-shadow: #fff 1px 1px; } 
+      @-webkit-keyframes heartbeat {
+        4% { text-shadow: #fff 1px 1px 20px; }
+        0%, 9%, 100% { text-shadow: #fff 1px 1px; }
       }
       a[rel~=home] { -webkit-animation: heartbeat 11s linear 0s infinite; }
-    
+
     /* /--/ header nav /--/ */
     nav > ul { list-style: none; margin: 0 0 0 60px; padding: 0; }
-      nav li { 
+      nav li {
         margin: 6px 20px 0 5px; float: left; line-height: 1;
         letter-spacing: 2px; text-transform: lowercase;
       }
-        nav li > a:after { 
-          content: "\20"; position: absolute; width: 30px; height: 20px; 
+        nav li > a:after {
+          content: "\20"; position: absolute; width: 30px; height: 20px;
           margin-left: -30px; top: 0; background: rgba(255, 255, 255, 0.2);
           top: 5px; background: rgba(255, 255, 255, 0.15); height: 18px;
         }
-  
+
   /* /---/ content section /---/ */
   body:before, body:after { content: "\20"; display: block; margin-bottom: 19px; }
-  
+
     /* /--/ content header /--/ */
-    header + * h1 { 
-      font: 60px/60px arial; margin-left: -20px; margin-right: -20px; 
-      letter-spacing: 0; 
+    header + * h1 {
+      font: 60px/60px arial; margin-left: -20px; margin-right: -20px;
+      letter-spacing: 0;
     }
       header + * h1 > a[href] { color: inherit; text-shadow: inherit; }
-    h1 + time { 
+    h1 + time {
       display: block; font: 14px/20px serif; margin-bottom: 20px;
-      text-transform: uppercase; letter-spacing: 2px; 
+      text-transform: uppercase; letter-spacing: 2px;
     }
       time > a[href] { color: inherit; text-shadow: inherit; }
       time sup { font-size: 70%; line-height: 0; text-transform: none; }
-    
+
     /* /--/ aside boxes /--/ */
-    aside[role="note"] { 
+    aside[role="note"] {
       width: 100px; padding: 10px; margin: 10px 0 10px 20px;
-      float: right; font-size: 10px; -webkit-border-radius: 5px; 
-      -moz-border-radius: 5px; border-radius: 5px; 
+      float: right; font-size: 10px; -webkit-border-radius: 5px;
+      -moz-border-radius: 5px; border-radius: 5px;
     }
       aside[role="note"] a { border-bottom: dotted 1px; text-decoration: none !important; }
-    
+
     /* /--/ article comments /--/ */
     article > aside[id], article + h3 + form { border-top: rgba(0, 0, 0, 0.1) solid 1px; margin-top: -1px; }
       aside > h2, aside > h3 { position: absolute; clip: rect(0, 0, 0, 0); }
-      aside > article { margin: 20px 30px; position: relative; } 
+      aside > article { margin: 20px 30px; position: relative; }
         aside > article h3 { margin-top: 0; margin-left: -10px; }
           h3 > a:hover { text-decoration: underline; }
             h3 > a:first-child { color: inherit; text-shadow: inherit; }
           h3 > img { float: left; margin-right: 10px; height: 18px; width: 18px; }
         aside [pubdate] { display: none; font-size: 12px; position: absolute; top: 1px; right: -10px; }
           aside > article:hover [pubdate] { display: block; }
-      aside > form { margin: 20px; } 
+      aside > form { margin: 20px; }
         article + h3 + form { padding-top: 20px; }
-    
+
     /* /--/ form controls /--/ */
     fieldset { float: right; border: none; margin: -40px 0 0 0; padding: 0; position: relative; }
-    label { 
+    label {
       display: block; margin-bottom: 8px; letter-spacing: 1px; text-transform: uppercase;
-      border-left: rgba(0, 0, 0, 0.075) solid 25px; padding-left: 15px; 
-    } 
+      border-left: rgba(0, 0, 0, 0.075) solid 25px; padding-left: 15px;
+    }
       label > input, textarea {
-        margin-top: 2px; border: solid 1px; 
+        margin-top: 2px; border: solid 1px;
         -webkit-box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 2px inset;
-        -moz-box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 2px inset; 
-        box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 2px inset; 
+        -moz-box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 2px inset;
+        box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 2px inset;
       }
       textarea { width: 100%; height: 188px; padding: 5px; overflow-x: hidden; resize: vertical; margin: 10px 0 8px; }
         h1 ~ form textarea { height: 400px; font-size: 11px; font-family: monospace; }
       label > input { width: 70%; float: right; }
         label > input[type="checkbox"] { float: none; margin-left: -32px; margin-top: -5px; margin-right: 5px; }
-    label ~ input[type="submit"] { 
-      width: auto; height: auto; cursor: pointer; border: none; margin-top: 2px; 
+    label ~ input[type="submit"] {
+      width: auto; height: auto; cursor: pointer; border: none; margin-top: 2px;
       font-size: 14px; text-transform: uppercase; float: right; margin-left: 30px;
     }
     h1 + form[action*="admin"] { float: left; }
       input[type="password"] { width: 200px; display: block; float: none; }
-    form[role="button"], form[role="button"] > input { 
-      display: inline-block; padding: 0; margin: 0; 
-      background: none; border: none; 
+    form[role="button"], form[role="button"] > input {
+      display: inline-block; padding: 0; margin: 0;
+      background: none; border: none;
     }
       form[role="button"] > input:hover { cursor: pointer; text-decoration: underline; }
-    
+
     /* /--/ browse list /--/ */
     section > ol > li { font-size: 13px; }
       section > ol time { display: block; }
-    
+
     /* /--/ content footer /--/ */
-    header + * > footer { 
-      position: fixed; z-index: 1; top: 40px; left: 50%; 
+    header + * > footer {
+      position: fixed; z-index: 1; top: 40px; left: 50%;
       margin-left: 360px; width: 60px; height: 120px;
     }
-      header + * > footer > a { 
-        display: block; overflow: hidden; 
+      header + * > footer > a {
+        display: block; overflow: hidden;
         width: 60px; height: 50px; background: none !important;
-        text-shadow: rgba(255, 255, 255, 0.2) 1px 1px, #000 -1px -1px; 
-        text-shadowz: #000 1px 1px, rgba(255, 255, 255, 0.2) -1px -1px; 
+        text-shadow: rgba(255, 255, 255, 0.2) 1px 1px, #000 -1px -1px;
+        text-shadowz: #000 1px 1px, rgba(255, 255, 255, 0.2) -1px -1px;
         color: darkred !important; text-decoration: none !important;
       }
         header + * > footer > a:hover { color: #a32 !important; }
         header + * > footer > a:first-child { position: absolute; bottom: 0; }
         header + * > footer > a:first-child + a { position: absolute; top: 0; }
         header + * > footer > a:only-child { bottom: auto; }
-        header + * > footer > a:before { 
-          display: block; font: 80px/35px arial, verdana; 
-          text-align: center; padding-bottom: 60px; 
+        header + * > footer > a:before {
+          display: block; font: 80px/35px arial, verdana;
+          text-align: center; padding-bottom: 60px;
         }
           a[rel~="prev"]:before { content: "«"; }
           a[rel~="next"]:before { content: "»"; }
-          a[href="#comments"]:before, 
+          a[href="#comments"]:before,
           footer > a[rel~="bookmark"]:before { content: "#"; font-size: 60px; line-height: 52px; }
           a[title^="Delete"]:before { content: "x"; font-size: 60px; }
-  
+
   /* /---/ page footer /---/ */
   body > footer { position: fixed; z-index: 1; top: 0; right: 50%; margin-right: -365px; margin-right: -355px; }
-    
+
     body > footer > small { display: block; height: 0; width: 0; overflow: hidden; }
     body > footer a, footer > form { position: absolute; top: 0; right: 0; }
-    
-    body > footer a { 
-      margin-top: 4px; height: 18px; width: 18px; overflow: hidden; 
+
+    body > footer a {
+      margin-top: 4px; height: 18px; width: 18px; overflow: hidden;
       -webkit-transition: 0.5s; -moz-transition: 0.5s; -o-transition: 0.5s; transition: 0.5s;
     }
-      body > footer a:hover { 
-        -webkit-transform: rotate(360deg); -moz-transform: rotate(360deg); 
+      body > footer a:hover {
+        -webkit-transform: rotate(360deg); -moz-transform: rotate(360deg);
         -o-transform: rotate(360deg); transform: rotate(360deg);
       }
-    
+
     footer a[rel="license"]:before { display: block; content: url(/front/by.png); }
-    
+
     footer > a[href*="git"] { margin-right: 30px; }
       footer > a[href*="git"]:before { display: block; content: url(/front/github.png); }
-    
+
     footer > a[rel="search"] { margin-top: 3px; margin-right: 60px; text-decoration: none !important; }
-      footer > a[rel="search"]:before { 
+      footer > a[rel="search"]:before {
         display: block; content: "?"; color: #fff;
-        font-size: 20px; line-height: 1; font-size: 18px; 
+        font-size: 20px; line-height: 1; font-size: 18px;
         height: 18px; text-align: center;
       }
       footer > a[rel="search"]:hover:before { color: red; }
-    
-    footer > form { 
-      margin-right: 60px;  padding: 25px 5px 5px; z-index: -1; opacity: 0; pointer-events: none; 
-      -webkit-transition: 0.4s; -moz-transition: 0.4s; -o-transition: 0.4s; transition: 0.4s; 
+
+    footer > form {
+      margin-right: 60px;  padding: 25px 5px 5px; z-index: -1; opacity: 0; pointer-events: none;
+      -webkit-transition: 0.4s; -moz-transition: 0.4s; -o-transition: 0.4s; transition: 0.4s;
     }
       footer > form:target { opacity: 1; pointer-events: auto; }
-      footer > form:before { 
-        display: block; position: absolute; top: 0; content: ""; 
-        background: rgba(255, 255, 255, 0.3); height: 20px; width: 15px; 
-        border-right: rgba(170, 0, 0, 0.3) solid 15px; 
+      footer > form:before {
+        display: block; position: absolute; top: 0; content: "";
+        background: rgba(255, 255, 255, 0.3); height: 20px; width: 15px;
+        border-right: rgba(170, 0, 0, 0.3) solid 15px;
         background: rgba(255, 255, 255, 0.2); border-right: none; width: 20px;
       }
-      footer input[type="search"] { 
-        background: #fff; border: black solid 1px; -webkit-appearance: none; 
-        height: 20px; width: 140px; float: left; font-size: 12px; line-height: 1; 
+      footer input[type="search"] {
+        background: #fff; border: black solid 1px; -webkit-appearance: none;
+        height: 20px; width: 140px; float: left; font-size: 12px; line-height: 1;
         border: none; background: rgba(255, 255, 255, 0.9); padding: 2px;
       }
-      footer input[type="submit"] { 
+      footer input[type="submit"] {
         height: 20px; padding: 0; position: absolute;
-        top: 2px; background: transparent; border: none; 
+        top: 2px; background: transparent; border: none;
         text-transform: lowercase; cursor: pointer;
       }
 
 /* /---/ color scheme /---/ chb15.png */
-html { 
+html {
   color: #333; background: url(/front/texture.png) #858893 fixed; /* rgba(136, 0, 0, 0.3) */
   background-image: url(/front/texture.png), -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0, transparent), color-stop(0.5, #fff), color-stop(1, transparent));
   background-image: url(/front/texture.png), -moz-linear-gradient(45deg, transparent 0%, #fff 50%, transparent 100%);
@@ -297,10 +297,10 @@ html {
 }
 body { background: rgba(255, 255, 255, 0.75); }
 a[rel~=home], body > header, head,
-body > header + * > footer > a, footer > form { 
-  background: rgba(170, 51, 34, 0.65); 
-  background: rgba(170, 51, 34, 0.75); 
-  backgroundz: #a75a4f; 
+body > header + * > footer > a, footer > form {
+  background: rgba(170, 51, 34, 0.65);
+  background: rgba(170, 51, 34, 0.75);
+  backgroundz: #a75a4f;
 }
 body > header, head { border-color: rgba(255, 255, 255, 0.25); }
 
@@ -312,9 +312,9 @@ a[href][rel~="home"] { color: #a32; text-shadow: #fff 1px 1px; }
 
 a[rel~="home"] { border-color: #fff; }
 
-header + * h1, h2, h3, h4, h5, h6, dt, 
+header + * h1, h2, h3, h4, h5, h6, dt,
 nav a[href]:hover, nav a[href][rel~="self"], nav a[href][rel~="directory"],
-blockquote:before { color: #000; } 
+blockquote:before { color: #000; }
 
 a[rel~="home"]:hover, footer > a:hover { border-color: darkred; }
 label:hover, h3 > a[href][rel~="related"] { color: darkred; }
@@ -324,12 +324,12 @@ hr, blockquote:before { color: #a32; color: darkred; colorz: #fff; color: $speci
 a:link, form[role="button"] > input { color: darkred; colorz: #fff; color: $special-color; }
 a:visited { color: #777; color: darkred; colorz: #fff; color: $special-color; }
 
-nav a[href], header + * > footer > a[href], aside[role="note"], 
+nav a[href], header + * > footer > a[href], aside[role="note"],
 aside[role="note"] a[href], footer input[type="submit"] { color: maroon; colorz: #fff; color: $special-color; }
 
-h3 > a[rel="bookmark"], aside [pubdate], 
-label, label ~ input[type="submit"], h1 + time { color: #999; color: darkred; colorz: #fff; color: $special-color; } 
-img, label > input, textarea { border-color: #333; } 
+h3 > a[rel="bookmark"], aside [pubdate],
+label, label ~ input[type="submit"], h1 + time { color: #999; color: darkred; colorz: #fff; color: $special-color; }
+img, label > input, textarea { border-color: #333; }
 
 
 
@@ -340,7 +340,7 @@ header + * h1 { margin-left: 0; margin-right: 0; padding: 10px 0; }
 p { font-family: verdana; font-size: 12px; }
 
 
-/* 
+/*
    #858893
    darkRed
    #146a78
@@ -348,17 +348,17 @@ p { font-family: verdana; font-size: 12px; }
    #50788c -
    #44797f ?
    #72848b t
-   #4b706f 
-   
+   #4b706f
+
    #a64e00
    #656874
    #6a7784
    #727e8c
    #66798d
-   
+
    #e2c186 - old yellow - brighter: #eece89
    #29261f - old yellow border color
-   
+
    good:
    #6b7e94 (#5c6d80 - darker)
    +20 brightness: #77889c;
@@ -366,36 +366,36 @@ p { font-family: verdana; font-size: 12px; }
    +40 brightness: #8191a4;
 */
 
-@var $page-color #8191a4; 
+@var $page-color #8191a4;
 @var $chrome-color #8191a4; /*#334*/
 @var $text-color #000;
 @var $special-color #fff;
 
 
-html { 
-  background-color: $page-color; color: $text-color; 
+html {
+  background-color: $page-color; color: $text-color;
   background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop(0, rgba(0, 0, 0, 0.15)), color-stop(0.2, transparent), color-stop(0.8, transparent), color-stop(1, rgba(0, 0, 0, 0.15)));
   background-image: -moz-linear-gradient(-90deg, rgba(0, 0, 0, 0.15) 0%, transparent 20%, transparent 80%, rgba(0, 0, 0, 0.15) 100%);
-  
+
   /*background-image: url(/web/work/top-gradient.png); background-repeat: repeat-x;*/
 }
 
-body { 
-  text-shadow: rgba(0, 0, 0, 0.025) 0 -1px 0, rgba(255, 255, 255, 0.2) 0 1px 0; 
-  
+body {
+  text-shadow: rgba(0, 0, 0, 0.025) 0 -1px 0, rgba(255, 255, 255, 0.2) 0 1px 0;
+
   /* faster rendering for:  #6b7e94 */
-  text-shadowz: #687b90 0 -1px 0, #8897a9 0 1px 0; 
-  
+  text-shadowz: #687b90 0 -1px 0, #8897a9 0 1px 0;
+
   /* faster rendering for: #7c8da0 */
-  text-shadowz: #798a9d 0 -1px 0, #95a3b3 0 1px 0; 
+  text-shadowz: #798a9d 0 -1px 0, #95a3b3 0 1px 0;
 }
 
 
 /* full yellow design */
 htmlz { padding-bottom: 40px; }
-bodyz { 
-  background: rgba(255, 255, 255, 0.75); 
-  box-shadow: rgba(0, 0, 0, 0.4) 0 0 10px; 
+bodyz {
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow: rgba(0, 0, 0, 0.4) 0 0 10px;
   borderz: 1px; border-stylez: none solid; border-color: #29261f;
   text-shadow: none;
 }
@@ -404,9 +404,9 @@ body > header, head, footer > form { border-color: #29261f; }
 
 input, textarea { color: $text-color; }
 
-body > header, footer > form, head, a[href][rel~=home] { 
-  background: $chrome-color;  
-  box-shadow: rgba(0, 0, 0, 0.4) 0 0 12px; 
+body > header, footer > form, head, a[href][rel~=home] {
+  background: $chrome-color;
+  box-shadow: rgba(0, 0, 0, 0.4) 0 0 12px;
   background-imagez: url(/web/work/bgs/ch15.png) !important;
 }
 
@@ -419,8 +419,8 @@ body > header {
   background-image: -moz-linear-gradient(-90deg, rgba(0, 0, 0, 0.15) 0%, transparent 50%);
 }
 
-head { 
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop(0.5, transparent), color-stop(1, rgba(0, 0, 0, 0.15))); 
+head {
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop(0.5, transparent), color-stop(1, rgba(0, 0, 0, 0.15)));
   background-image: -moz-linear-gradient(-90deg, transparent 50%, rgba(0, 0, 0, 0.15) 100%);
 }
 
@@ -429,24 +429,24 @@ body > header + * > footer > a[href]:before { color: #333; text-shadow: rgba(255
 
 input, textarea, pre, figure, blockquote { backgroundz: #eee; }
 
-/* dark 
-html { background-color: #2a2a2a; color: #ccc; 
+/* dark
+html { background-color: #2a2a2a; color: #ccc;
 background-image: url(/web/work/bgs/ch15.png); background-attachment: scroll; }
-body > header, footer > form, head, a[href][rel~=home] { background-color: #a32; 
+body > header, footer > form, head, a[href][rel~=home] { background-color: #a32;
 background-image: url(/web/work/bgs/ch15.png); }
 a[href][rel~=home] { color: #a32; }
 
 hr, blockquote:before,
 a:link, form[role="button"] > input,
 a:visited,
-h3 > a[rel="bookmark"], aside [pubdate], 
+h3 > a[rel="bookmark"], aside [pubdate],
 label, label ~ input[type="submit"], h1 + time { color: orange; }
 header + * input, header + * textarea, header + * h1, h2, h3, h4, h5, h6, dt { color: #ccc; }
 
 body > header + * > footer > a[href]:before { color: #a32; text-shadow: #fff 1px 1px 1px; }
 
-header > timez:before { 
-  content: "§"; position: fixed; z-index: -1; left: 0; bottom: 0; 
+header > timez:before {
+  content: "§"; position: fixed; z-index: -1; left: 0; bottom: 0;
   height: 500px; width: 500px; font: italic 500px/1 serif;
   text-shadow: #fff 0px 5px 1px; color: #000; opacity: 0.05;
 } */
@@ -457,7 +457,7 @@ header > timez:before {
 @media print {
   html { width: auto; padding: 0; }
   body { margin: 0; padding: 0; }
-  body:before, body:after, body > header, 
+  body:before, body:after, body > header,
   footer, h1 + time, form { display: none; }
   h1, h2, h3, h4, h5, h6 { page-break-after: avoid; }
   pre, blockquote, figure, aside[role="note"] { page-break-inside: avoid; }
@@ -482,7 +482,7 @@ header > timez:before {
   label > input { width: 50%; }
 }
 
-/* at this point, its safe to assume the person is probably using 
+/* at this point, its safe to assume the person is probably using
    a mobile device that doesnt support position: fixed */
 @media (max-width: 600px) {
   html { overflow: auto; padding-bottom: 40px; background-image: none; }
@@ -491,14 +491,14 @@ header > timez:before {
   header + * h1 { padding-top: 20px; margin-left: 0; margin-right: 0; }
   body > footer { right: 5px; }
   body > header + * > footer { height: auto; width: auto; top: 30px; margin: 0 10px 0 0; }
-  body > header + * > footer > a[href] { 
+  body > header + * > footer > a[href] {
     position: static; text-shadow: none; float: left;
-    margin: 0 0 0 20px; width: auto; height: auto; font-size: 11px; 
+    margin: 0 0 0 20px; width: auto; height: auto; font-size: 11px;
   }
   body > header + * > footer > a:before { display: none; }
   nav ul { margin-left: 60px; }
   head { display: none; }
-  body > header, body > footer, 
+  body > header, body > footer,
   body > header + * > footer { position: absolute; }
 }
 

@@ -13,7 +13,7 @@ if (isset($_GET['search'])) {
   }
 
   // convenient way to access the admin page
-  if ($_GET['search'] == '/') page::redirect(page::uri('admin'));
+  if ($_GET['search'] === '/') page::redirect(page::uri('admin'));
 
   // need to remove "_" and "%" due to
   // their special meaning in LIKE queries
@@ -49,7 +49,7 @@ if (isset($_GET['search'])) {
           )
         )
       );
-    } elseif ($page->path[1] == 'latest') {
+    } elseif ($page->path[1] === 'latest') {
       $page->name = 'latest';
       $page->title = 'Latest';
 

@@ -43,7 +43,7 @@ RewriteRule ^/?.+?$ - [L]
 RewriteRule ^/?(.+?)/$ http://%{HTTP_HOST}/$1 [R=301,L]
 
 # only way of passing the request line to php
-RewriteCond %{THE_REQUEST} ^.+$ 
+RewriteCond %{THE_REQUEST} ^.+$
 RewriteRule ^ - [E=REQUEST_LINE:%0]
 
 # articles or the home page

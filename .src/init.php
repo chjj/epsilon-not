@@ -213,10 +213,10 @@ class page {
     $this->updated = filemtime($cache);
 
     // orchestrate the caching
-    if ($_SERVER['REQUEST_METHOD'] === 'GET' 
+    if ($_SERVER['REQUEST_METHOD'] === 'GET'
         && APP_HOST !== '127.0.0.1') {
       header('Last-Modified: '.$this->updated);
-      if ($_SERVER['HTTP_IF_MODIFIED_SINCE'] == $this->updated) {
+      if ($_SERVER['HTTP_IF_MODIFIED_SINCE'] === $this->updated) {
         header(' ', true, 304);
         exit;
       }
@@ -273,10 +273,10 @@ class page {
 
   public function build() {
     $this->output(template::parse('root', array(
-      'title' => $this->title 
+      'title' => $this->title
         ? strtolower(htmlspecialchars(
           preg_replace('/<[^>]+>/', '', $this->title)
-        )) 
+        ))
         : false,
       'content' => $this->content,
       'canonical' => $this->canonical,

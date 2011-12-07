@@ -1,7 +1,7 @@
 <?php
 // i was toying with the idea of using a completely procedural backend
 // a long time ago. this was my attempt at one. it abuses static variables
-// like crazy because php's scoping is stupid. still needs a lot of work. 
+// like crazy because php's scoping is stupid. still needs a lot of work.
 // very sloppy.
 
 error_reporting($_SERVER['SERVER_ADDR'] === '127.0.0.1' ? E_ALL|E_STRICT : 0);
@@ -222,10 +222,10 @@ function page_cache($relevant_file = APP_DATA) {
   $updated = filemtime($relevant_file);
 
   // orchestrate the caching
-  if ($_SERVER['REQUEST_METHOD'] === 'GET' 
+  if ($_SERVER['REQUEST_METHOD'] === 'GET'
       && APP_HOST !== '127.0.0.1') {
     header('Last-Modified: '.$updated);
-    if ($_SERVER['HTTP_IF_MODIFIED_SINCE'] == $updated) {
+    if ($_SERVER['HTTP_IF_MODIFIED_SINCE'] === $updated) {
       header(' ', true, 304);
       exit;
     }
@@ -291,14 +291,14 @@ function page_error($title, $message = null) {
   page_build($content, $title, null, null, $status, APP_TYPE);
 }
 
-function page_build($content, $title = null, 
+function page_build($content, $title = null,
                     $name = null, $canonical = null,
                     $status = null, $type = null) {
   page_output(template_parse('root', array(
-    'title' => $title 
+    'title' => $title
       ? strtolower(htmlspecialchars(
         preg_replace('/<[^>]+>/', '', $title)
-      )) 
+      ))
       : false,
     'content' => $content,
     'canonical' => $canonical,

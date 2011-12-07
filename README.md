@@ -1,6 +1,6 @@
 # epsilon not
 
-My very minimalist PHP weblog. The repo is no longer maintained, but contains 
-the last work I did on it. 
+This is my very old, minimalist PHP weblog. It is no longer maintained,
+but contains the last work I did on it.
 
-There are 3 designs. 2 of which never saw real use. 
+There are 3 designs. 2 of which never saw real use.

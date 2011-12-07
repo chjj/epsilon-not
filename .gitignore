@@ -1,2 +1,2 @@
 .source/cache/*
-.source/data/*.sqlite
+*.sqlite

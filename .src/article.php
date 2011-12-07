@@ -3,7 +3,7 @@ require('./init.php');
 
 $page = new page();
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($page->path[0])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($page->path[0])) {
   $data = array_map('trim', $_POST);
   if (empty($data)) $page->error(400);
 
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($page->path[0])) {
       }
       $data['timestamp'] = strtotime($data['timestamp']);
       $page->db->update($table, 'id=:id', $data);
-    } elseif ($page->path[1] == 'delete') {
+    } elseif ($page->path[1] === 'delete') {
       if ($table === 'articles') $slug = null;
       $page->db->delete($table, 'id=?', $data['id']);
     }

@@ -1,7 +1,7 @@
 /* /-------------------------/ (c) Copyright 2010-2011, Christopher Jeffrey (epsilon-not.net) /-------------------------/ */
 
 /* /-=-=-/ html5 elements /-=-=-/ */
-header, footer, nav, section, aside, 
+header, footer, nav, section, aside,
 article, hgroup, figure, figcaption { display: block; }
 
 /* /-=-=-/ basic elements /-=-=-/ */
@@ -13,7 +13,7 @@ a { text-decoration: none; text-shadow: none; } /* i hate styling links */
   a:focus { outline: none; }
   nav a:hover, header + * a:hover { text-decoration: underline; }
     h1 > a:hover, footer > a:hover { text-decoration: none; }
-  
+
 abbr { border: none; text-decoration: none; }
   abbr[title] { cursor: help; border-bottom: rgba(0, 0, 0, 0.15) solid 1px; }
 
@@ -41,30 +41,30 @@ h1, h2, h3, h4, h5, h6, dt { font: normal 60px/20px serif; letter-spacing: 0.05e
   h4 { font-size: 18px; }
   h5, h6 { font-size: 16px; }
 
-hr { height: auto; border: none; text-align: center; cursor: default; color: inherit; } 
+hr { height: auto; border: none; text-align: center; cursor: default; color: inherit; }
   hr:before { content: "∙ § ∙"; font: italic 40px/1 serif; }
 
-img { 
-  display: block; outline: none; border: solid 1px; opacity: 0.6; -webkit-transition: 0.25s; 
-  -moz-transition: 0.25s; -o-transition: 0.25s; transition: 0.25s; 
+img {
+  display: block; outline: none; border: solid 1px; opacity: 0.6; -webkit-transition: 0.25s;
+  -moz-transition: 0.25s; -o-transition: 0.25s; transition: 0.25s;
 }
   :hover > img, img:hover { opacity: 1; }
   p > img { float: right; margin: 0 0 20px 20px; }
   p:nth-of-type(even) > img { float: left; margin: 0 20px 20px 0; }
 
 /* /--/ basic form controls /--/ */
-input, textarea { 
-  display: block; height: 20px; font: inherit; 
-  margin: 0; padding: 0 2px; -webkit-box-sizing: border-box; 
+input, textarea {
+  display: block; height: 20px; font: inherit;
+  margin: 0; padding: 0 2px; -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box; box-sizing: border-box;
 }
   /* get rid of google chrome outline */
-  input:focus, textarea:focus { outline: none; } 
-  input[type="checkbox"] { 
-    display: inline-block; height: auto; width: auto; 
-    margin: 0; padding: 0; vertical-align: middle; 
+  input:focus, textarea:focus { outline: none; }
+  input[type="checkbox"] {
+    display: inline-block; height: auto; width: auto;
+    margin: 0; padding: 0; vertical-align: middle;
   }
-  input[type="submit"] { 
+  input[type="submit"] {
     width: auto; background: transparent; -webkit-box-shadow: none;
     -moz-box-shadow: none; box-shadow: none; overflow: hidden;
   }
@@ -74,12 +74,12 @@ p { font: 16px/20px serif; }
 body > article > header + p, h1 + p { min-height: 40px; }
 body > article > header + p:first-line, h1 + p:first-line { font-weight: bold; }
 
-blockquote > p:first-child:first-letter, 
-body > article > header + p:first-letter, 
+blockquote > p:first-child:first-letter,
+body > article > header + p:first-letter,
 h1 + p:first-letter, aside[role="note"]:first-letter,
-form > p:first-letter { 
-  float: left; font: 40px/28px serif; padding: 8px 3px 0 0; 
-  text-shadow: rgba(255, 255, 255, 0.3) 1px 1px 1px; 
+form > p:first-letter {
+  float: left; font: 40px/28px serif; padding: 8px 3px 0 0;
+  text-shadow: rgba(255, 255, 255, 0.3) 1px 1px 1px;
 }
 
 /* /--/ lists /--/ */
@@ -91,148 +91,148 @@ dd { margin-left: 20px; }
 /* /-=-=-/ layout design /-=-=-/ */
 @media only all {
 html, body > header > * { width: 820px; margin: 0 auto; }
-html { 
+html {
   font: 12px/20px verdana, sans-serif; overflow-y: scroll;
-  height: 100%; padding-bottom: 70px; -webkit-box-sizing: border-box; 
-  -moz-box-sizing: border-box; box-sizing: border-box; 
+  height: 100%; padding-bottom: 70px; -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box; box-sizing: border-box;
 }
 html:after { content: "\20"; display: block; height: 1px; margin-top: -1px; }
-body { 
-  margin: 35px 40px 25px 60px; min-height: 100%; padding: 0 40px; 
-  border: #900 5px; border-style: solid none; box-shadow: none; 
+body {
+  margin: 35px 40px 25px 60px; min-height: 100%; padding: 0 40px;
+  border: #900 5px; border-style: solid none; box-shadow: none;
 }
 
   /* /---/ page header /---/ */
   body > header { height: 24px; position: fixed; z-index: 1; top: 0; left: 0; right: 0; border-bottom: solid 1px; }
-    
+
     /* /--/ header h1 /--/ */
-    a[rel~="home"] { 
+    a[rel~="home"] {
       position: absolute; z-index: 1; height: 35px; width: 35px; padding: 0; letter-spacing: 0;
       margin: 8px 0 0 11px; font: 90px/30px verdana; overflow: hidden; border: solid 1px;
     }
       a[rel~="home"]:before { content: "ε"; display: block; margin-left: 3px; padding-bottom: 30px; }
-      
+
       /* make the logo animate every 10 seconds */
-      @-webkit-keyframes heartbeat { 
-        4% { text-shadow: #fff 1px 1px 20px; } 
-        0%, 9%, 100% { text-shadow: #fff 1px 1px; } 
+      @-webkit-keyframes heartbeat {
+        4% { text-shadow: #fff 1px 1px 20px; }
+        0%, 9%, 100% { text-shadow: #fff 1px 1px; }
       }
       a[rel~=home] { -webkit-animation: heartbeat 11s linear 0s infinite; }
-    
+
     /* /--/ header nav /--/ */
     nav > ul { list-style: none; margin: 0 0 0 60px; padding: 0; }
-      nav li { 
+      nav li {
         margin: 6px 20px 0 5px; float: left; line-height: 1;
         letter-spacing: 2px; text-transform: lowercase;
       }
-        nav li > a:after { 
-          content: "\20"; position: absolute; width: 30px; height: 20px; 
-          margin-left: -30px; top: 0; background: rgba(255, 255, 255, 0.2); 
+        nav li > a:after {
+          content: "\20"; position: absolute; width: 30px; height: 20px;
+          margin-left: -30px; top: 0; background: rgba(255, 255, 255, 0.2);
         }
-  
+
   /* /---/ content section /---/ */
   body:before, body:after { content: "\20"; display: block; margin-bottom: 20px; }
-  
+
     /* /--/ content header /--/ */
-    header + * h1 { 
-      font: 60px/60px arial; margin-left: -20px; margin-right: -20px; 
-      letter-spacing: 0; 
+    header + * h1 {
+      font: 60px/60px arial; margin-left: -20px; margin-right: -20px;
+      letter-spacing: 0;
     }
       header + * h1 > a[href] { color: inherit; text-shadow: inherit; }
-    h1 + time { 
+    h1 + time {
       display: block; font: 14px/20px serif; margin-bottom: 20px;
       text-transform: uppercase; letter-spacing: 2px; color: #777;
     }
       time > a[href] { color: inherit; text-shadow: inherit; text-decoration: none !important; }
       time sup { font-size: 70%; line-height: 0; text-transform: none; }
-    
+
     /* /--/ aside boxes /--/ */
-    aside[role="note"] { 
+    aside[role="note"] {
       width: 100px; padding: 10px; margin: 10px 0 10px 20px;
-      float: right; font-size: 10px; -webkit-border-radius: 5px; 
-      -moz-border-radius: 5px; border-radius: 5px; 
+      float: right; font-size: 10px; -webkit-border-radius: 5px;
+      -moz-border-radius: 5px; border-radius: 5px;
     }
       aside[role="note"] a { border-bottom: dotted 1px; text-decoration: none !important; }
-    
+
     /* /--/ article comments /--/ */
     article > aside[id], article + h3 + form { border-top: rgba(0, 0, 0, 0.1) solid 1px; margin-top: -1px; }
       aside > h2, aside > h3 { position: absolute; clip: rect(0, 0, 0, 0); }
-      aside > article { margin: 20px 30px; position: relative; } 
+      aside > article { margin: 20px 30px; position: relative; }
         aside > article h3 { margin-top: 0; margin-left: -10px; }
           h3 > a:hover { text-decoration: underline; }
             h3 > a:first-child { color: inherit; text-shadow: inherit; }
           h3 > img { float: left; margin-right: 10px; height: 18px; width: 18px; }
         aside [pubdate] { display: none; font-size: 12px; position: absolute; top: 1px; right: -10px; }
           aside > article:hover [pubdate] { display: block; }
-      aside > form { margin: 20px; } 
+      aside > form { margin: 20px; }
         article + h3 + form { padding-top: 20px; }
-    
+
     /* /--/ form controls /--/ */
     fieldset { float: right; border: none; margin: -40px 0 0 0; padding: 0; }
-    label { 
+    label {
       display: block; margin-bottom: 8px; letter-spacing: 1px; text-transform: uppercase;
-      border-left: rgba(0, 0, 0, 0.075) solid 25px; padding-left: 15px; 
-    } 
+      border-left: rgba(0, 0, 0, 0.075) solid 25px; padding-left: 15px;
+    }
       label > input, textarea {
-        margin-top: 2px; border: solid 1px; 
+        margin-top: 2px; border: solid 1px;
         -webkit-box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 2px inset;
-        -moz-box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 2px inset; 
-        box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 2px inset; 
+        -moz-box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 2px inset;
+        box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 2px inset;
       }
       textarea { width: 100%; height: 188px; padding: 5px; overflow-x: hidden; resize: vertical; margin: 10px 0 8px; }
         h1 ~ form textarea { height: 400px; font-size: 11px; font-family: monospace; }
       label > input { width: 70%; float: right; }
         label > input[type="checkbox"] { float: none; margin-left: -32px; margin-top: -5px; margin-right: 5px; }
-    label ~ input[type="submit"] { 
-      width: auto; height: auto; cursor: pointer; border: none; margin-top: 2px; 
+    label ~ input[type="submit"] {
+      width: auto; height: auto; cursor: pointer; border: none; margin-top: 2px;
       font-size: 14px; text-transform: uppercase; float: right; margin-left: 30px;
     }
     h1 + form[action*="admin"] { width: 50%; }
       input[type="password"] { width: 200px; }
-    
+
     /* /--/ browse list /--/ */
     section > ol > li { font-size: 13px; }
       section > ol time { display: block; }
-    
+
     /* /--/ content footer /--/ */
     header + * > footer { position: fixed; z-index: 1; top: 45px; left: 50%; margin-left: 370px; width: 29px; }
-      header + * > footer > a { 
-        display: block; overflow: hidden; border: solid 1px; 
+      header + * > footer > a {
+        display: block; overflow: hidden; border: solid 1px;
         height: 28px; width: 29px; border-left: none;
       }
         header + * > footer > a:first-child { margin-top: 40px; }
         header + * > footer > a:first-child + a { margin-top: -70px; }
         header + * > footer > a:only-child { margin-top: 0; }
-        header + * > footer > a:before { 
-          display: block; font: 40px/21px arial, verdana; 
-          text-align: center; padding-bottom: 20px; 
+        header + * > footer > a:before {
+          display: block; font: 40px/21px arial, verdana;
+          text-align: center; padding-bottom: 20px;
         }
           a[rel~="prev"]:before { content: "«"; }
           a[rel~="next"]:before { content: "»"; }
-          a[href="#comments"]:before, 
+          a[href="#comments"]:before,
           footer > a[rel~="bookmark"]:before { content: "#"; font-size: 25px; line-height: 28px; }
           a[title^="Delete"]:before { content: "x"; font-size: 37px; }
-  
+
   /* /---/ page footer /---/ */
-  head { 
-    display: block; position: fixed; z-index: 1; left: 0; right: 0; bottom: 0; 
-    height: 9px; border-top: solid 1px; 
+  head {
+    display: block; position: fixed; z-index: 1; left: 0; right: 0; bottom: 0;
+    height: 9px; border-top: solid 1px;
   }
 
 /* /---/ color scheme /---/ */
-html { 
+html {
   color: #333; background: url(/web/work/bgs/chb15.png) #858893 fixed; /* rgba(136, 0, 0, 0.3) */
   background-image: url(/web/work/bgs/chb15.png), -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0, transparent), color-stop(0.5, #fff), color-stop(1, transparent));
   background-image: url(/web/work/bgs/chb15.png), -moz-linear-gradient(45deg, transparent 0%, #fff 50%, transparent 100%);
   background-image: url(/web/work/bgs/chb15.png), linear-gradient(45deg, transparent 0%, #fff 50%, transparent 100%);
-  
+
   /*background-color: #fff;
   background-image: url(/web/work/bgs/chb15.png), -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0, #a32), color-stop(0.5, transparent), color-stop(1, #858893));*/
 }
 body { background: rgba(255, 255, 255, 0.75); }
 a[rel~=home], body > header, head,
-body > header + * > footer > a, footer > form { 
-  background: rgba(170, 51, 34, 0.65); 
+body > header + * > footer > a, footer > form {
+  background: rgba(170, 51, 34, 0.65);
 }
 body > header { border-color: rgba(255, 255, 255, 0.25); }
 
@@ -245,9 +245,9 @@ a[href][rel~="home"] { color: #a32; text-shadow: #fff 1px 1px; }
 a[rel~="home"], head, header + * > footer > a { border-color: #fff; }
 
 header + * h1 { color: darkred; }
-header + * h1:first-line, h2, h3, h4, h5, h6, dt, 
+header + * h1:first-line, h2, h3, h4, h5, h6, dt,
 nav a[href]:hover, nav a[href][rel~="self"], nav a[href][rel~="directory"],
-blockquote:before, hr:before { color: #000; text-shadow: rgba(255, 255, 255, 0.25) 1px 1px 1px; } 
+blockquote:before, hr:before { color: #000; text-shadow: rgba(255, 255, 255, 0.25) 1px 1px 1px; }
 
 a[rel~="home"]:hover, footer > a:hover { border-color: orange; }
 label:hover, h3 > a[rel~="related"] { color: darkred; }
@@ -255,73 +255,73 @@ label:hover, h3 > a[rel~="related"] { color: darkred; }
 a:link { color: darkred; }
 a:visited { color: purple; }
 
-nav a[href], header + * > footer > a[href], aside[role="note"], 
+nav a[href], header + * > footer > a[href], aside[role="note"],
 aside[role="note"] a[href] { color: #fff; }
 
-h3 > a[rel="bookmark"], aside [pubdate], 
-label, label ~ input[type="submit"] { color: #999; } 
-img, label > input, textarea { border-color: #333; } 
+h3 > a[rel="bookmark"], aside [pubdate],
+label, label ~ input[type="submit"] { color: #999; }
+img, label > input, textarea { border-color: #333; }
 
 /* /---/ potential changes || in the midst of rethinking the design /---/ */
 
 body > footer { position: fixed; z-index: 1; top: 0; right: 50%; margin-right: -365px; }
-  
+
   body > footer > small { display: block; height: 0; width: 0; overflow: hidden; }
   body > footer a, footer > form { position: absolute; top: 0; right: 0; }
-  
+
   footer a[rel="license"] { margin-top: 4px; height: 18px; width: 18px; overflow: hidden; }
     footer a[rel="license"]:before { display: block; content: url(/web/work/by18c.png); }
-  
+
   footer > a[href*="git"] { margin-top: 4px; margin-right: 30px; height: 18px; width: 18px; overflow: hidden; }
     footer > a[href*="git"]:before { display: block; content: url(/web/work/github-18.png); }
-  
+
   footer > a[rel="search"] { margin-top: 3px; margin-right: 55px; height: 20px; width: 18px; overflow: hidden; }
-    footer > a[rel="search"]:before { 
+    footer > a[rel="search"]:before {
       display: block; content: "?"; color: #fff;
       font-size: 20px; line-height: 1; font-size: 18px; height: 18px; text-align: center;
     }
     footer > a[rel="search"]:hover:before { color: red; }
-  
+
   footer > a[rel="search"] { margin-top: 3px; height: 18px; width: 18px; margin-right: 60px; }
     footer > a[rel="search"]:before { font-size: 18px; }
-  
+
   body > footer a { -webkit-transition: 0.5s; -moz-transition: 0.5s; -o-transition: 0.5s; transition: 0.5s; }
-    body > footer a:hover { 
-      -webkit-transform: rotate(360deg); -moz-transform: rotate(360deg); 
+    body > footer a:hover {
+      -webkit-transform: rotate(360deg); -moz-transform: rotate(360deg);
       -o-transform: rotate(360deg); transform: rotate(360deg);
     }
-  
-  footer > form { 
-    margin-right: 60px;  padding: 25px 5px 5px; opacity: 0; z-index: -1; 
+
+  footer > form {
+    margin-right: 60px;  padding: 25px 5px 5px; opacity: 0; z-index: -1;
     /*border: rgba(255, 255, 255, 0.25) solid 1px; border-top: none; */
     -webkit-transition: 0.4s; -moz-transition: 0.4s;
-    -o-transition: 0.4s; transition: 0.4s; 
+    -o-transition: 0.4s; transition: 0.4s;
   }
     footer > form:target { opacity: 1; }
-    footer > form:before { 
-      display: block; position: absolute; top: 0; content: ""; 
-      background: rgba(255, 255, 255, 0.3); height: 20px; width: 15px; 
+    footer > form:before {
+      display: block; position: absolute; top: 0; content: "";
+      background: rgba(255, 255, 255, 0.3); height: 20px; width: 15px;
       border-right: rgba(170, 0, 0, 0.3) solid 15px;
     }
-    footer input[type="search"] { 
-      background: #fff; border: black solid 1px; -webkit-appearance: none; 
-      height: 20px; width: 140px; float: left; font-size: 12px; line-height: 1; 
+    footer input[type="search"] {
+      background: #fff; border: black solid 1px; -webkit-appearance: none;
+      height: 20px; width: 140px; float: left; font-size: 12px; line-height: 1;
       border: none; background: rgba(255, 255, 255, 0.9); padding: 2px;
     }
-    footer input[type="submit"] { 
+    footer input[type="submit"] {
       height: 20px; padding: 0; position: absolute;
-      top: 2px; background: transparent; border: none; 
+      top: 2px; background: transparent; border: none;
       color: #fff; text-transform: lowercase; cursor: pointer;
     }
-  
-  
-} 
+
+
+}
 
 /* /-=-=-/ media queries /-=-=-/ */
 @media print {
   html { width: auto; padding: 0; }
   body { margin: 0; padding: 0; }
-  body:before, body:after, body > header, 
+  body:before, body:after, body > header,
   footer, h1 + time, form { display: none; }
   h1, h2, h3, h4, h5, h6 { page-break-after: avoid; }
   pre, blockquote, figure, aside[role="note"] { page-break-inside: avoid; }
@@ -348,7 +348,7 @@ body > footer { position: fixed; z-index: 1; top: 0; right: 50%; margin-right: -
   label > input { width: 50%; }
 }
 
-/* at this point, its safe to assume the person is probably using 
+/* at this point, its safe to assume the person is probably using
    a mobile device that doesnt support position: fixed */
 @media (max-width: 600px) {
   html { overflow: auto; padding: 0; }
@@ -359,7 +359,7 @@ body > footer { position: fixed; z-index: 1; top: 0; right: 50%; margin-right: -
   nav ul { margin-left: 50px; margin-left: 60px; }
   header > aside { display: none; }
   footer > small { text-indent: 40px; }
-  body > header, body > footer, 
+  body > header, body > footer,
   body > header + * > footer { position: absolute; }
 }
 
